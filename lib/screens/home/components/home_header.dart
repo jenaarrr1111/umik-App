@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umik/constants.dart';
 import 'package:umik/screens/cart/cart_screen.dart';
 
 import '../../../size_config.dart';
@@ -15,19 +16,27 @@ class HomeHeader extends StatelessWidget {
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SearchField(),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/Cart Icon.svg",
-            press: () => Navigator.pushNamed(context, CartScreen.routeName),
+          Text(
+            "UMIK",
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(20),
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/Bell.svg",
-            numOfitem: 3,
-            press: () {},
-          ),
+          const SearchField(),
+          // IconBtnWithCounter(
+          //   svgSrc: "assets/icons/Cart Icon.svg",
+          //   press: () => Navigator.pushNamed(context, CartScreen.routeName),
+          // ),
+          // IconBtnWithCounter(
+          //   svgSrc: "assets/icons/Bell.svg",
+          //   numOfitem: 3,
+          //   press: () {},
+          // ),
         ],
       ),
     );

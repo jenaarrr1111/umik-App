@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:umik/components/custom_surfix_icon.dart';
 import 'package:umik/components/default_button.dart';
 import 'package:umik/components/form_error.dart';
-import 'package:umik/screens/complete_profile/complete_profile_screen.dart';
 
 import '../../../components/second_button.dart';
 import '../../../constants.dart';
 import '../../../helper/keyboard.dart';
 import '../../../size_config.dart';
 import '../../login_success/login_success_screen.dart';
+import '../../sign_in/sign_in_screen.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -62,11 +62,11 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                Navigator.pushNamed(context, SignInScreen.routeName);
               }
             },
           ),
-          SizedBox(height: getProportionateScreenHeight(35)),
+          SizedBox(height: getProportionateScreenHeight(20)),
           Row(
             children: [
               Expanded(
@@ -88,9 +88,10 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ],
           ),
-          SizedBox(height: getProportionateScreenHeight(35)),
+          SizedBox(height: getProportionateScreenHeight(20)),
           SecondButton(
-            text: "Sign In With Google",
+            icon: "assets/icons/google-icon.svg",
+            text: "Sign Up With Google",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -128,6 +129,8 @@ class _SignUpFormState extends State<SignUpForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }
@@ -155,6 +158,8 @@ class _SignUpFormState extends State<SignUpForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }
@@ -221,6 +226,8 @@ class _SignUpFormState extends State<SignUpForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }
@@ -254,6 +261,8 @@ class _SignUpFormState extends State<SignUpForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }

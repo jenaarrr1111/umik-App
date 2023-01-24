@@ -6,9 +6,11 @@ import '../size_config.dart';
 class SecondButton extends StatelessWidget {
   const SecondButton({
     Key? key,
+    this.icon,
     this.text,
     this.press,
   }) : super(key: key);
+  final String? icon;
   final String? text;
   final Function? press;
 
@@ -16,7 +18,7 @@ class SecondButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: getProportionateScreenHeight(56),
+      height: getProportionateScreenHeight(40),
       child: TextButton(
         style: TextButton.styleFrom(
           shape:

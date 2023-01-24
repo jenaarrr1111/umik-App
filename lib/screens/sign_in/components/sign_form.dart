@@ -9,6 +9,7 @@ import '../../../components/default_button.dart';
 import '../../../components/second_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../home/home_screen.dart';
 import '../../sign_up/sign_up_screen.dart';
 
 class SignForm extends StatefulWidget {
@@ -44,9 +45,9 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(50)),
+          SizedBox(height: getProportionateScreenHeight(35)),
           buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: getProportionateScreenHeight(15)),
           Row(
             children: [
               Spacer(),
@@ -60,15 +61,15 @@ class _SignFormState extends State<SignForm> {
               )
             ],
           ),
-          SizedBox(height: getProportionateScreenHeight(50)),
+          SizedBox(height: getProportionateScreenHeight(45)),
           FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: getProportionateScreenHeight(25)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Belum punya akun? ",
-                style: TextStyle(fontSize: getProportionateScreenWidth(16)),
+                style: TextStyle(fontSize: getProportionateScreenWidth(13)),
               ),
               GestureDetector(
                 onTap: () =>
@@ -76,7 +77,7 @@ class _SignFormState extends State<SignForm> {
                 child: Text(
                   "Daftar Sekarang",
                   style: TextStyle(
-                      fontSize: getProportionateScreenWidth(16),
+                      fontSize: getProportionateScreenWidth(13),
                       color: kPrimaryColor),
                 ),
               ),
@@ -90,11 +91,11 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),
-          SizedBox(height: getProportionateScreenHeight(45)),
+          SizedBox(height: getProportionateScreenHeight(20)),
           Row(
             children: [
               Expanded(
@@ -116,9 +117,10 @@ class _SignFormState extends State<SignForm> {
               ),
             ],
           ),
-          SizedBox(height: getProportionateScreenHeight(45)),
+          SizedBox(height: getProportionateScreenHeight(20)),
           SecondButton(
             text: "Sign In With Google",
+            icon: "assets/icons/google-icon.svg",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -162,6 +164,8 @@ class _SignFormState extends State<SignForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 35.0),
       ),
     );
   }
@@ -195,6 +199,8 @@ class _SignFormState extends State<SignForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 35.0),
       ),
     );
   }

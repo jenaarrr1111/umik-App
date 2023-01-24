@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umik/screens/home/components/section_title.dart';
 
 import '../../../size_config.dart';
 
@@ -12,14 +13,18 @@ class DiscountBanner extends StatelessWidget {
     return Container(
       // height: 90,
       width: double.infinity,
-      margin: EdgeInsets.all(getProportionateScreenWidth(20)),
+      margin: EdgeInsets.all(getProportionateScreenWidth(30)),
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(20),
-        vertical: getProportionateScreenWidth(15),
+        vertical: getProportionateScreenWidth(50),
       ),
+      // child: SectionTitle(
+      //   title: "Special for you",
+      //   press: () {},
+      // ),
       decoration: BoxDecoration(
         color: Color(0xFF4A3298),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Text.rich(
         TextSpan(

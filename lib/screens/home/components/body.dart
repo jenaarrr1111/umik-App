@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umik/constants.dart';
 
 import '../../../size_config.dart';
 import 'categories.dart';
@@ -17,6 +18,7 @@ class Body extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(20)),
             HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(10)),
+            Text("Promo Untukmu", style: heading1Style),
             DiscountBanner(),
             Categories(),
             SpecialOffers(),

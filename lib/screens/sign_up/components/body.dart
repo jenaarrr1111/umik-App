@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:umik/components/socal_card.dart';
 import 'package:umik/constants.dart';
 import 'package:umik/size_config.dart';
 
@@ -13,16 +12,16 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(45)),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
+                SizedBox(height: SizeConfig.screenHeight * 0.01), // 4%
                 Text("Creat Account", style: headingStyle),
 
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignUpForm(),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
+                SizedBox(height: SizeConfig.screenHeight * 0.05),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [
@@ -30,17 +29,17 @@ class Body extends StatelessWidget {
                 //       icon: "assets/icons/google-icon.svg",
                 //       press: () {},
                 //     ),
-                //     SocalCard(
-                //       icon: "assets/icons/facebook-2.svg",
-                //       press: () {},
-                //     ),
-                //     SocalCard(
-                //       icon: "assets/icons/twitter.svg",
-                //       press: () {},
-                //     ),
+                //     //     SocalCard(
+                //     //       icon: "assets/icons/facebook-2.svg",
+                //     //       press: () {},
+                //     //     ),
+                //     //     SocalCard(
+                //     //       icon: "assets/icons/twitter.svg",
+                //     //       press: () {},
+                //     //     ),
                 //   ],
                 // ),
-                SizedBox(height: getProportionateScreenHeight(20)),
+                SizedBox(height: getProportionateScreenHeight(100)),
                 // Text(
                 //   'By continuing your confirm that you agree \nwith our Term and Condition',
                 //   textAlign: TextAlign.center,

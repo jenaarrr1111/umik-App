@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:umik/components/no_account_text.dart';
-import 'package:umik/components/socal_card.dart';
+import 'package:umik/constants.dart';
 import '../../../size_config.dart';
 import 'sign_form.dart';
 
@@ -12,20 +11,14 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(26)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(45)),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.01),
-                Text(
-                  "Sign In",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(28),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
+                Text("Sign In", style: headingStyle),
+
+                SizedBox(height: SizeConfig.screenHeight * 0.09),
                 SignForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.05),
                 // Row(
@@ -37,7 +30,7 @@ class Body extends StatelessWidget {
                 //     ),
                 //   ],
                 // ),
-                SizedBox(height: getProportionateScreenHeight(20)),
+                SizedBox(height: getProportionateScreenHeight(100)),
               ],
             ),
           ),

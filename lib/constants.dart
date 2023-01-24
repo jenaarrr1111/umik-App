@@ -21,6 +21,13 @@ final headingStyle = TextStyle(
   height: 1.5,
 );
 
+final heading1Style = TextStyle(
+  fontSize: getProportionateScreenWidth(20),
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+  height: 1.5,
+);
+
 const defaultDuration = Duration(milliseconds: 250);
 
 // Form Error
