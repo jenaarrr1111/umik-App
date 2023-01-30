@@ -27,6 +27,7 @@ class HomeHeader extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          SizedBox(height: getProportionateScreenHeight(80)),
           const SearchField(),
           // IconBtnWithCounter(
           //   svgSrc: "assets/icons/Cart Icon.svg",
