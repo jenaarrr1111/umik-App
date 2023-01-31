@@ -5,7 +5,7 @@ import 'package:umik/size_config.dart';
 
 // This is the best practice
 import '../components/seller_welcome_content.dart';
-import '../../../components/default_button.dart';
+import '../../../../components/default_button.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});

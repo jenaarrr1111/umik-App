@@ -47,27 +47,22 @@ class CustomBottomNavBar extends StatelessWidget {
             //     ],
             //   ),
             // ),
+
             //Icon button Pesanan Saya
-            ElevatedButton.icon(
-                onPressed: () =>
-                    Navigator.pushNamed(context, HomeScreen.routeName),
-                icon: Image.asset(
-                  "assets/images/Nav List View.png",
-                ),
-                label: const Text("Pesanan Saya")),
-            // IconButton(
-            //   icon: Image.asset(
-            //     "assets/images/Nav List View.png",
-            //     // color: MenuState.home == selectedMenu
-            //     //     // ? kPrimaryColor
-            //     //     // : inActiveIconColor,
-            //   ),
-            //   onPressed: () =>
-            //       Navigator.pushNamed(context, HomeScreen.routeName),
-            // ),
+            IconButton(
+              icon: Image.asset(
+                "assets/images/Nav List View.png",
+                // color: MenuState.home == selectedMenu
+                //     // ? kPrimaryColor
+                //     // : inActiveIconColor,
+              ),
+              onPressed: () =>
+                  Navigator.pushNamed(context, HomeScreen.routeName),
+            ),
             // Text(
             //   "Pesanan Saya",
             // ),
+
             //Icon button Profile
             IconButton(
               icon: Image.asset(
@@ -79,7 +74,7 @@ class CustomBottomNavBar extends StatelessWidget {
               onPressed: () =>
                   Navigator.pushNamed(context, ProfileScreen.routeName),
             ),
-            Text("Saya"),
+            // Text("Saya"),
           ],
         ),
       ),

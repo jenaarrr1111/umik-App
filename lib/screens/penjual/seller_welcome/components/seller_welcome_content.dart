@@ -2,8 +2,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../../constants.dart';
+import '../../../../size_config.dart';
 
 class SellerWelcomeContent extends StatelessWidget {
   const SellerWelcomeContent({super.key});

@@ -23,6 +23,15 @@ class Body extends StatelessWidget {
               style: heading1Style,
             ),
             DiscountBanner(),
+            GestureDetector(
+              onTap: () {},
+              child: Text(
+                "Show more >>",
+                style: TextStyle(
+                  color: kTextSecondColor,
+                ),
+              ),
+            ),
             SizedBox(height: getProportionateScreenHeight(20)),
             Text(
               "Kategori",

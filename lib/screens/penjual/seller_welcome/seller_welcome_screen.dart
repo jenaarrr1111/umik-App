@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:umik/screens/seller_welcome/components/body.dart';
+import 'package:umik/screens/penjual/seller_welcome/components/body.dart';
 import 'package:umik/size_config.dart';
 
 class SplashScreen extends StatelessWidget {
