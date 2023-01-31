@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:umik/constants.dart';
 
-import '../../../size_config.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -9,51 +7,33 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          // SizedBox(height: getProportionateScreenHeight(20)),
-          Text(
-            "Profile Saya",
-            style: heading1Style,
-          ),
-          SizedBox(height: getProportionateScreenHeight(20)),
           ProfilePic(),
-          SizedBox(height: getProportionateScreenHeight(10)),
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              "Edit Foto",
-              style: TextStyle(
-                // fontSize: getProportionateScreenWidth(15),
-                color: kTextSecondColor,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
           SizedBox(height: 20),
           ProfileMenu(
-            text: "Nama",
+            text: "My Account",
             icon: "assets/icons/User Icon.svg",
             press: () => {},
           ),
           ProfileMenu(
-            text: "Username",
+            text: "Notifications",
             icon: "assets/icons/Bell.svg",
             press: () {},
           ),
           ProfileMenu(
-            text: "Handphone",
+            text: "Settings",
             icon: "assets/icons/Settings.svg",
             press: () {},
           ),
           ProfileMenu(
-            text: "Email",
+            text: "Help Center",
             icon: "assets/icons/Question mark.svg",
             press: () {},
           ),
           ProfileMenu(
-            text: "Mulai Sebagai Penjual",
+            text: "Log Out",
             icon: "assets/icons/Log out.svg",
             press: () {},
           ),

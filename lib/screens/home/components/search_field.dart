@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:umik/screens/home/components/icon_btn_with_counter.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import '../../cart/cart_screen.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({
@@ -30,10 +28,6 @@ class SearchField extends StatelessWidget {
             hintText: "Mau makan apa hari ini?",
             prefixIcon: Icon(Icons.search)),
       ),
-      // child: IconBtnWithCounter(
-      //   svgSrc: "assets/icons/Cart Icon.svg",
-      //   press: () => Navigator.pushNamed(context, CartScreen.routeName),
-      // ),
     );
   }
 }
