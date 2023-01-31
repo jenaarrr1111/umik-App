@@ -13,33 +13,29 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "UMIK",
-            style: TextStyle(
-              fontSize: getProportionateScreenWidth(20),
-              color: kPrimaryColor,
-              fontWeight: FontWeight.bold,
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          "UMIK",
+          style: TextStyle(
+            fontSize: getProportionateScreenWidth(20),
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
           ),
-          SizedBox(height: getProportionateScreenHeight(80)),
-          const SearchField(),
-          // IconBtnWithCounter(
-          //   svgSrc: "assets/icons/Cart Icon.svg",
-          //   press: () => Navigator.pushNamed(context, CartScreen.routeName),
-          // ),
-          // IconBtnWithCounter(
-          //   svgSrc: "assets/icons/Bell.svg",
-          //   numOfitem: 3,
-          //   press: () {},
-          // ),
-        ],
-      ),
+        ),
+        SizedBox(height: getProportionateScreenHeight(80)),
+        const SearchField(),
+        // IconBtnWithCounter(
+        //   svgSrc: "assets/icons/Cart Icon.svg",
+        //   press: () => Navigator.pushNamed(context, CartScreen.routeName),
+        // ),
+        // IconBtnWithCounter(
+        //   svgSrc: "assets/icons/Bell.svg",
+        //   numOfitem: 3,
+        //   press: () {},
+        // ),
+      ],
     );
   }
 }
