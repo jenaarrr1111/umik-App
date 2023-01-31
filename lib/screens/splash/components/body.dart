@@ -84,7 +84,7 @@ class _BodyState extends State<Body> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: getProportionateScreenWidth(18),
-                            color: kTextColor,
+                            color: kTextSecondColor,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
