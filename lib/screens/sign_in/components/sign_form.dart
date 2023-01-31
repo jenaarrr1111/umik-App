@@ -56,10 +56,7 @@ class _SignFormState extends State<SignForm> {
                     context, ForgotPasswordScreen.routeName),
                 child: Text(
                   "Lupa Password?",
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: kTextSecondColor,
-                  ),
+                  style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
             ],

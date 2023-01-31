@@ -23,7 +23,7 @@ class SecondButton extends StatelessWidget {
         style: TextButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          foregroundColor: Colors.white,
+          primary: Colors.white,
           backgroundColor: kSecondColor,
         ),
         onPressed: press as void Function()?,
