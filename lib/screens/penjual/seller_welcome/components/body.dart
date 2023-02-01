@@ -19,13 +19,29 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          Image.asset('assets/images/splash_2.png'),
-          Text("Daftar sebagai penjual dengan"),
-          Text("Melengkapi informasi yang"),
-          Text("diperlukan"),
-        ],
+      child: Container(
+        padding: EdgeInsets.only(top: getProportionateScreenHeight(122)),
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/images/splash_2.png',
+              width: getProportionateScreenWidth(300),
+              height: getProportionateScreenHeight(307),
+            ),
+            const Text(
+              "Daftar sebagai penjual dengan",
+              style: TextStyle(fontSize: 20),
+            ),
+            const Text(
+              "Melengkapi informasi yang",
+              style: TextStyle(fontSize: 20),
+            ),
+            const Text(
+              "diperlukan",
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
       ),
     );
   }

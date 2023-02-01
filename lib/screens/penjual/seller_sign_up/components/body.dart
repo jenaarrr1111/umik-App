@@ -19,6 +19,15 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return SellerSignUpForm();
+    return SafeArea(
+      child: SizedBox(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [SellerSignUpForm()],
+          ),
+        ),
+      ),
+    );
   }
 }

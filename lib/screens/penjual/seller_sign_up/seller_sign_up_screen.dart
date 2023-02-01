@@ -5,10 +5,10 @@ import 'package:umik/size_config.dart';
 import '../../../components/default_button.dart';
 import '../../../components/second_button.dart';
 
-class SellerSignUp extends StatelessWidget {
-  static String routeName = "/seller_welcome";
+class SellerSignUpScreen extends StatelessWidget {
+  static String routeName = "/seller_sign_up";
 
-  const SellerSignUp({super.key});
+  const SellerSignUpScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,17 +16,6 @@ class SellerSignUp extends StatelessWidget {
         title: const Text("Atur Informasi UMKM"),
       ),
       body: const Body(),
-
-      //  Padding(
-      // padding: EdgeInsets.only(
-      //   left: getProportionateScreenWidth(18),
-      //   right: getProportionateScreenWidth(18),
-      //   bottom: getProportionateScreenHeight(31),
-      // ),
-      // child: TextButton(
-      //   onPressed: () {},
-      //   child: Text("Mulai Pendaftaran"),
-      // ),
     );
   }
 }

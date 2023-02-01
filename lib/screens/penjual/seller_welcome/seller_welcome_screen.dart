@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
 import 'package:umik/screens/penjual/seller_welcome/components/body.dart';
 import 'package:umik/size_config.dart';
 
 import '../../../components/default_button.dart';
+import '../../../theme.dart';
 
 class SellerWelcomeScreen extends StatelessWidget {
   static String routeName = "/seller_welcome";
@@ -11,22 +13,24 @@ class SellerWelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Selamat Datang ke UMIK"),
-      ),
-      body: const Body(),
-      bottomNavigationBar:
-          DefaultButton(text: "Mulai Pendafaran", press: () {}),
-      //  Padding(
-      // padding: EdgeInsets.only(
-      //   left: getProportionateScreenWidth(18),
-      //   right: getProportionateScreenWidth(18),
-      //   bottom: getProportionateScreenHeight(31),
-      // ),
-      // child: TextButton(
-      //   onPressed: () {},
-      //   child: Text("Mulai Pendaftaran"),
-      // ),
-    );
+        appBar: AppBar(
+          title: const Text(
+            "Selamat Datang ke UMIK",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        body: const Body(),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(
+            left: getProportionateScreenWidth(18),
+            right: getProportionateScreenWidth(18),
+            bottom: getProportionateScreenHeight(23),
+          ),
+          child: DefaultButton(
+              text: "Mulai Pendafaran",
+              press: () {
+                Navigator.pushNamed(context, SellerSignUpScreen.routeName);
+              }),
+        ));
   }
 }

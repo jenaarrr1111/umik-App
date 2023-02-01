@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
+import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 import 'package:umik/screens/sign_in/sign_in_screen.dart';
 import 'package:umik/size_config.dart';
 
@@ -95,6 +96,8 @@ class _BodyState extends State<Body> {
                       text: "Get Started",
                       press: () {
                         Navigator.pushNamed(context, SignInScreen.routeName);
+                        //   Navigator.pushNamed(
+                        //       context, SellerWelcomeScreen.routeName);
                       },
                     ),
                     Spacer(),
