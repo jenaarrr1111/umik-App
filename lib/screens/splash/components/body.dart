@@ -95,9 +95,9 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Get Started",
                       press: () {
-                        // Navigator.pushNamed(context, SignInScreen.routeName);
-                        Navigator.pushNamed(
-                            context, SellerWelcomeScreen.routeName);
+                        Navigator.pushNamed(context, SignInScreen.routeName);
+                        // Navigator.pushNamed(
+                        //     context, SellerWelcomeScreen.routeName);
                       },
                     ),
                     Spacer(),
