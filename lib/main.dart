@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:umik/routes.dart';
-import 'package:umik/screens/profile/profile_screen.dart';
 import 'package:umik/screens/splash/splash_screen.dart';
 import 'package:umik/theme.dart';
 

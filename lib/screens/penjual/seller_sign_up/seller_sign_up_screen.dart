@@ -13,7 +13,10 @@ class SellerSignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Atur Informasi UMKM"),
+        title: const Text(
+          "Atur Informasi UMKM",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: const Body(),
     );

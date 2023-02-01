@@ -45,7 +45,8 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
     return Form(
       key: _formKey,
       child: Column(
-        children: [
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
           buildUmkmNameField(),
           SizedBox(height: getProportionateScreenHeight(20)),
           buildAddressFormField(),
@@ -61,14 +62,18 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           Row(
-            children: [
-              SecondButton(
-                text: "Kembali",
-                press: () {},
+            children: <Widget>[
+              Flexible(
+                child: SecondButton(
+                  text: "Kembali",
+                  press: () {},
+                ),
               ),
-              DefaultButton(
-                text: "Sign Up With Google",
-                press: () {},
+              Flexible(
+                child: DefaultButton(
+                  text: "Kirim",
+                  press: () {},
+                ),
               ),
             ],
           ),
