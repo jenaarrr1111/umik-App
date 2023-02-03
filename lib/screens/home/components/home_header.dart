@@ -14,15 +14,18 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "UMIK",
-          style: TextStyle(
-            fontSize: getProportionateScreenWidth(20),
-            color: kPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
+        // Text(
+        //   "UMIK",
+        //   style: TextStyle(
+        //     fontSize: getProportionateScreenWidth(20),
+        //     color: kPrimaryColor,
+        //     fontWeight: FontWeight.bold,
+        //   ),
+        // ),
+        Image.asset(
+          "assets/images/umik.png",
         ),
         SizedBox(height: getProportionateScreenHeight(80)),
         const SearchField(),

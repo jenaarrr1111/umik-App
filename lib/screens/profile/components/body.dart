@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
 import '../../../size_config.dart';
+import '../../penjual/seller_welcome/seller_welcome_screen.dart';
+import 'nama/nama_screen.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -34,28 +36,27 @@ class Body extends StatelessWidget {
           SizedBox(height: 20),
           ProfileMenu(
             text: "Nama",
-            icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () => {
+              Navigator.pushNamed(context, NamaScreen.routeName),
+            },
           ),
-          ProfileMenu(
+          ProfileMenu2(
             text: "Username",
-            icon: "assets/icons/Bell.svg",
             press: () {},
           ),
           ProfileMenu(
             text: "Handphone",
-            icon: "assets/icons/Settings.svg",
             press: () {},
           ),
-          ProfileMenu(
+          ProfileMenu2(
             text: "Email",
-            icon: "assets/icons/Question mark.svg",
             press: () {},
           ),
           ProfileMenu(
             text: "Mulai Sebagai Penjual",
-            icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, SellerWelcomeScreen.routeName);
+            },
           ),
         ],
       ),

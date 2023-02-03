@@ -4,7 +4,6 @@ import 'package:umik/screens/penjual/seller_welcome/components/body.dart';
 import 'package:umik/size_config.dart';
 
 import '../../../components/default_button.dart';
-import '../../../theme.dart';
 
 class SellerWelcomeScreen extends StatelessWidget {
   static String routeName = "/seller_welcome";

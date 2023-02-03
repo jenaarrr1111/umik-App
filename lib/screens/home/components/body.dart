@@ -28,7 +28,7 @@ class Body extends StatelessWidget {
               child: Text(
                 "Show more >>",
                 style: TextStyle(
-                  color: kTextSecondColor,
+                  color: Colors.lightBlue,
                 ),
               ),
             ),

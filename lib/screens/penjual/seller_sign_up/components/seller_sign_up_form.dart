@@ -1,6 +1,4 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors, avoid_returning_null_for_void, curly_braces_in_flow_control_structures
-
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:umik/components/custom_surfix_icon.dart';
@@ -19,7 +17,7 @@ class SellerSignUpForm extends StatefulWidget {
 class _SellerSignUpFormState extends State<SellerSignUpForm> {
   final _formKey = GlobalKey<FormState>();
   String? umkm_name;
-  Array? address;
+  // Array? address;
   String? email;
   String? phone_number;
   String? number_plate;
