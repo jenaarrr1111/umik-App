@@ -58,6 +58,7 @@ class Body extends StatelessWidget {
               Navigator.pushNamed(context, SellerWelcomeScreen.routeName);
             },
           ),
+          TextField(),
         ],
       ),
     );
