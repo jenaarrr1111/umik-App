@@ -11,14 +11,46 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
-      {"icon": "assets/images/KMinuman.png", "text": "Minuman"},
-      {"icon": "assets/images/KJajanan.png", "text": "Jajanan"},
-      {"icon": "assets/images/KCepatsaji.png", "text": "Cepat saji"},
-      {"icon": "assets/images/KNasi.png", "text": "Aneka nasi"},
-      {"icon": "assets/images/KRoti.png", "text": "Roti"},
-      {"icon": "assets/images/KKopi.png", "text": "Kopi"},
-      {"icon": "assets/images/KSeafood.png", "text": "Seafood"},
-      {"icon": "assets/images/KBakmie.png", "text": "Bakmie"},
+      {
+        "icon": "assets/images/KMinuman.png",
+        "text": "Minuman",
+        "value": '1',
+      },
+      {
+        "icon": "assets/images/KJajanan.png",
+        "text": "Jajanan",
+        "value": '2',
+      },
+      {
+        "icon": "assets/images/KCepatsaji.png",
+        "text": "Cepat saji",
+        "value": '3',
+      },
+      {
+        "icon": "assets/images/KNasi.png",
+        "text": "Aneka nasi",
+        "value": '4',
+      },
+      {
+        "icon": "assets/images/KRoti.png",
+        "text": "Roti",
+        "value": '5',
+      },
+      {
+        "icon": "assets/images/KKopi.png",
+        "text": "Kopi",
+        "value": '6',
+      },
+      {
+        "icon": "assets/images/KSeafood.png",
+        "text": "Seafood",
+        "value": '7',
+      },
+      {
+        "icon": "assets/images/KBakmie.png",
+        "text": "Bakmie",
+        "value": '8',
+      },
     ];
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
@@ -29,7 +61,9 @@ class Categories extends StatelessWidget {
           (index) => CategoryCard(
             icon: categories[index]["icon"],
             text: categories[index]["text"],
-            press: () {},
+            press: () {
+              // Navigator( )
+            },
           ),
         ),
       ),

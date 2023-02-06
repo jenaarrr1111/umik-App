@@ -29,18 +29,6 @@ class NamaScreen extends StatelessWidget {
         ],
       ),
       body: Body(),
-      // bottomNavigationBar: Padding(
-      //   padding: EdgeInsets.only(
-      //     left: getProportionateScreenWidth(18),
-      //     right: getProportionateScreenWidth(18),
-      //     bottom: getProportionateScreenHeight(23),
-      //   ),
-      //   child: DefaultButton(
-      //       text: "Mulai Pendafaran",
-      //       press: () {
-      //         Navigator.pushNamed(context, SellerSignUpScreen.routeName);
-      //       }),
-      // ),
     );
   }
 }
