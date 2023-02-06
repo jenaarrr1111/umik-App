@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umik/components/rectangle_bottom_first.dart';
 import 'package:umik/screens/penjual/seller_address/components/body.dart';
 import 'package:umik/size_config.dart';
 
@@ -26,7 +27,7 @@ class SellerAddressScreen extends StatelessWidget {
             right: getProportionateScreenWidth(18),
             bottom: getProportionateScreenHeight(23),
           ),
-          child: DefaultButton(
+          child: RectangleFirst(
               text: "Lanjut",
               press: () {
                 Navigator.pushNamed(context, SellerSignUpScreen.routeName);

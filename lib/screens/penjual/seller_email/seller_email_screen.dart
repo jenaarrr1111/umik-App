@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umik/components/custom_text_field.dart';
+import 'package:umik/components/rectangle_bottom_first.dart';
+import 'package:umik/constants.dart';
 import 'package:umik/screens/penjual/seller_sign_up/components/body.dart';
 import 'package:umik/size_config.dart';
 
@@ -25,7 +27,7 @@ class SellerEmailScreen extends StatelessWidget {
           width: double.infinity,
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
                   Text(
@@ -42,13 +44,15 @@ class SellerEmailScreen extends StatelessWidget {
           padding: EdgeInsets.only(
             left: getProportionateScreenWidth(18),
             right: getProportionateScreenWidth(18),
-            bottom: getProportionateScreenHeight(23),
+            bottom: getProportionateScreenHeight(490),
           ),
-          child: DefaultButton(
-              text: "Lanjut",
-              press: () {
-                Navigator.pushNamed(context, SellerSignUpScreen.routeName);
-              }),
+          child: Container(
+            child: RectangleFirst(
+                text: "Lanjut",
+                press: () {
+                  Navigator.pushNamed(context, SellerSignUpScreen.routeName);
+                }),
+          ),
         ));
   }
 }

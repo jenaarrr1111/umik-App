@@ -36,20 +36,23 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
   Widget form() {
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          CustomTextField(hintText: "Masukkan Nama UMKM", label: "Nama UMKM"),
-          _buildTextButton("Alamat", () {
-            Navigator.pushNamed(context, SellerAddressScreen.routeName);
-          }),
-          _buildTextButton("Email", () {
-            Navigator.pushNamed(context, SellerEmailScreen.routeName);
-          }),
-          CustomTextField(hintText: "", label: "Nomor Telepon"),
-          CustomTextField(
-              hintText: "Masukkan Plat Nomor Kendaraan",
-              label: "Plat Nomor Kendaraan"),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: Column(
+          children: [
+            CustomTextField(hintText: "Nama UMKM", label: "Masukkan Nama UMKM"),
+            _buildTextButton("Alamat", () {
+              Navigator.pushNamed(context, SellerAddressScreen.routeName);
+            }),
+            _buildTextButton("Email", () {
+              Navigator.pushNamed(context, SellerEmailScreen.routeName);
+            }),
+            CustomTextField(hintText: "", label: "Nomor Telepon"),
+            CustomTextField(
+                hintText: "Masukkan Plat Nomor Kendaraan",
+                label: "Plat Nomor Kendaraan"),
+          ],
+        ),
       ),
     );
   }
@@ -63,7 +66,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
           padding: const EdgeInsets.all(30),
           // shape:
           // RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          backgroundColor: const Color(0xFFF5F6F9),
+          backgroundColor: Color.fromARGB(255, 245, 245, 245),
         ),
         onPressed: press,
         child: Row(
