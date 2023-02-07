@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:umik/components/rectangle_bottom_first.dart';
-import 'package:umik/components/rectangle_bottom_second.dart';
-import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
-import 'package:umik/screens/penjual/seller_welcome/components/body.dart';
+import 'package:umik/screens/penjual/seller_address/components/body.dart';
 import 'package:umik/size_config.dart';
 
 import '../../../components/default_button.dart';
+import '../../../components/second_button.dart';
+import '../seller_sign_up/seller_sign_up_screen.dart';
 
-class SellerWelcomeScreen extends StatelessWidget {
-  static String routeName = "/seller_welcome";
+class SellerAddressScreen extends StatelessWidget {
+  static String routeName = "/seller_address";
 
-  const SellerWelcomeScreen({super.key});
+  const SellerAddressScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            "Selamat Datang ke UMIK",
+            "Alamat Baru",
             style: TextStyle(color: Colors.black),
           ),
         ),
-        body: const Body(),
+        body: Body(),
         bottomNavigationBar: Padding(
           padding: EdgeInsets.only(
             left: getProportionateScreenWidth(18),
@@ -28,7 +28,7 @@ class SellerWelcomeScreen extends StatelessWidget {
             bottom: getProportionateScreenHeight(23),
           ),
           child: RectangleFirst(
-              text: "Mulai Pendafaran",
+              text: "Lanjut",
               press: () {
                 Navigator.pushNamed(context, SellerSignUpScreen.routeName);
               }),

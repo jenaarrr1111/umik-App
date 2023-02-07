@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
+import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 
 import '../../../size_config.dart';
 import '../../penjual/seller_welcome/seller_welcome_screen.dart';
@@ -54,6 +55,7 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "Mulai Sebagai Penjual",
+            // icon : "assets/icons/Log out.svg",
             press: () {
               Navigator.pushNamed(context, SellerWelcomeScreen.routeName);
             },
