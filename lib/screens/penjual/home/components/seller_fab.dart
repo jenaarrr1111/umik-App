@@ -21,13 +21,13 @@ class SellerFAB extends StatelessWidget {
           vertical: 2),
         // Return PopupMenuEntry with String as value
         itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-          const PopupMenuItem<String>(
+          PopupMenuItem<String>(
             value: 'Tambah Produk',
-            child: Text('Tambah Produk'),
+            child: Text('Tambah Produk', style: Theme.of(context).textTheme.labelMedium,),
           ),
-          const PopupMenuItem<String>(
+          PopupMenuItem<String>(
             value: 'Buat Promo',
-            child: Text('Buat Promo'),
+            child: Text('Buat Promo', style: Theme.of(context).textTheme.labelMedium,),
           ),
         ],
         onSelected: (value) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:umik/constants.dart';
 import 'package:umik/screens/penjual/home/components/seller_menu_gridview.dart';
 
 class SellerBody extends StatelessWidget {
@@ -19,11 +18,13 @@ class SellerBody extends StatelessWidget {
       {
         'nama_menu': 'Pangsit Kukus',
         'thumbnail': 'assets/images/pangsit_kukus.png',
+        'keterangan': 'Isi 3',
         'harga': 15000,
       },
       {
         'nama_menu': 'Pangsit Kukus',
         'thumbnail': 'assets/images/pangsit_kukus.png',
+        'keterangan': 'Isi 3',
         'harga': 15000,
       },
       {
@@ -34,6 +35,7 @@ class SellerBody extends StatelessWidget {
       {
         'nama_menu': 'Pangsit Kukus',
         'thumbnail': 'assets/images/pangsit_kukus.png',
+        'keterangan': 'Isi 3',
         'harga': 15000,
       },
       {
@@ -60,15 +62,9 @@ class SellerBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
       children: [
         Row(
-          children: const [
-            Text( 
-              'Bakmie Hokki, Soehat',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Padding(
+          children: [
+            Text('Bakmie Hokki, Soehat', style: Theme.of(context).textTheme.headlineLarge),
+            const Padding(
               padding: EdgeInsets.only(left: 10, right: 3.0),
               child: Icon(
                 Icons.star,
@@ -76,38 +72,23 @@ class SellerBody extends StatelessWidget {
                 size: 16,
               ),
             ),
-            Text( // Rating UMKM
-              '4.8',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text('4.8', style: Theme.of(context).textTheme.headlineMedium),
           ],
         ),
-        const Text(
-          "Jajanan",
-          style: TextStyle(
-            fontSize: 15,
-            color: kTextSecondColor,
-          ),
+        Text('Jajanan', style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 15),
-        const Text(
-          'Recomended',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+        Text( 'Recomended', style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 15),
         Expanded(
           child: GridView.builder(
+            padding: const EdgeInsets.all(0),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
-              childAspectRatio: 2 / 3,
+              childAspectRatio: 2 / 3.1,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
             ), 
@@ -117,12 +98,12 @@ class SellerBody extends StatelessWidget {
                 namaMenu: dataProduk[index]['nama_menu'].toString(),
                 thumbnail: dataProduk[index]['thumbnail'].toString(),
                 harga: dataProduk[index]['harga'].toString(),
+                keterangan: dataProduk[index]['keterangan'].toString(),
               );
             }
           ),
         )
       ],
-
     );
   }
 }

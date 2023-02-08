@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
+// ignore: must_be_immutable
 class SellerMenuGridView extends StatefulWidget {
-  final String namaMenu, thumbnail, harga;
+  final String namaMenu, thumbnail, harga, keterangan;
 
   const SellerMenuGridView({
     Key? key,
     required this.namaMenu,
     required this.thumbnail,
     required this.harga,
+    required this.keterangan,
   }) : super(key: key);
 
   @override
@@ -44,13 +46,19 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
                 offset: const Offset(0, 30),
                 // Return PopupMenuEntry with String as value
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'Edit',
-                    child: Text('Edit'),
+                    child: Text(
+                      'Edit',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                   ),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'Hapus',
-                    child: Text('Hapus'),
+                    child: Text(
+                      'Hapus',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                   ),
                 ],
               ),
@@ -60,21 +68,14 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
         const SizedBox(
           height: 8,
         ),
-        Text(
-          widget.namaMenu,
-          style: const TextStyle(
-            fontSize: 15,
-          ),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Text(
-          widget.harga,
-          style: const TextStyle(
-            fontSize: 15,
-          ),
-        ),
+        Text(widget.namaMenu, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 5),
+        widget.keterangan != 'null' // render keterangan klo ada
+            ? Text(widget.keterangan,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kTextSecondColor))
+            : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
+        const SizedBox(height: 5),
+        Text(widget.harga, style: Theme.of(context).textTheme.titleMedium),
         Align(
           alignment: Alignment.centerRight,
           child: IconButton(
