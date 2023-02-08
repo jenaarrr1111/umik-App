@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:umik/constants.dart';
+
+class SellerFAB extends StatelessWidget {
+  const SellerFAB({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(20)
+      ),
+      margin: const EdgeInsets.only(right: 18),
+      child: PopupMenuButton<String>(
+        offset: const Offset(0, -130),
+        color: Colors.white,
+        icon: const Icon(Icons.add),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8, 
+          vertical: 2),
+        // Return PopupMenuEntry with String as value
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+          const PopupMenuItem<String>(
+            value: 'Tambah Produk',
+            child: Text('Tambah Produk'),
+          ),
+          const PopupMenuItem<String>(
+            value: 'Buat Promo',
+            child: Text('Buat Promo'),
+          ),
+        ],
+        onSelected: (value) {
+          if (value == 'Tambah Produk') {
+            print(value);
+          } else if (value == 'Buat Promo') {
+            print(value);
+          }
+        },
+      ),
+    );
+  }
+}
