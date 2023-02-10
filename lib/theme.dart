@@ -68,6 +68,13 @@ TextTheme textTheme() {
       color: kTextColor,
     ),
 
+    bodySmall: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+
     // Label
     labelMedium: TextStyle(
       fontFamily: 'Poppins',
