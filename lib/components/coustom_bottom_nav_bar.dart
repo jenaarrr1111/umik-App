@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/profile/profile_screen.dart';
 
-import '../constants.dart';
 import '../enums.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -17,12 +16,12 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color inActiveIconColor = Color.fromARGB(255, 0, 0, 0);
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         color: Colors.grey[300],
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, -15),
+            offset: const Offset(0, -15),
             blurRadius: 20,
             color: Color(0xFFDADADA).withOpacity(0.15),
           ),

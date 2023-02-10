@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText, label;
 
-  CustomTextField({
+  const CustomTextField({
     Key? key,
     this.hintText = "",
     required this.label,

@@ -5,53 +5,66 @@ import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
 
-class Categories extends StatelessWidget {
+class Categories extends StatefulWidget {
   const Categories({super.key});
+
+  _Categories createState() => _Categories();
+}
+
+class _Categories extends State<Categories> {
+  List<Map<String, dynamic>> categories = [
+    {
+      "icon": "assets/images/KMinuman.png",
+      "title": "Minuman",
+      "subtitle": "",
+      "value": "1",
+    },
+    {
+      "icon": "assets/images/KJajanan.png",
+      "title": "Jajanan",
+      "subtitle": "",
+      "value": "2",
+    },
+    {
+      "icon": "assets/images/KCepatsaji.png",
+      "title": "Cepat saji",
+      "subtitle": "",
+      "value": "3",
+    },
+    {
+      "icon": "assets/images/KNasi.png",
+      "title": "Aneka nasi",
+      "subtitle": "",
+      "value": "4",
+    },
+    {
+      "icon": "assets/images/KRoti.png",
+      "title": "Roti",
+      "subtitle": "",
+      "value": "5",
+    },
+    {
+      "icon": "assets/images/KKopi.png",
+      "title": "Kopi",
+      "subtitle": "",
+      "value": "6",
+    },
+    {
+      "icon": "assets/images/KSeafood.png",
+      "title": "Seafood",
+      "subtitle": "",
+      "value": "7",
+    },
+    {
+      "icon": "assets/images/KBakmie.png",
+      "title": "Bakmie",
+      "subtitle": "",
+      "value": "8",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> categories = [
-      {
-        "icon": "assets/images/KMinuman.png",
-        "text": "Minuman",
-        "value": '1',
-      },
-      {
-        "icon": "assets/images/KJajanan.png",
-        "text": "Jajanan",
-        "value": '2',
-      },
-      {
-        "icon": "assets/images/KCepatsaji.png",
-        "text": "Cepat saji",
-        "value": '3',
-      },
-      {
-        "icon": "assets/images/KNasi.png",
-        "text": "Aneka nasi",
-        "value": '4',
-      },
-      {
-        "icon": "assets/images/KRoti.png",
-        "text": "Roti",
-        "value": '5',
-      },
-      {
-        "icon": "assets/images/KKopi.png",
-        "text": "Kopi",
-        "value": '6',
-      },
-      {
-        "icon": "assets/images/KSeafood.png",
-        "text": "Seafood",
-        "value": '7',
-      },
-      {
-        "icon": "assets/images/KBakmie.png",
-        "text": "Bakmie",
-        "value": '8',
-      },
-    ];
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
       child: Wrap(
@@ -60,9 +73,9 @@ class Categories extends StatelessWidget {
           categories.length,
           (index) => CategoryCard(
             icon: categories[index]["icon"],
-            text: categories[index]["text"],
+            text: categories[index]["title"],
             press: () {
-              // Navigator( )
+              // if (index == 1) Navigator.pop(context);
             },
           ),
         ),
