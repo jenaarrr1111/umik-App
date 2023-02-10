@@ -39,10 +39,7 @@ final Map<String, WidgetBuilder> routes = {
   //penjual
   SellerWelcomeScreen.routeName: (context) => SellerWelcomeScreen(),
   SellerSignUpScreen.routeName: (context) => SellerSignUpScreen(),
-<<<<<<< HEAD
   SellerAddressScreen.routeName: (context) => SellerAddressScreen(),
-  SellerEmailScreen.routeName: (context) => SellerEmailScreen()
-=======
+  SellerEmailScreen.routeName: (context) => SellerEmailScreen(),
   SellerHomeScreen.routeName: (context) => SellerHomeScreen(),
->>>>>>> origin/develop.langgeng
 };
