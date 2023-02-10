@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
-class AddProductBody extends StatefulWidget {
-  const AddProductBody({super.key});
+class EditProductBody extends StatefulWidget {
+  const EditProductBody({super.key});
 
   @override
-  State<AddProductBody> createState() => _AddProductBodyState();
+  State<EditProductBody> createState() => _EditProductBodyState();
 }
 
-class _AddProductBodyState extends State<AddProductBody> {
+class _EditProductBodyState extends State<EditProductBody> {
   final _formKey = GlobalKey<FormState>();
 
   // Initialize form field controller
@@ -314,3 +314,4 @@ class _AddProductBodyState extends State<AddProductBody> {
     );
   }
 }
+

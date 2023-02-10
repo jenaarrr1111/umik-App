@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
+import 'package:umik/screens/penjual/edit_produk/seller_edit_product.dart';
 
 // ignore: must_be_immutable
 class SellerMenuGridView extends StatefulWidget {
@@ -41,6 +42,14 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
               width: 24,
               height: 24,
               child: PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'Edit') {
+                    Navigator.pushNamed(context, SellerEditProductScreen.routeName);
+                    print(context);
+                  } else if (value == 'Hapus') {
+                    print(context);
+                  }
+                },
                 icon: const Icon(Icons.more_vert),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 offset: const Offset(0, 30),
@@ -72,7 +81,10 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
         const SizedBox(height: 5),
         widget.keterangan != 'null' // render keterangan klo ada
             ? Text(widget.keterangan,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kTextSecondColor))
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    !.copyWith(color: kTextSecondColor))
             : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
         const SizedBox(height: 5),
         Text(widget.harga, style: Theme.of(context).textTheme.titleMedium),
