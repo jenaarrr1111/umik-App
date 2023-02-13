@@ -4,6 +4,7 @@ import 'package:umik/screens/complete_profile/complete_profile_screen.dart';
 import 'package:umik/screens/details/details_screen.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
 import 'package:umik/screens/home/home_screen.dart';
+import 'package:umik/screens/penjual/promo/promo_screen.dart';
 import 'package:umik/screens/otp/otp_screen.dart';
 import 'package:umik/screens/penjual/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
@@ -37,4 +38,5 @@ final Map<String, WidgetBuilder> routes = {
   SellerWelcomeScreen.routeName: (context) => SellerWelcomeScreen(),
   SellerSignUpScreen.routeName: (context) => SellerSignUpScreen(),
   SellerHomeScreen.routeName: (context) => SellerHomeScreen(),
+  SellerPromoScreen.routeName: (context) => SellerPromoScreen(),
 };
