@@ -5,55 +5,55 @@ class SellerBody extends StatelessWidget {
   SellerBody({super.key});
 
   final List<Map<String, dynamic>> dataProduk = [
-      {
-        'nama_menu': 'Bakmie Ayam Madu',
-        'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-        'harga': 19000,
-      },
-      {
-        'nama_menu': 'Bakmie Ayam Suwir',
-        'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-        'harga': 15000,
-      },
-      {
-        'nama_menu': 'Pangsit Kukus',
-        'thumbnail': 'assets/images/pangsit_kukus.png',
-        'keterangan': 'Isi 3',
-        'harga': 15000,
-      },
-      {
-        'nama_menu': 'Pangsit Kukus',
-        'thumbnail': 'assets/images/pangsit_kukus.png',
-        'keterangan': 'Isi 3',
-        'harga': 15000,
-      },
-      {
-        'nama_menu': 'Bakmie Ayam Suwir',
-        'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-        'harga': 15000,
-      },
-      {
-        'nama_menu': 'Pangsit Kukus',
-        'thumbnail': 'assets/images/pangsit_kukus.png',
-        'keterangan': 'Isi 3',
-        'harga': 15000,
-      },
-      {
-        'nama_menu': 'Bakmie Ayam Suwir',
-        'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-        'harga': 15000,
-      },
-      {
-        'nama_menu': 'Bakmie Ayam Madu',
-        'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-        'harga': 19000,
-      },
-      {
-        'nama_menu': 'Bakmie Ayam Suwir',
-        'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-        'harga': 15000,
-      },
-];
+    {
+      'nama_menu': 'Bakmie Ayam Madu',
+      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
+      'harga': 19000,
+    },
+    {
+      'nama_menu': 'Bakmie Ayam Suwir',
+      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
+      'harga': 15000,
+    },
+    {
+      'nama_menu': 'Pangsit Kukus',
+      'thumbnail': 'assets/images/pangsit_kukus.png',
+      'keterangan': 'Isi 3',
+      'harga': 15000,
+    },
+    {
+      'nama_menu': 'Pangsit Goreng',
+      'thumbnail': 'assets/images/pangsit_kukus.png',
+      'keterangan': 'Isi 3',
+      'harga': 15000,
+    },
+    {
+      'nama_menu': 'Bakmie Ayam Suwir',
+      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
+      'harga': 15000,
+    },
+    {
+      'nama_menu': 'Pangsit Kukus',
+      'thumbnail': 'assets/images/pangsit_kukus.png',
+      'keterangan': 'Isi 3',
+      'harga': 15000,
+    },
+    {
+      'nama_menu': 'Bakmie Ayam Suwir',
+      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
+      'harga': 15000,
+    },
+    {
+      'nama_menu': 'Bakmie Ayam Madu',
+      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
+      'harga': 19000,
+    },
+    {
+      'nama_menu': 'Bakmie Ayam Suwir',
+      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
+      'harga': 15000,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,8 @@ class SellerBody extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text('Bakmie Hokki, Soehat', style: Theme.of(context).textTheme.headlineLarge),
+            Text('Bakmie Hokki, Soehat',
+                style: Theme.of(context).textTheme.headlineLarge),
             const Padding(
               padding: EdgeInsets.only(left: 10, right: 3.0),
               child: Icon(
@@ -75,33 +76,36 @@ class SellerBody extends StatelessWidget {
             Text('4.8', style: Theme.of(context).textTheme.headlineMedium),
           ],
         ),
-        Text('Jajanan', style: Theme.of(context).textTheme.headlineSmall,
+        Text(
+          'Jajanan',
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 15),
-        Text( 'Recomended', style: Theme.of(context).textTheme.titleLarge,
+        Text(
+          'Recomended',
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 15),
         Expanded(
           child: GridView.builder(
-            padding: const EdgeInsets.all(0),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 2 / 3.1,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-            ), 
-            itemCount: dataProduk.length,
-            itemBuilder: (_, index) {
-              return SellerMenuGridView(
-                namaMenu: dataProduk[index]['nama_menu'].toString(),
-                thumbnail: dataProduk[index]['thumbnail'].toString(),
-                harga: dataProduk[index]['harga'].toString(),
-                keterangan: dataProduk[index]['keterangan'].toString(),
-              );
-            }
-          ),
+              padding: const EdgeInsets.all(0),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                childAspectRatio: 2 / 3.1,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+              ),
+              itemCount: dataProduk.length,
+              itemBuilder: (_, index) {
+                return SellerMenuGridView(
+                  namaMenu: dataProduk[index]['nama_menu'].toString(),
+                  thumbnail: dataProduk[index]['thumbnail'].toString(),
+                  harga: dataProduk[index]['harga'].toString(),
+                  keterangan: dataProduk[index]['keterangan'].toString(),
+                );
+              }),
         )
       ],
     );
