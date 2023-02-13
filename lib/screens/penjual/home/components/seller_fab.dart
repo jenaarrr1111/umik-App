@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
+import 'package:umik/screens/penjual/tambah_produk/seller_add_product.dart';
 
 class SellerFAB extends StatelessWidget {
   const SellerFAB({super.key});
@@ -34,6 +35,7 @@ class SellerFAB extends StatelessWidget {
         ],
         onSelected: (value) {
           if (value == 'Tambah Produk') {
+            Navigator.pushNamed(context, SellerAddProductScreen.routeName);
             print(value);
           } else if (value == 'Buat Promo') {
             print(value);
