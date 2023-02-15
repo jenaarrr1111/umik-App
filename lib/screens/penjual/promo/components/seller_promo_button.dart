@@ -6,16 +6,25 @@ class PromoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      child: const Text(
-        'Buat Promo',
-        style: TextStyle(
-          color: Color.fromARGB(255, 0, 0, 0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      child: SizedBox(
+        width: double.infinity, // set width to match the parent
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kPrimaryColor,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+          child: Text(
+            'Buat Promo',
+            style:
+                Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 14),
+          ),
         ),
-      ),
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.yellow),
       ),
     );
   }
