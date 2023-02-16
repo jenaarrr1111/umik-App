@@ -80,7 +80,6 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         Text(
-                          ""
                           "For Healthy Life!",
                           textAlign: TextAlign.left,
                           style: TextStyle(
@@ -92,12 +91,12 @@ class _BodyState extends State<Body> {
                       ],
                     ),
                     Spacer(),
+
+                    //button Get Started to Sign In screen
                     DefaultButton(
                       text: "Get Started",
                       press: () {
                         Navigator.pushNamed(context, SignInScreen.routeName);
-                        // Navigator.pushNamed(
-                        //     context, SellerWelcomeScreen.routeName);
                       },
                     ),
                     Spacer(),

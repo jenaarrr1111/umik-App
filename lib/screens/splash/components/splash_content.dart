@@ -14,14 +14,19 @@ class SplashContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        //Logo Umik
         Spacer(),
         Image.asset(
           "assets/images/umik.png",
         ),
+
+        //Text title
         Text(
           text!,
           textAlign: TextAlign.center,
         ),
+
+        //Gambar/foto
         Spacer(flex: 2),
         Image.asset(
           image!,
