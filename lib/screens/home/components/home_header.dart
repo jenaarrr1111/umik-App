@@ -14,30 +14,33 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text(
-        //   "UMIK",
-        //   style: TextStyle(
-        //     fontSize: getProportionateScreenWidth(20),
-        //     color: kPrimaryColor,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        // ),
-        Image.asset(
-          "assets/images/umik.png",
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Image.asset(
+              "assets/images/umik.png",
+            ),
+          ),
         ),
         SizedBox(height: getProportionateScreenHeight(80)),
-        const SearchField(),
-        // IconBtnWithCounter(
-        //   svgSrc: "assets/icons/Cart Icon.svg",
-        //   press: () => Navigator.pushNamed(context, CartScreen.routeName),
-        // ),
-        // IconBtnWithCounter(
-        //   svgSrc: "assets/icons/Bell.svg",
-        //   numOfitem: 3,
-        //   press: () {},
-        // ),
+        Row(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: const SearchField(),
+              ),
+            ),
+            IconBtnWithCounter(
+              svgSrc: "assets/icons/Cart Icon.svg",
+              press: () => Navigator.pushNamed(context, CartScreen.routeName),
+            ),
+          ],
+        ),
       ],
     );
   }
