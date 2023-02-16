@@ -10,10 +10,12 @@ import 'package:umik/screens/penjual/seller_address/seller_address_screen.dart';
 import 'package:umik/screens/penjual/seller_email/seller_email_screen.dart';
 import 'package:umik/screens/penjual/edit_produk/seller_edit_product.dart';
 import 'package:umik/screens/penjual/home/home_screen.dart';
+import 'package:umik/screens/penjual/seller_rute/seller_rute.dart';
 import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
 import 'package:umik/screens/penjual/tambah_produk/seller_add_product.dart';
 import 'package:umik/screens/profile/components/nama/nama_screen.dart';
 import 'package:umik/screens/profile/profile_screen.dart';
+import 'package:umik/screens/rute/rute.dart';
 import 'package:umik/screens/sign_in/sign_in_screen.dart';
 import 'package:umik/screens/splash/splash_screen.dart';
 
@@ -33,6 +35,7 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  UserRute.routeName: (context) => UserRute(),
 
   //profile
   ProfileScreen.routeName: (context) => ProfileScreen(),
@@ -47,4 +50,5 @@ final Map<String, WidgetBuilder> routes = {
   SellerPromoScreen.routeName: (context) => SellerPromoScreen(),
   SellerAddProductScreen.routeName: (context) => SellerAddProductScreen(),
   SellerEditProductScreen.routeName: (context) => SellerEditProductScreen(),
+  SellerRute.routeName: (context) => SellerRute(),
 };

@@ -33,7 +33,6 @@ InputDecorationTheme inputDecorationTheme() {
 
 TextTheme textTheme() {
   return const TextTheme(
-
     // Headline
     headlineLarge: TextStyle(
       fontFamily: 'Inter',
@@ -82,6 +81,13 @@ TextTheme textTheme() {
       fontSize: 12,
       color: kTextColor,
     ),
+    labelSmall: TextStyle(
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.w400,
+      fontSize: 10,
+      color: kTextColor,
+      letterSpacing: 0,
+    ),
   );
 }
 
@@ -89,11 +95,10 @@ AppBarTheme appBarTheme() {
   return const AppBarTheme(
     color: Colors.white,
     titleTextStyle: TextStyle(
-      color: Colors.black,
-      fontSize: 20,
-      fontWeight: FontWeight.bold,
-      fontFamily: 'Poppins'
-    ),
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Poppins'),
     elevation: 0,
     // brightness is deprecated
     // brightness: Brightness.light,
