@@ -72,25 +72,31 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 55),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kPrimaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+              Builder(builder: (context) {
+                if (widget.status == 'Selesai') {
+                  return Container(
+                    margin: EdgeInsets.only(top: 55),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kPrimaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: Text(
+                        'Ulangi',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .copyWith(fontSize: 12),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Ulangi',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(fontSize: 12),
-                  ),
-                ),
-              ),
+                  );
+                } else {
+                  return Text(' ');
+                }
+              }),
               Align(
                 child: IconButton(
                   iconSize: 15.0,
