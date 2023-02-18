@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umik/screens/penjual/tambah_promo/components/search_field.dart';
 import 'package:umik/screens/penjual/tambah_promo/components/seller_promo_listview.dart';
 
 import '../../../../constants.dart';
@@ -57,18 +58,32 @@ class SellerPromo extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(8),
-      itemCount: dataProduk.length,
-      itemBuilder: (BuildContext context, int index) {
-        return SellerPromoGridView(
-          namaMenu: dataProduk[index]['nama_menu'].toString(),
-          thumbnail: dataProduk[index]['thumbnail'].toString(),
-          harga: dataProduk[index]['harga'].toString(),
-          keterangan: dataProduk[index]['keterangan'].toString(),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
+    return Column(
+      children: [
+        Flexible(
+          child: Container(
+            child: const SearchField(),
+          ),
+        ),
+        Flexible(
+          flex: 10,
+          fit: FlexFit.tight,
+          child: ListView.separated(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(8),
+            itemCount: dataProduk.length,
+            itemBuilder: (BuildContext context, int index) {
+              return SellerPromoGridView(
+                namaMenu: dataProduk[index]['nama_menu'].toString(),
+                thumbnail: dataProduk[index]['thumbnail'].toString(),
+                harga: dataProduk[index]['harga'].toString(),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+          ),
+        ),
+      ],
     );
   }
 }

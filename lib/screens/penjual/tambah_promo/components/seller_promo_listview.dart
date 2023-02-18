@@ -3,14 +3,13 @@ import 'package:umik/constants.dart';
 
 // ignore: must_be_immutable
 class SellerPromoGridView extends StatefulWidget {
-  final String namaMenu, thumbnail, harga, keterangan;
+  final String namaMenu, thumbnail, harga;
 
   const SellerPromoGridView({
     Key? key,
     required this.namaMenu,
     required this.thumbnail,
     required this.harga,
-    required this.keterangan,
   }) : super(key: key);
 
   @override
