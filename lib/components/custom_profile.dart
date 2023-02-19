@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:umik/constants.dart';
 
-import '../constants.dart';
-
-class CustomTextField extends StatelessWidget {
+class CustomProfile extends StatelessWidget {
   final String hintText, label;
 
-  const CustomTextField({
+  const CustomProfile({
     Key? key,
     this.hintText = "",
     required this.label,

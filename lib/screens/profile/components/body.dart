@@ -3,8 +3,8 @@ import 'package:umik/constants.dart';
 import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 
 import '../../../size_config.dart';
-import '../../penjual/seller_welcome/seller_welcome_screen.dart';
-import 'nama/nama_screen.dart';
+import '../nama/nama_screen.dart';
+import '../no_handphone/hp_screen.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -47,7 +47,9 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "Handphone",
-            press: () {},
+            press: () => {
+              Navigator.pushNamed(context, HpScreen.routeName),
+            },
           ),
           ProfileMenu2(
             text: "Email",
@@ -55,9 +57,8 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "Mulai Sebagai Penjual",
-            // icon : "assets/icons/Log out.svg",
-            press: () {
-              Navigator.pushNamed(context, SellerWelcomeScreen.routeName);
+            press: () => {
+              Navigator.pushNamed(context, SellerWelcomeScreen.routeName),
             },
           ),
         ],

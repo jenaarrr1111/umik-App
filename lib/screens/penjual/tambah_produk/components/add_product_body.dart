@@ -174,8 +174,8 @@ class _AddProductBodyState extends State<AddProductBody> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10, right: 10, left: 20),
+                    padding:
+                        const EdgeInsets.only(top: 10, right: 10, left: 20),
                     child: Text('Kategori',
                         style: Theme.of(context).textTheme.titleLarge),
                   ),

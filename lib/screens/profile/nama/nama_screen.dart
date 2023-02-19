@@ -1,58 +1,79 @@
 import 'package:flutter/material.dart';
-import 'package:umik/components/custom_text_field.dart';
-import 'package:umik/components/rectangle_bottom_first.dart';
 import 'package:umik/constants.dart';
-import 'package:umik/screens/penjual/seller_sign_up/components/body.dart';
-import 'package:umik/size_config.dart';
+// import 'package:umik/screens/profile/components/nama/components/body.dart';
 
-import '../../../components/default_button.dart';
-import '../../../components/second_button.dart';
-import '../seller_sign_up/seller_sign_up_screen.dart';
+import '../../../components/custom_profile.dart';
+import '../profile_screen.dart';
 
 class NamaScreen extends StatelessWidget {
-  static String routeName = "/nama_user";
+  static String routeName = "/profile_nama";
 
   const NamaScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Alamat Email",
-            style: TextStyle(color: Colors.black),
+      appBar: AppBar(
+        title: const Text(
+          "Ubah Nama",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
           ),
         ),
-        body: SafeArea(
-            child: SizedBox(
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => {
+              Navigator.pushNamed(context, ProfileScreen.routeName),
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+              ),
+              child: Text(
+                "Simpan",
+                style: TextStyle(
+                  color: Color(0xFF33691E),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  Text(
-                    "Mohon Masukkan alamat Email untuk mendapatkan kode verifikasi(OTP)",
-                    style: TextStyle(fontSize: 16),
+                  CustomProfile(
+                    label: "Nama",
                   ),
-                  CustomTextField(label: "Email")
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 5,
+                      ),
+                      child: Text(
+                        "Maks. 30 karakter",
+                        style: TextStyle(
+                          color: kTextSecondColor,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
-        )),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(18),
-            right: getProportionateScreenWidth(18),
-            bottom: getProportionateScreenHeight(490),
-          ),
-          child: Container(
-            child: RectangleFirst(
-                text: "Lanjut",
-                press: () {
-                  Navigator.pushNamed(context, SellerSignUpScreen.routeName);
-                }),
-          ),
-        ));
+        ),
+      ),
+    );
   }
 }
