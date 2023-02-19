@@ -20,7 +20,7 @@ class PromoButton extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Buat Promo',
+            'Simpan',
             style:
                 Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 14),
           ),

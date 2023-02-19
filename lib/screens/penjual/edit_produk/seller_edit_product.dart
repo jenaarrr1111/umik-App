@@ -9,20 +9,17 @@ class SellerEditProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Edit Produk', 
+        appBar: AppBar(
+          title: const Text(
+            'Edit Produk',
+          ),
+          shadowColor: Colors.black45,
+          elevation: 20,
         ),
-        shadowColor: Colors.black45,
-        elevation: 20,
-      ),
-      body: ListView(
-        children: const [
-          EditProductBody(),
-        ],
-      )
-    );
+        body: ListView(
+          children: const [
+            EditProductBody(),
+          ],
+        ));
   }
 }
-
-

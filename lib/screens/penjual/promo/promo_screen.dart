@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:umik/screens/penjual/promo/components/body.dart';
 import 'package:umik/screens/penjual/promo/components/seller_promo_button.dart';
 
+import '../../../constants.dart';
+
 class SellerPromoScreen extends StatelessWidget {
   const SellerPromoScreen({super.key});
 
@@ -16,7 +18,7 @@ class SellerPromoScreen extends StatelessWidget {
         elevation: 20,
       ),
       body: SellerPromo(),
-      floatingActionButton: const PromoButton(),
+      bottomNavigationBar: const PromoButton(),
     );
   }
 }
