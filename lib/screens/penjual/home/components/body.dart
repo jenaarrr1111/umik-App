@@ -86,27 +86,25 @@ class SellerBody extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 15),
-        Expanded(
-          child: GridView.builder(
-              padding: const EdgeInsets.all(0),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 2 / 3.1,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-              itemCount: dataProduk.length,
-              itemBuilder: (_, index) {
-                return SellerMenuGridView(
-                  namaMenu: dataProduk[index]['nama_menu'].toString(),
-                  thumbnail: dataProduk[index]['thumbnail'].toString(),
-                  harga: dataProduk[index]['harga'].toString(),
-                  keterangan: dataProduk[index]['keterangan'].toString(),
-                );
-              }),
-        )
+        GridView.builder(
+            padding: const EdgeInsets.all(0),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              childAspectRatio: 2 / 3.3,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+            ),
+            itemCount: dataProduk.length,
+            itemBuilder: (_, index) {
+              return SellerMenuGridView(
+                namaMenu: dataProduk[index]['nama_menu'].toString(),
+                thumbnail: dataProduk[index]['thumbnail'].toString(),
+                harga: dataProduk[index]['harga'].toString(),
+                keterangan: dataProduk[index]['keterangan'].toString(),
+              );
+            }),
       ],
     );
   }
