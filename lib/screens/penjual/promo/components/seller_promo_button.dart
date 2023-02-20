@@ -26,6 +26,9 @@ class PromoButton extends StatelessWidget {
           ),
         ),
       ),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.yellow),
+      ),
     );
   }
 }
