@@ -44,17 +44,22 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
+          //Username
           buildUsernameFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
+          //Name
           buildNameFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
+          //Email
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
+          //Password
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          // buildConformPassFormField(),
+          // form Error
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
+          //Button Sign Up
           DefaultButton(
             text: "Sign Up",
             press: () {
@@ -66,6 +71,7 @@ class _SignUpFormState extends State<SignUpForm> {
             },
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
+          //Sign Up With Google
           Row(
             children: [
               Expanded(
@@ -105,6 +111,7 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  //field Username
   TextFormField buildUsernameFormField() {
     return TextFormField(
       onSaved: (newValue) => username = newValue,
@@ -122,10 +129,7 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       decoration: InputDecoration(
-        // labelText: "Username",
         hintText: "Username",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
         contentPadding:
@@ -134,6 +138,7 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  //field Name
   TextFormField buildNameFormField() {
     return TextFormField(
       onSaved: (newValue) => name = newValue,
@@ -151,10 +156,7 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       decoration: InputDecoration(
-        // labelText: "Name",
         hintText: "Name",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
         contentPadding:
@@ -163,6 +165,7 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  //field Password
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
@@ -186,10 +189,7 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       decoration: InputDecoration(
-        // labelText: "Password",
         hintText: "Password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
         contentPadding:
@@ -198,6 +198,7 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  //field Email
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -221,10 +222,7 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       decoration: InputDecoration(
-        // labelText: "Email",
         hintText: "Email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
         contentPadding:

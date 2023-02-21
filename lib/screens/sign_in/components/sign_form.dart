@@ -43,12 +43,16 @@ class _SignFormState extends State<SignForm> {
       key: _formKey,
       child: Column(
         children: [
+          //Email
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(35)),
+
+          //Password
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(15)),
           Row(
             children: [
+              //Lups Password
               Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
@@ -63,6 +67,7 @@ class _SignFormState extends State<SignForm> {
               )
             ],
           ),
+          //Form Error
           SizedBox(height: getProportionateScreenHeight(45)),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(25)),
@@ -86,6 +91,8 @@ class _SignFormState extends State<SignForm> {
               SizedBox(height: getProportionateScreenHeight(45)),
             ],
           ),
+
+          //Button Sign in
           DefaultButton(
             text: "Sign In",
             press: () {
@@ -98,6 +105,8 @@ class _SignFormState extends State<SignForm> {
             },
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
+
+          //Sign in With google
           Row(
             children: [
               Expanded(
@@ -137,6 +146,7 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
+  //field Password
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
@@ -160,10 +170,7 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: InputDecoration(
-        // labelText: "Password",
         hintText: "Password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
         contentPadding:
@@ -172,6 +179,7 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
+  //field Email
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -195,10 +203,7 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: InputDecoration(
-        // labelText: "Email",
         hintText: "Email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
         contentPadding:

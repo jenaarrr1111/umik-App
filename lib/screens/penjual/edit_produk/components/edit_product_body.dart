@@ -17,6 +17,16 @@ class _EditProductBodyState extends State<EditProductBody> {
   var hargaController = TextEditingController();
   var stokController = TextEditingController();
 
+  final namaProdukLength = 255;
+  final deskripsiLength = 3000;
+  final hargaLength = 100;
+  final stokLength = 300;
+
+  var textNamaProdukLength = 0;
+  var textDeskripsiLength = 0;
+  var textHargaLength = 0;
+  var textStokLength = 0;
+
   static const List<String> kategoriList = [
     'Kategori 1',
     'Kategori 2',
@@ -92,9 +102,22 @@ class _EditProductBodyState extends State<EditProductBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 10),
-                    child: Text('Nama Produk',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text('Nama Produk',
+                              style: Theme.of(context).textTheme.titleLarge),
+                        ),
+                        Text(
+                            '${textNamaProdukLength.toString()}/${namaProdukLength.toString()}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(color: kTextSecondColor)),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
@@ -115,8 +138,15 @@ class _EditProductBodyState extends State<EditProductBody> {
                       errorBorder: InputBorder.none,
                       hintText: 'Masukkan nama produk',
                       filled: true,
+                      counterText: '',
                     ),
                     style: Theme.of(context).textTheme.titleMedium,
+                    maxLength: namaProdukLength,
+                    onChanged: (value) {
+                      setState(() {
+                        textNamaProdukLength = value.length;
+                      });
+                    },
                     validator: (value) => value!.isEmpty
                         ? 'Nama produk tidak boleh kososng!'
                         : null,
@@ -133,9 +163,22 @@ class _EditProductBodyState extends State<EditProductBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 10),
-                    child: Text('Deskripsi Produk',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text('Deskripsi Produk',
+                              style: Theme.of(context).textTheme.titleLarge),
+                        ),
+                        Text(
+                            '${textDeskripsiLength.toString()}/${deskripsiLength.toString()}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(color: kTextSecondColor)),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
@@ -156,8 +199,15 @@ class _EditProductBodyState extends State<EditProductBody> {
                       errorBorder: InputBorder.none,
                       hintText: 'Masukkan deskripsi produk',
                       filled: true,
+                      counterText: '',
                     ),
                     style: Theme.of(context).textTheme.titleMedium,
+                    maxLength: deskripsiLength,
+                    onChanged: (value) {
+                      setState(() {
+                        textDeskripsiLength = value.length;
+                      });
+                    },
                     validator: (value) => value!.isEmpty
                         ? 'Deskripsi produk tidak boleh kososng!'
                         : null,
@@ -174,8 +224,8 @@ class _EditProductBodyState extends State<EditProductBody> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10, right: 10, left: 20),
+                    padding:
+                        const EdgeInsets.only(top: 10, right: 10, left: 20),
                     child: Text('Kategori',
                         style: Theme.of(context).textTheme.titleLarge),
                   ),
@@ -213,9 +263,22 @@ class _EditProductBodyState extends State<EditProductBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 10),
-                    child: Text('Harga',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text('Harga',
+                              style: Theme.of(context).textTheme.titleLarge),
+                        ),
+                        Text(
+                            '${textHargaLength.toString()}/${hargaLength.toString()}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(color: kTextSecondColor)),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
@@ -236,8 +299,15 @@ class _EditProductBodyState extends State<EditProductBody> {
                       errorBorder: InputBorder.none,
                       hintText: 'Masukkan harga',
                       filled: true,
+                      counterText: '',
                     ),
                     style: Theme.of(context).textTheme.titleMedium,
+                    maxLength: hargaLength,
+                    onChanged: (value) {
+                      setState(() {
+                        textHargaLength = value.length;
+                      });
+                    },
                     validator: (value) =>
                         value!.isEmpty ? 'Harga tidak boleh kososng!' : null,
                   ),
@@ -253,9 +323,22 @@ class _EditProductBodyState extends State<EditProductBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 10),
-                    child: Text('Stok',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text('Stok',
+                              style: Theme.of(context).textTheme.titleLarge),
+                        ),
+                        Text(
+                            '${textStokLength.toString()}/${stokLength.toString()}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(color: kTextSecondColor)),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
@@ -276,8 +359,15 @@ class _EditProductBodyState extends State<EditProductBody> {
                       errorBorder: InputBorder.none,
                       hintText: 'Masukkan jumlah stok',
                       filled: true,
+                      counterText: '',
                     ),
                     style: Theme.of(context).textTheme.titleMedium,
+                    maxLength: stokLength,
+                    onChanged: (value) {
+                      setState(() {
+                        textStokLength = value.length;
+                      });
+                    },
                     validator: (value) =>
                         value!.isEmpty ? 'Stok boleh kososng!' : null,
                   ),
@@ -314,4 +404,3 @@ class _EditProductBodyState extends State<EditProductBody> {
     );
   }
 }
-

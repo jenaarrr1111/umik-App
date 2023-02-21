@@ -12,6 +12,7 @@ const kPrimaryGradientColor = LinearGradient(
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color.fromARGB(255, 0, 0, 0);
 const kTextSecondColor = Color(0xFF757575);
+const KBgColor = Color(0xFFD9D9D9);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 

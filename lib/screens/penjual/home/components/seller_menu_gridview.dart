@@ -44,7 +44,8 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
               child: PopupMenuButton<String>(
                 onSelected: (value) {
                   if (value == 'Edit') {
-                    Navigator.pushNamed(context, SellerEditProductScreen.routeName);
+                    Navigator.pushNamed(
+                        context, SellerEditProductScreen.routeName);
                     print(context);
                   } else if (value == 'Hapus') {
                     print(context);
@@ -83,8 +84,8 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
             ? Text(widget.keterangan,
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium
-                    !.copyWith(color: kTextSecondColor))
+                    .titleMedium!
+                    .copyWith(color: kTextSecondColor))
             : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
         const SizedBox(height: 5),
         Text(widget.harga, style: Theme.of(context).textTheme.titleMedium),

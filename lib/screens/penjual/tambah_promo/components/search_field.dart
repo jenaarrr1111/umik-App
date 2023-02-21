@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:umik/screens/home/components/icon_btn_with_counter.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
-import '../../cart/cart_screen.dart';
+import '../../../../constants.dart';
+import '../../../../size_config.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({
@@ -13,7 +12,6 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: SizeConfig.screenWidth * 0.78,
       decoration: BoxDecoration(
         color: kSecondaryColor.withOpacity(0.4),
         borderRadius: BorderRadius.circular(15),
@@ -21,9 +19,6 @@ class SearchField extends StatelessWidget {
       child: TextField(
         onChanged: (value) => print(value),
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-              vertical: getProportionateScreenWidth(15),
-            ),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,

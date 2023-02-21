@@ -5,6 +5,9 @@ import 'package:umik/screens/details/details_screen.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
 import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/penjual/promo/promo_screen.dart';
+import 'package:umik/screens/promo/promo_screen.dart';
+import 'package:umik/screens/penjual/tambah_promo/add_promo_screen.dart';
+import 'package:umik/screens/penjual/pilih_menu/pilih_menu_screen.dart';
 import 'package:umik/screens/otp/otp_screen.dart';
 import 'package:umik/screens/penjual/seller_address/seller_address_screen.dart';
 import 'package:umik/screens/penjual/seller_email/seller_email_screen.dart';
@@ -13,7 +16,8 @@ import 'package:umik/screens/penjual/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_rute/seller_rute.dart';
 import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
 import 'package:umik/screens/penjual/tambah_produk/seller_add_product.dart';
-import 'package:umik/screens/profile/components/nama/nama_screen.dart';
+import 'package:umik/screens/profile/nama/nama_screen.dart';
+import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/profile/profile_screen.dart';
 import 'package:umik/screens/rute/rute.dart';
 import 'package:umik/screens/sign_in/sign_in_screen.dart';
@@ -40,6 +44,7 @@ final Map<String, WidgetBuilder> routes = {
   //profile
   ProfileScreen.routeName: (context) => ProfileScreen(),
   NamaScreen.routeName: (context) => NamaScreen(),
+  HpScreen.routeName: (context) => HpScreen(),
 
   //penjual
   SellerWelcomeScreen.routeName: (context) => SellerWelcomeScreen(),
@@ -48,7 +53,10 @@ final Map<String, WidgetBuilder> routes = {
   SellerEmailScreen.routeName: (context) => SellerEmailScreen(),
   SellerHomeScreen.routeName: (context) => SellerHomeScreen(),
   SellerPromoScreen.routeName: (context) => SellerPromoScreen(),
+  SellerAddPromoScreen.routeName: (context) => SellerAddPromoScreen(),
+  SellerCreatePromoScreen.routeName: (context) => SellerCreatePromoScreen(),
   SellerAddProductScreen.routeName: (context) => SellerAddProductScreen(),
   SellerEditProductScreen.routeName: (context) => SellerEditProductScreen(),
+  SellerPromoScreenUser.routeName: (context) => SellerPromoScreenUser(),
   SellerRute.routeName: (context) => SellerRute(),
 };

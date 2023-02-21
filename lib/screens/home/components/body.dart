@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
 import '../../../size_config.dart';
+import '../../promo/promo_screen.dart';
 import 'categories.dart';
 import 'discount_banner.dart';
 import 'home_header.dart';
-import 'popular_product.dart';
-import 'special_offers.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -18,25 +17,46 @@ class Body extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(20)),
             HomeHeader(),
             SizedBox(height: getProportionateScreenHeight(20)),
-            Text(
-              "Promo Untukmu",
-              style: heading1Style,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  "Promo Untukmu",
+                  style: heading1Style,
+                  // textAlign: TextAlign.left,
+                ),
+              ),
             ),
             DiscountBanner(),
             GestureDetector(
-              onTap: () {},
-              child: Text(
-                "Show more >>",
-                style: TextStyle(
-                  color: Colors.lightBlue,
+              onTap: () => {
+                Navigator.pushNamed(context, SellerPromoScreenUser.routeName),
+              },
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    "Show more >>",
+                    style: TextStyle(
+                      color: Colors.lightBlue,
+                    ),
+                  ),
                 ),
               ),
             ),
             SizedBox(height: getProportionateScreenHeight(20)),
-            Text(
-              "Kategori",
-              textAlign: TextAlign.start,
-              style: heading1Style,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  "Kategori",
+                  textAlign: TextAlign.start,
+                  style: heading1Style,
+                ),
+              ),
             ),
 
             Categories(),

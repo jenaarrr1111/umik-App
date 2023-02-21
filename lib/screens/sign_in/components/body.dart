@@ -17,19 +17,9 @@ class Body extends StatelessWidget {
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.01),
                 Text("Sign In", style: headingStyle),
-
                 SizedBox(height: SizeConfig.screenHeight * 0.09),
                 SignForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.05),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     SocalCard(
-                //       icon: "assets/icons/google-icon.svg",
-                //       press: () {},
-                //     ),
-                //   ],
-                // ),
                 SizedBox(height: getProportionateScreenHeight(100)),
               ],
             ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class SplashContent extends StatelessWidget {
@@ -15,19 +14,19 @@ class SplashContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        //Logo Umik
         Spacer(),
-        Text(
-          "UMIK",
-          style: TextStyle(
-            fontSize: getProportionateScreenWidth(25),
-            color: kPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
+        Image.asset(
+          "assets/images/umik.png",
         ),
+
+        //Text title
         Text(
           text!,
           textAlign: TextAlign.center,
         ),
+
+        //Gambar/foto
         Spacer(flex: 2),
         Image.asset(
           image!,
