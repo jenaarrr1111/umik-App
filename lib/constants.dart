@@ -25,6 +25,7 @@ final headingStyle = TextStyle(
 
 final heading1Style = TextStyle(
   fontSize: getProportionateScreenWidth(20),
+  fontFamily: 'Poppins',
   fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,

@@ -5,6 +5,9 @@ import 'package:umik/screens/details/details_screen.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
 import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/penjual/promo/promo_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/no_handphone/hp_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/seller_profile_screen.dart';
 import 'package:umik/screens/promo/promo_screen.dart';
 import 'package:umik/screens/penjual/tambah_promo/add_promo_screen.dart';
 import 'package:umik/screens/penjual/pilih_menu/pilih_menu_screen.dart';
@@ -59,4 +62,7 @@ final Map<String, WidgetBuilder> routes = {
   SellerEditProductScreen.routeName: (context) => SellerEditProductScreen(),
   SellerPromoScreenUser.routeName: (context) => SellerPromoScreenUser(),
   SellerRute.routeName: (context) => SellerRute(),
+  SellerProfileScreen.routeName: (context) => SellerProfileScreen(),
+  SellerNamaScreen.routeName: (context) => SellerNamaScreen(),
+  SellerHpScreen.routeName: (context) => SellerHpScreen(),
 };
