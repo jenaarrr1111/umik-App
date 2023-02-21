@@ -1,67 +1,52 @@
-import 'dart:ui';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../size_config.dart';
+import 'package:http/http.dart' as http;
+import 'package:umik/size_config.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
 
-  _Categories createState() => _Categories();
+  @override
+  State<Categories> createState() => _CategoriesState();
 }
 
-class _Categories extends State<Categories> {
-  List<Map<String, dynamic>> categories = [
-    {
-      "icon": "assets/images/KMinuman.png",
-      "title": "Minuman",
-      "subtitle": "",
-      "value": "1",
-    },
-    {
-      "icon": "assets/images/KJajanan.png",
-      "title": "Jajanan",
-      "subtitle": "",
-      "value": "2",
-    },
-    {
-      "icon": "assets/images/KCepatsaji.png",
-      "title": "Cepat saji",
-      "subtitle": "",
-      "value": "3",
-    },
-    {
-      "icon": "assets/images/KNasi.png",
-      "title": "Aneka nasi",
-      "subtitle": "",
-      "value": "4",
-    },
-    {
-      "icon": "assets/images/KRoti.png",
-      "title": "Roti",
-      "subtitle": "",
-      "value": "5",
-    },
-    {
-      "icon": "assets/images/KKopi.png",
-      "title": "Kopi",
-      "subtitle": "",
-      "value": "6",
-    },
-    {
-      "icon": "assets/images/KSeafood.png",
-      "title": "Seafood",
-      "subtitle": "",
-      "value": "7",
-    },
-    {
-      "icon": "assets/images/KBakmie.png",
-      "title": "Bakmie",
-      "subtitle": "",
-      "value": "8",
-    },
+class _CategoriesState extends State<Categories> {
+  List<String> imgPath = [
+    "assets/images/KMinuman.png",
+    "assets/images/KJajanan.png",
+    "assets/images/KCepatsaji.png",
+    "assets/images/KNasi.png",
+    "assets/images/KRoti.png",
+    "assets/images/KKopi.png",
+    "assets/images/KSeafood.png",
+    "assets/images/KBakmie.png",
   ];
+
+  List<dynamic> _getCategories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  Future _getData() async {
+    try {
+      final response =
+          await http.get(Uri.parse("http://umik.test/api/categories"));
+
+      // if response successful
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body)['data'];
+        setState(() {
+          _getCategories = data;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +55,16 @@ class _Categories extends State<Categories> {
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.start,
         children: List.generate(
-          categories.length,
+          imgPath.length,
           (index) => CategoryCard(
-            icon: categories[index]["icon"],
-            text: categories[index]["title"],
+            icon: imgPath[index],
+            text: _getCategories.isNotEmpty
+                ? _getCategories[index]
+                : 'loading...',
             press: () {
               // if (index == 1) Navigator.pop(context);
+              // Navigator.pushNamed(context, _getCategories[index]);
+              print('fuck');
             },
           ),
         ),
@@ -108,12 +97,12 @@ class CategoryCard extends StatelessWidget {
               height: getProportionateScreenWidth(49),
               width: getProportionateScreenWidth(52),
               decoration: BoxDecoration(
-                color: Color(0xFFFFECDF),
+                color: const Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Image.asset(icon!),
             ),
-            SizedBox(height: 7),
+            const SizedBox(height: 7),
             Text(
               text!,
               textAlign: TextAlign.center,
@@ -122,7 +111,7 @@ class CategoryCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         ),
       ),
