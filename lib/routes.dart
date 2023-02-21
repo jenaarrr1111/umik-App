@@ -7,7 +7,7 @@ import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/penjual/promo/promo_screen.dart';
 import 'package:umik/screens/promo/promo_screen.dart';
 import 'package:umik/screens/penjual/tambah_promo/add_promo_screen.dart';
-import 'package:umik/screens/penjual/buat_promo/create_promo_screen.dart';
+import 'package:umik/screens/penjual/pilih_menu/pilih_menu_screen.dart';
 import 'package:umik/screens/otp/otp_screen.dart';
 import 'package:umik/screens/penjual/seller_address/seller_address_screen.dart';
 import 'package:umik/screens/penjual/seller_email/seller_email_screen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
-import 'package:umik/screens/penjual/buat_promo/components/widget_item_produk.dart';
+import 'package:umik/screens/penjual/pilih_menu/components/widget_item_produk.dart';
 
 class SellerPromo extends StatefulWidget {
   const SellerPromo({super.key});

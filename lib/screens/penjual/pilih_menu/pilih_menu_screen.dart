@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:umik/screens/penjual/buat_promo/components/body.dart';
-import 'package:umik/screens/penjual/buat_promo/components/seller_promo_button.dart';
+import 'package:umik/screens/penjual/pilih_menu/components/body.dart';
+import 'package:umik/screens/penjual/pilih_menu/components/seller_promo_button.dart';
 
 class SellerCreatePromoScreen extends StatelessWidget {
   const SellerCreatePromoScreen({super.key});
 
-  static String routeName = "/create_promo";
+  static String routeName = "/pilih_menu";
 
   @override
   Widget build(BuildContext context) {

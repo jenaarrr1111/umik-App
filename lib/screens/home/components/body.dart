@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
 import '../../../size_config.dart';
+import '../../promo/promo_screen.dart';
 import 'categories.dart';
 import 'discount_banner.dart';
 import 'home_header.dart';
@@ -29,7 +30,9 @@ class Body extends StatelessWidget {
             ),
             DiscountBanner(),
             GestureDetector(
-              onTap: () {},
+              onTap: () => {
+                Navigator.pushNamed(context, SellerPromoScreenUser.routeName),
+              },
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
