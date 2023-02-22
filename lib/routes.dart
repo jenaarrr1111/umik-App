@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:umik/screens/cart/cart_screen.dart';
 import 'package:umik/screens/complete_profile/complete_profile_screen.dart';
+import 'package:umik/screens/daftar_produk/daftar_produk_screen.dart';
+import 'package:umik/screens/daftar_umkm/daftar_umkm_screen.dart';
 import 'package:umik/screens/details/details_screen.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
 import 'package:umik/screens/home/home_screen.dart';
@@ -40,6 +42,8 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   UserRute.routeName: (context) => UserRute(),
+  DaftarUmkmScreen.routeName: (context) => DaftarUmkmScreen(),
+  DaftarProdukScreen.routeName: (context) => DaftarProdukScreen(),
 
   //profile
   ProfileScreen.routeName: (context) => ProfileScreen(),

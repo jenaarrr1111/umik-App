@@ -62,9 +62,9 @@ class _CategoriesState extends State<Categories> {
                 ? _getCategories[index]
                 : 'loading...',
             press: () {
-              // if (index == 1) Navigator.pop(context);
-              // Navigator.pushNamed(context, _getCategories[index]);
-              print('fuck');
+              Navigator.pushNamed(context, '/daftar_umkm', arguments: {
+                'title': _getCategories[index],
+              });
             },
           ),
         ),

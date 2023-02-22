@@ -27,15 +27,16 @@ class HomeHeader extends StatelessWidget {
         ),
         SizedBox(height: getProportionateScreenHeight(80)),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: const SearchField(),
-              ),
-            ),
+            const SearchField(),
+            // const Align(
+            //   alignment: Alignment.centerLeft,
+            // child: Padding(
+            //   padding: const EdgeInsets.only(left: 30),
+            //   child: const SearchField(),
+            // ),
+            // ),
             // IconBtnWithCounter(
             //   svgSrc: "assets/icons/Cart Icon.svg",
             //   press: () => Navigator.pushNamed(context, CartScreen.routeName),
