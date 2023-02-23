@@ -59,6 +59,7 @@ class SellerBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.vertical,
+      addAutomaticKeepAlives: false,
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
       children: [
         Row(
