@@ -1,4 +1,4 @@
-import 'package:umik/screens/penjual/pilih_menu/components/seller_promo_listview.dart';
+import 'package:umik/screens/penjual/tambah_promo/components/seller_promo_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
+import '../../pilih_menu/pilih_menu_screen.dart';
+
 class PromoButton extends StatelessWidget {
   const PromoButton({super.key});
 
@@ -11,7 +13,9 @@ class PromoButton extends StatelessWidget {
       child: SizedBox(
         width: double.infinity, // set width to match the parent
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () => {
+            Navigator.pushNamed(context, SellerPilihMenuScreen.routeName),
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: kPrimaryColor,
             padding: const EdgeInsets.symmetric(vertical: 15),

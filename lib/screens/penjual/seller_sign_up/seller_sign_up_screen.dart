@@ -10,6 +10,7 @@ import 'package:umik/theme.dart';
 
 import '../../../components/rectangle_bottom_first.dart';
 import '../../../components/rectangle_bottom_second.dart';
+import '../seller_profile/seller_profile_screen.dart';
 import '../seller_welcome/seller_welcome_screen.dart';
 
 class SellerSignUpScreen extends StatelessWidget {
@@ -26,21 +27,23 @@ class SellerSignUpScreen extends StatelessWidget {
               "Atur Informasi UMKM",
               style: TextStyle(color: Colors.black),
             ),
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  child: Text("Atur Informasi UMKM",
-                      style:
-                          TextStyle(fontFamily: "Barlow", color: Colors.black)),
-                ),
-                Tab(
-                  child: Text(
-                    "Upload Produk",
-                    style: TextStyle(fontFamily: "Barlow", color: Colors.black),
-                  ),
-                ),
-              ],
-            ),
+            shadowColor: Colors.black45,
+            elevation: 20,
+            // bottom: TabBar(
+            //   tabs: [
+            //     Tab(
+            //       child: Text("Atur Informasi UMKM",
+            //           style:
+            //               TextStyle(fontFamily: "Barlow", color: Colors.black)),
+            //     ),
+            //     Tab(
+            //       child: Text(
+            //         "Upload Produk",
+            //         style: TextStyle(fontFamily: "Barlow", color: Colors.black),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ),
           body: const Body(),
           bottomNavigationBar: Padding(
@@ -56,11 +59,12 @@ class SellerSignUpScreen extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.all(5),
                     child: RectangleSecond(
-                        text: "Kembali",
-                        press: () {
-                          Navigator.pushNamed(
-                              context, SellerWelcomeScreen.routeName);
-                        }),
+                      text: "Kembali",
+                      press: () {
+                        Navigator.pushNamed(
+                            context, SellerWelcomeScreen.routeName);
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
@@ -68,7 +72,10 @@ class SellerSignUpScreen extends StatelessWidget {
                     margin: EdgeInsets.all(5),
                     child: RectangleFirst(
                       text: "Kirim",
-                      press: () {},
+                      press: () {
+                        Navigator.pushNamed(
+                            context, SellerProfileScreen.routeName);
+                      },
                     ),
                   ),
                 )

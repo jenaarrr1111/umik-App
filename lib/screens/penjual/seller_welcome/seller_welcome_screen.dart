@@ -19,6 +19,8 @@ class SellerWelcomeScreen extends StatelessWidget {
             "Selamat Datang ke UMIK",
             style: TextStyle(color: Colors.black),
           ),
+          shadowColor: Colors.black45,
+          elevation: 20,
         ),
         body: const Body(),
         bottomNavigationBar: Padding(

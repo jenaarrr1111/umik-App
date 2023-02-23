@@ -11,7 +11,7 @@ class SellerAddPromoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pilih Menu'),
+        title: const Text('Buat Promo'),
         shadowColor: Colors.black45,
         elevation: 20,
       ),

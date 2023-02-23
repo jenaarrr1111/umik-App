@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
+import '../../tambah_promo/add_promo_screenA.dart';
+
 class PromoButton extends StatelessWidget {
   const PromoButton({super.key});
 
@@ -11,7 +13,9 @@ class PromoButton extends StatelessWidget {
       child: SizedBox(
         width: double.infinity, // set width to match the parent
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () => {
+            Navigator.pushNamed(context, SellerAddPromoScreen.routeName),
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: kPrimaryColor,
             padding: const EdgeInsets.symmetric(vertical: 15),
@@ -20,7 +24,7 @@ class PromoButton extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Simpan',
+            'Lanjut',
             style:
                 Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 14),
           ),

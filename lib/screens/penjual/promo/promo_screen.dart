@@ -3,6 +3,7 @@ import 'package:umik/screens/penjual/promo/components/body.dart';
 import 'package:umik/screens/penjual/promo/components/seller_promo_button.dart';
 
 import '../../../constants.dart';
+import '../home/home_screen.dart';
 
 class SellerPromoScreen extends StatelessWidget {
   const SellerPromoScreen({super.key});
@@ -14,6 +15,12 @@ class SellerPromoScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Promo'),
+        leading: IconButton(
+          onPressed: () => {
+            Navigator.pushNamed(context, SellerHomeScreen.routeName),
+          },
+          icon: Icon(Icons.arrow_back_rounded),
+        ),
         shadowColor: Colors.black45,
         elevation: 20,
       ),

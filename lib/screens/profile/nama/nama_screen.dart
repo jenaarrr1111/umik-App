@@ -20,6 +20,8 @@ class NamaScreen extends StatelessWidget {
             fontSize: 20,
           ),
         ),
+        shadowColor: Colors.black45,
+        elevation: 20,
         actions: <Widget>[
           TextButton(
             onPressed: () => {

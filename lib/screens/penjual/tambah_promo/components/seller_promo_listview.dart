@@ -33,7 +33,6 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
                 height: 100.0,
                 child: Image.asset(
                   widget.thumbnail,
-                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -46,18 +45,10 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
                 children: [
                   Text(
                     widget.namaMenu,
-                    textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  SizedBox(
-                    height: 9, // <-- SEE HERE
-                  ),
                   Text(widget.harga,
-                      textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.titleSmall),
-                  SizedBox(
-                    height: 9, // <-- SEE HERE
-                  ),
                 ],
               ),
             ),
@@ -67,7 +58,8 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
                 icon: isOn
                     ? const Icon(Icons.check_circle_rounded,
                         color: kPrimaryColor)
-                    : const Icon(Icons.check_circle_rounded),
+                    : const Icon(Icons.check_circle_rounded,
+                        color: kPrimaryColor),
                 onPressed: () {
                   setState(() {
                     isOn = !isOn;
