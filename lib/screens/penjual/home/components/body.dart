@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:umik/screens/penjual/home/components/seller_menu_gridview.dart';
 
 class SellerBody extends StatelessWidget {
@@ -83,25 +84,23 @@ class SellerBody extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 20),
-        GridView.builder(
-            addAutomaticKeepAlives: false,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 2 / 3.3,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 10,
-            ),
-            itemCount: dataProduk.length,
-            itemBuilder: (_, int index) {
-              return SellerMenuGridView(
-                namaMenu: dataProduk[index]['nama_menu'].toString(),
-                thumbnail: dataProduk[index]['thumbnail'].toString(),
-                harga: dataProduk[index]['harga'].toString(),
-                keterangan: dataProduk[index]['keterangan'].toString(),
-              );
-            }),
+        AlignedGridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 30,
+          crossAxisSpacing: 20,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          addAutomaticKeepAlives: false,
+          itemCount: dataProduk.length,
+          itemBuilder: (context, index) {
+            return SellerMenuGridView(
+              namaMenu: dataProduk[index]['nama_menu'].toString(),
+              thumbnail: dataProduk[index]['thumbnail'].toString(),
+              harga: dataProduk[index]['harga'].toString(),
+              keterangan: dataProduk[index]['keterangan'].toString(),
+            );
+          },
+        ),
       ],
     );
   }

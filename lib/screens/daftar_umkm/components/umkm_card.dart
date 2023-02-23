@@ -41,13 +41,16 @@ class _UmkmCardState extends State<UmkmCard> {
 
   @override
   Widget build(BuildContext context) {
+    if (_getUmkmWithCategories.isEmpty) {
+      return const Text('Tidak ada toko.', textAlign: TextAlign.center);
+    }
+
     return Column(
       children: _getUmkmWithCategories.isNotEmpty
           ? List.generate(
               _getUmkmWithCategories.length,
               (index) {
-                String idUmkm =
-                    _getUmkmWithCategories[index]!['id_umkm'].toString();
+                int idUmkm = _getUmkmWithCategories[index]!['id_umkm'];
                 String namaUmkm = _getUmkmWithCategories[index]!['nama_umkm'];
                 String kategoriConcat =
                     _getUmkmWithCategories[index]!['kategori_concat'];

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:umik/constants.dart';
 import 'package:umik/screens/cart/cart_screen.dart';
-
-import '../../../size_config.dart';
-import 'icon_btn_with_counter.dart';
-import 'search_field.dart';
+import 'package:umik/screens/home/components/search_field.dart';
+import 'package:umik/size_config.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -29,11 +26,11 @@ class HomeHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: const SearchField(),
+                padding: EdgeInsets.only(left: 30),
+                child: SearchField(),
               ),
             ),
             // IconBtnWithCounter(
