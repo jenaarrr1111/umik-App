@@ -19,6 +19,8 @@ class SellerAddressScreen extends StatelessWidget {
             "Alamat Baru",
             style: TextStyle(color: Colors.black),
           ),
+          shadowColor: Colors.black45,
+          elevation: 20,
         ),
         body: Body(),
         bottomNavigationBar: Padding(

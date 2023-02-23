@@ -29,9 +29,16 @@ class _SellerAddressFormState extends State<SellerAddressForm> {
         children: [
           Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                "Alamat Toko",
-                style: TextStyle(fontSize: 16),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  "Alamat Toko",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               )),
           form(),
         ],

@@ -382,8 +382,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
         style: TextButton.styleFrom(
           foregroundColor: kTextColor,
           padding: const EdgeInsets.all(30),
-          // shape:
-          // RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          textStyle: Theme.of(context).textTheme.titleLarge,
           backgroundColor: KBgColor,
         ),
         onPressed: press,
