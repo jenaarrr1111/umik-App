@@ -77,28 +77,24 @@ class SellerBody extends StatelessWidget {
             Text('4.8', style: Theme.of(context).textTheme.headlineMedium),
           ],
         ),
+        const SizedBox(height: 3),
         Text(
           'Jajanan',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
-        const SizedBox(height: 15),
-        Text(
-          'Recomended',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 20),
         GridView.builder(
-            padding: const EdgeInsets.all(0),
+            addAutomaticKeepAlives: false,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
               childAspectRatio: 2 / 3.3,
               crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
+              mainAxisSpacing: 10,
             ),
             itemCount: dataProduk.length,
-            itemBuilder: (_, index) {
+            itemBuilder: (_, int index) {
               return SellerMenuGridView(
                 namaMenu: dataProduk[index]['nama_menu'].toString(),
                 thumbnail: dataProduk[index]['thumbnail'].toString(),

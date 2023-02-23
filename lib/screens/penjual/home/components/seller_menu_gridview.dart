@@ -75,9 +75,7 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         Text(widget.namaMenu, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 5),
         widget.keterangan != 'null' // render keterangan klo ada
