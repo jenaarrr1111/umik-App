@@ -46,18 +46,19 @@ class _UmkmCardState extends State<UmkmCard> {
           ? List.generate(
               _getUmkmWithCategories.length,
               (index) {
-                String idUmkm = _getUmkmWithCategories[index]!['id_umkm'];
+                String idUmkm =
+                    _getUmkmWithCategories[index]!['id_umkm'].toString();
                 String namaUmkm = _getUmkmWithCategories[index]!['nama_umkm'];
-                String kategori =
+                String kategoriConcat =
                     _getUmkmWithCategories[index]!['kategori_concat'];
-                kategori = kategori.split(',').join(', ');
+                kategoriConcat = kategoriConcat.split(',').join(', ');
 
                 return GestureDetector(
                   onTap: () => {
                     Navigator.pushNamed(context, '/daftar_produk', arguments: {
                       'idUmkm': idUmkm,
                       'namaUmkm': namaUmkm,
-                      'kategori': kategori,
+                      'kategori': kategoriConcat,
                     })
                   },
                   child: Padding(
@@ -67,7 +68,7 @@ class _UmkmCardState extends State<UmkmCard> {
                       children: [
                         Text(namaUmkm,
                             style: Theme.of(context).textTheme.titleMedium),
-                        Text(kategori,
+                        Text(kategoriConcat,
                             style: Theme.of(context).textTheme.labelSmall),
                         const Divider(),
                         Text('Diantar dalam 25 menit - 1,5 km',

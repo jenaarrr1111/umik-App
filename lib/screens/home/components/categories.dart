@@ -55,18 +55,20 @@ class _CategoriesState extends State<Categories> {
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.start,
         children: List.generate(
-          imgPath.length,
-          (index) => CategoryCard(
-            icon: imgPath[index],
-            text: _getCategories.isNotEmpty
-                ? _getCategories[index]
-                : 'loading...',
-            press: () {
-              Navigator.pushNamed(context, '/daftar_umkm', arguments: {
-                'title': _getCategories[index],
-              });
-            },
-          ),
+          _getCategories.length,
+          (index) {
+            return CategoryCard(
+              icon: imgPath[index],
+              text: _getCategories.isNotEmpty
+                  ? _getCategories[index]
+                  : 'loading...',
+              press: () {
+                Navigator.pushNamed(context, '/daftar_umkm', arguments: {
+                  'title': _getCategories[index],
+                });
+              },
+            );
+          },
         ),
       ),
     );

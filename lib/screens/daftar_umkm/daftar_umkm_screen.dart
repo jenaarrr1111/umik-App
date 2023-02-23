@@ -44,8 +44,8 @@ class DaftarUmkmScreen extends StatelessWidget {
 
     // Ekstrak argumen dari pushedNamed navigotor
     final args = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    final kategori = args.isNotEmpty ? args['title'] : 'Roti';
+        <String, String>{}) as Map;
+    final String kategori = args.isNotEmpty ? args['title'] : 'Aneka Nasi';
 
     return Scaffold(
       body: Stack(
