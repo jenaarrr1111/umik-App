@@ -24,7 +24,7 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,19 +92,23 @@ class _SellerMenuGridViewState extends State<SellerMenuGridView> {
             Text(widget.harga, style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: IconButton(
-            padding: const EdgeInsets.only(right: 10),
-            iconSize: 45.0,
-            alignment: const Alignment(-1, 1),
-            icon: isOn
-                ? const Icon(Icons.toggle_on_rounded, color: kPrimaryColor)
-                : const Icon(Icons.toggle_off_rounded),
-            onPressed: () {
-              setState(() => isOn = !isOn);
-            },
-          ),
+        Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                padding: const EdgeInsets.all(0),
+                iconSize: 40.0,
+                alignment: Alignment.topRight,
+                icon: isOn
+                    ? const Icon(Icons.toggle_on_rounded, color: kPrimaryColor)
+                    : const Icon(Icons.toggle_off_rounded),
+                onPressed: () {
+                  setState(() => isOn = !isOn);
+                },
+              ),
+            ),
+          ],
         )
       ],
     );

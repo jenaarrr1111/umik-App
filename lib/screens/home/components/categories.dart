@@ -53,7 +53,7 @@ class _CategoriesState extends State<Categories> {
     if (_getCategories.isEmpty) {
       return const Padding(
         padding: EdgeInsets.all(20),
-        child: Text('Loading...'),
+        child: CircularProgressIndicator(),
       );
     }
 

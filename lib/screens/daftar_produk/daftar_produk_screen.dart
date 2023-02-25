@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:umik/constants.dart';
+import 'package:umik/services/storage_service.dart';
 
 class DaftarProdukScreen extends StatelessWidget {
   const DaftarProdukScreen({super.key});
@@ -94,17 +95,27 @@ class GridItemDaftarProduk extends StatefulWidget {
 
 class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
   List _productsOnUmkm = [];
+  final storage = StorageService();
 
-  Future _getData(String id) async {
+  Future<void> getUserTokenAndGetData() async {
+    try {
+      final String token = await storage.readSecureData('token') ?? '';
+      _getData(widget.idUmkm.toString(), token);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _getData(String id, String token) async {
     try {
       var url = 'http://umik.test/api/products/umkm/$id';
-      final response = await http.get(Uri.parse(url),
-          // TODO: Simpan BEARER TOKEN nya ke flutter_secure_storage
-          headers: {
-            'Accept': 'application/json',
-            'Authorization':
-                'Bearer 2|LxkuqlIq6sdAXGmLMMNkPTtO9oswJeEaZNbteb85',
-          });
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body)['data'];
         setState(() {
@@ -119,7 +130,8 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
   @override
   void initState() {
     super.initState();
-    _getData(widget.idUmkm.toString());
+    getUserTokenAndGetData();
+    // _getData(widget.idUmkm.toString());
   }
 
   @override
@@ -152,7 +164,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
         String harga = _productsOnUmkm[index]!['harga'];
 
         return GestureDetector(
-          onTap: () => {},
+          onTap: () {},
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

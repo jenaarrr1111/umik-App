@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:umik/services/storage_service.dart';
 
 class UmkmCard extends StatefulWidget {
   final String kategori;
@@ -17,17 +18,24 @@ class UmkmCard extends StatefulWidget {
 
 class _UmkmCardState extends State<UmkmCard> {
   List _getUmkmWithCategories = [];
+  final storage = StorageService();
+  // var userToken = '';
 
   Future _getData() async {
     try {
-      final response = await http
-          .get(Uri.parse('http://umik.test/api/categories/${widget.kategori}'));
+      final response = await http.get(
+        Uri.parse(
+          'http://umik.test/api/categories/${widget.kategori}',
+        ),
+        headers: {'Accept': 'application/json'},
+      );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body)['data'];
         setState(() {
           _getUmkmWithCategories = data;
         });
       }
+      return response;
     } catch (e) {
       print(e);
     }
@@ -57,27 +65,47 @@ class _UmkmCardState extends State<UmkmCard> {
                 kategoriConcat = kategoriConcat.split(',').join(', ');
 
                 return GestureDetector(
-                  onTap: () => {
+                  onTap: () {
                     Navigator.pushNamed(context, '/daftar_produk', arguments: {
                       'idUmkm': idUmkm,
                       'namaUmkm': namaUmkm,
                       'kategori': kategoriConcat,
-                    })
+                    });
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Text(namaUmkm,
-                            style: Theme.of(context).textTheme.titleMedium),
-                        Text(kategoriConcat,
-                            style: Theme.of(context).textTheme.labelSmall),
-                        const Divider(),
-                        Text('Diantar dalam 25 menit - 1,5 km',
-                            style: Theme.of(context).textTheme.bodyMedium),
-                        Text('Diskon xxxxxx',
-                            style: Theme.of(context).textTheme.bodyMedium),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            color: Colors.grey[100],
+                            height: 100,
+                            width: 100,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(namaUmkm,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
+                              Text(kategoriConcat,
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
+                              const Divider(),
+                              Text('Diantar dalam 25 menit - 1,5 km',
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                              Text('Diskon xxxxxx',
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

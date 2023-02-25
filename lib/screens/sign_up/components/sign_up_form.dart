@@ -1,17 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:umik/components/custom_surfix_icon.dart';
 import 'package:umik/components/default_button.dart';
 import 'package:umik/components/form_error.dart';
-
-import '../../../components/second_button.dart';
-import '../../../constants.dart';
-import '../../../helper/keyboard.dart';
-import '../../../size_config.dart';
-import '../../sign_in/sign_in_screen.dart';
+import 'package:umik/components/second_button.dart';
+import 'package:umik/constants.dart';
+import 'package:umik/helper/keyboard.dart';
+import 'package:umik/screens/sign_in/sign_in_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:umik/services/storage_service.dart';
+import 'package:umik/size_config.dart';
 
 class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
+
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
@@ -19,23 +24,81 @@ class _SignUpFormState extends State<SignUpForm> {
   String? username;
   String? name;
   String? email;
+  String? phoneNumber;
   String? password;
-  String? conform_password;
+  String? confirmPassword;
   bool remember = false;
   final List<String?> errors = [];
 
+  // initialize storage
+  final StorageService storage = StorageService();
+  String userToken = '';
+
+  // initialize form controller
+  var usernameController = TextEditingController();
+  var emailController = TextEditingController();
+  var namaController = TextEditingController();
+  var phoneNumberController = TextEditingController();
+  var passwordController = TextEditingController();
+
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
+  }
+
+  Future<void> storeUserCreds(String email, String pass, String token) async {
+    try {
+      await storage.writeSecureData('email', email);
+      await storage.writeSecureData('password', pass);
+      await storage.writeSecureData('token', token);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _onSubmit() async {
+    try {
+      // Aku bingung cara ngeblok user klo udh login, jd utk sementara aku lgsg cek klo udah ada tokennya, wkt disubmit lgsg ke home aja
+      if (userToken.isNotEmpty) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        return;
+      }
+      // logout dulu
+      await storage.deleteAll();
+      return await http.post(
+        Uri.parse('http://umik.test/api/register'),
+        headers: {'Accept': 'application/json'},
+        body: {
+          'username': usernameController.text,
+          'nama': namaController.text,
+          'no_tlp': phoneNumberController.text,
+          'email': emailController.text,
+          'password': passwordController.text,
+        },
+      ).then((value) {
+        final data = jsonDecode(value.body);
+        print(data);
+        print(data['token']);
+        storeUserCreds(
+            emailController.text, passwordController.text, data['token']);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -53,6 +116,9 @@ class _SignUpFormState extends State<SignUpForm> {
           //Email
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
+          //No Tlp
+          buildPhoneFormField(),
+          SizedBox(height: getProportionateScreenHeight(20)),
           //Password
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
@@ -65,8 +131,7 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, SignInScreen.routeName);
+                _onSubmit();
               }
             },
           ),
@@ -75,18 +140,18 @@ class _SignUpFormState extends State<SignUpForm> {
           Row(
             children: [
               Expanded(
-                child: new Container(
+                child: Container(
                     margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: Divider(
+                    child: const Divider(
                       color: Colors.black,
                       height: 16,
                     )),
               ),
-              Text("Atau"),
+              const Text("Atau"),
               Expanded(
-                child: new Container(
+                child: Container(
                     margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: Divider(
+                    child: const Divider(
                       color: Colors.black,
                       height: 16,
                     )),
@@ -114,12 +179,13 @@ class _SignUpFormState extends State<SignUpForm> {
   //field Username
   TextFormField buildUsernameFormField() {
     return TextFormField(
+      controller: usernameController,
       onSaved: (newValue) => username = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -128,12 +194,11 @@ class _SignUpFormState extends State<SignUpForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Username",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
+        contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }
@@ -141,12 +206,13 @@ class _SignUpFormState extends State<SignUpForm> {
   //field Name
   TextFormField buildNameFormField() {
     return TextFormField(
+      controller: namaController,
       onSaved: (newValue) => name = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -155,12 +221,11 @@ class _SignUpFormState extends State<SignUpForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Name",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
+        contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }
@@ -168,6 +233,7 @@ class _SignUpFormState extends State<SignUpForm> {
   //field Password
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      controller: passwordController,
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
@@ -188,12 +254,11 @@ class _SignUpFormState extends State<SignUpForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
+        contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }
@@ -201,6 +266,7 @@ class _SignUpFormState extends State<SignUpForm> {
   //field Email
   TextFormField buildEmailFormField() {
     return TextFormField(
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
@@ -209,7 +275,7 @@ class _SignUpFormState extends State<SignUpForm> {
         } else if (emailValidatorRegExp.hasMatch(value)) {
           removeError(error: kInvalidEmailError);
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -221,12 +287,37 @@ class _SignUpFormState extends State<SignUpForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
+        contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
+      ),
+    );
+  }
+
+  TextFormField buildPhoneFormField() {
+    return TextFormField(
+      controller: phoneNumberController,
+      onSaved: (newValue) => phoneNumber = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        }
+        return;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kPhoneNumberNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        hintText: "Phone number",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Call.svg"),
+        contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
       ),
     );
   }
