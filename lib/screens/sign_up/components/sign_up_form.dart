@@ -57,6 +57,15 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
+  Future<void> getUserCreds() async {
+    try {
+      final String token = await storage.readSecureData('token') ?? '';
+      setState(() => userToken = token);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> storeUserCreds(String email, String pass, String token) async {
     try {
       await storage.writeSecureData('email', email);
@@ -70,16 +79,20 @@ class _SignUpFormState extends State<SignUpForm> {
   Future _onSubmit() async {
     try {
       // Aku bingung cara ngeblok user klo udh login, jd utk sementara aku lgsg cek klo udah ada tokennya, wkt disubmit lgsg ke home aja
-      if (userToken.isNotEmpty) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-        return;
-      }
+      // if (userToken.isNotEmpty) {
+      //   Navigator.of(context)
+      //       .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+      //   return;
+      // }
       // logout dulu
-      await storage.deleteAll();
+      // await storage.deleteAll();
+      var url = '$kApiBaseUrl/register';
       return await http.post(
-        Uri.parse('http://umik.test/api/register'),
-        headers: {'Accept': 'application/json'},
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $userToken',
+        },
         body: {
           'username': usernameController.text,
           'nama': namaController.text,
@@ -88,17 +101,52 @@ class _SignUpFormState extends State<SignUpForm> {
           'password': passwordController.text,
         },
       ).then((value) {
-        final data = jsonDecode(value.body);
-        print(data);
-        print(data['token']);
-        storeUserCreds(
-            emailController.text, passwordController.text, data['token']);
+        // final resMsg = jsonDecode(value.body)['message'];
+        final res = jsonDecode(value.body);
+        final resMsg = res['message'];
+        final resToken = res['token'];
+        // print(res);
+        // print(res.runtimeType);
+        // print(resMsg);
+        // print(resMsg.runtimeType);
+        // print(resMsg.runtimeType.toString() == '_JsonMap');
+
+        // klo udh login / ter-autentikasi
+        if (value.statusCode == 403 && userToken.isNotEmpty) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/home', (Route<dynamic> route) => false);
+          return;
+        }
+
+        if (value.statusCode != 201) {
+          if (resMsg is String) {
+            addError(error: resMsg);
+            return;
+          }
+
+          if (resMsg.runtimeType.toString() == '_JsonMap') {
+            for (var item in resMsg.values) {
+              // print('item: ${item[0]}, type: ${item.runtimeType}');
+              // print(item[0]);
+              addError(error: item[0]);
+            }
+            return;
+          }
+        }
+
+        storeUserCreds(emailController.text, passwordController.text, resToken);
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
       });
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserCreds();
   }
 
   @override

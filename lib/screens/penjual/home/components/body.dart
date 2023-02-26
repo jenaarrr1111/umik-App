@@ -1,60 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:umik/screens/penjual/home/components/seller_menu_gridview.dart';
+import 'package:umik/services/storage_service.dart';
+import 'package:http/http.dart' as http;
 
-class SellerBody extends StatelessWidget {
-  SellerBody({super.key});
+class SellerBody extends StatefulWidget {
+  const SellerBody({super.key});
 
-  final List<Map<String, dynamic>> dataProduk = [
-    {
-      'nama_menu': 'Bakmie Ayam Madu',
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-      'harga': 19000,
-    },
-    {
-      'nama_menu': 'Bakmie Ayam Suwir',
-      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-      'harga': 15000,
-    },
-    {
-      'nama_menu': 'Pangsit Kukus',
-      'thumbnail': 'assets/images/pangsit_kukus.png',
-      'keterangan': 'Isi 3',
-      'harga': 15000,
-    },
-    {
-      'nama_menu': 'Pangsit Kukus',
-      'thumbnail': 'assets/images/pangsit_kukus.png',
-      'keterangan': 'Isi 3',
-      'harga': 15000,
-    },
-    {
-      'nama_menu': 'Bakmie Ayam Suwir',
-      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-      'harga': 15000,
-    },
-    {
-      'nama_menu': 'Pangsit Kukus',
-      'thumbnail': 'assets/images/pangsit_kukus.png',
-      'keterangan': 'Isi 3',
-      'harga': 15000,
-    },
-    {
-      'nama_menu': 'Bakmie Ayam Suwir',
-      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-      'harga': 15000,
-    },
-    {
-      'nama_menu': 'Bakmie Ayam Madu',
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-      'harga': 19000,
-    },
-    {
-      'nama_menu': 'Bakmie Ayam Suwir',
-      'thumbnail': 'assets/images/bakmie_ayam_suwir.png',
-      'harga': 15000,
-    },
-  ];
+  @override
+  State<SellerBody> createState() => _SellerBodyState();
+}
+
+class _SellerBodyState extends State<SellerBody> {
+  List _productsOnUmkm = [];
+  final storage = StorageService();
+  // utk sementara id umkmnya kyk gini
+
+  Future<void> getUserTokenAndGetData() async {
+    try {
+      final String token = await storage.readSecureData('token') ?? '';
+      _getData(1.toString(), token);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _getData(String id, String token) async {
+    try {
+      var url = 'http://umik.test/api/products/umkm/1';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(response.statusCode);
+        print(data);
+        print(token);
+        // print(data['data']);
+        setState(() {
+          _productsOnUmkm = data;
+          // imgPath = 'assets/images/bakmie_ayam_madu.png';
+        });
+      }
+      return response;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserTokenAndGetData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,17 +93,19 @@ class SellerBody extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           addAutomaticKeepAlives: false,
-          itemCount: dataProduk.length,
+          itemCount: _productsOnUmkm.length,
           itemBuilder: (context, index) {
             return SellerMenuGridView(
-              namaMenu: dataProduk[index]['nama_menu'].toString(),
-              thumbnail: dataProduk[index]['thumbnail'].toString(),
-              harga: dataProduk[index]['harga'].toString(),
-              keterangan: dataProduk[index]['keterangan'].toString(),
+              namaMenu: _productsOnUmkm[index]['nama_produk'].toString(),
+              thumbnail: 'assets/images/bakmie_ayam_madu.png',
+              harga: _productsOnUmkm[index]['harga'].toString(),
+              keterangan: _productsOnUmkm[index]['deskripsi'].toString(),
             );
           },
         ),
       ],
     );
   }
+
+  jsonDecode(String body) {}
 }

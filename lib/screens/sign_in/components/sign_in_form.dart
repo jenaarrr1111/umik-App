@@ -14,14 +14,14 @@ import 'package:umik/screens/sign_up/sign_up_screen.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
 
-class SignForm extends StatefulWidget {
-  const SignForm({super.key});
+class SignInForm extends StatefulWidget {
+  const SignInForm({super.key});
 
   @override
-  State<SignForm> createState() => _SignFormState();
+  State<SignInForm> createState() => _SignInFormState();
 }
 
-class _SignFormState extends State<SignForm> {
+class _SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -57,8 +57,8 @@ class _SignFormState extends State<SignForm> {
       final String email = await storage.readSecureData('email') ?? '';
       final String password = await storage.readSecureData('password') ?? '';
       final String token = await storage.readSecureData('token') ?? '';
-      final Map allData = await storage.readAll();
-      print('all: $allData');
+      // final Map allData = await storage.readAll();
+      // print('all: $allData');
       setState(() {
         emailController.text = email;
         passwordController.text = password;
@@ -81,8 +81,9 @@ class _SignFormState extends State<SignForm> {
 
   Future _onSubmit() async {
     try {
+      var url = '$kApiBaseUrl/login';
       return await http.post(
-        Uri.parse('http://umik.test/api/login'),
+        Uri.parse(url),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $userToken',
@@ -92,11 +93,33 @@ class _SignFormState extends State<SignForm> {
           'password': passwordController.text,
         },
       ).then((value) {
-        final data = jsonDecode(value.body);
-        print(data);
-        print(data['token']);
-        storeUserCreds(
-            emailController.text, passwordController.text, data['token']);
+        final res = jsonDecode(value.body);
+        final resMsg = res['message'];
+        final resToken = res['token'];
+
+        // klo udh login / ter-autentikasi
+        if (value.statusCode == 403 && userToken.isNotEmpty) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/home', (Route<dynamic> route) => false);
+          return;
+        }
+
+        if (value.statusCode != 200) {
+          if (resMsg is String) {
+            addError(error: resMsg);
+            return;
+          }
+
+          if (resMsg.runtimeType.toString() == '_JsonMap') {
+            for (var item in resMsg.values) {
+              // print('item: $item[0]');
+              addError(error: item[0]);
+            }
+            return;
+          }
+        }
+
+        storeUserCreds(emailController.text, passwordController.text, resToken);
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
       });
@@ -117,9 +140,6 @@ class _SignFormState extends State<SignForm> {
       key: _formKey,
       child: Column(
         children: [
-          //Email
-          // buildEmailFormField(),
-
           // [ Email ]
           TextFormField(
             controller: emailController,
@@ -152,9 +172,6 @@ class _SignFormState extends State<SignForm> {
             ),
           ),
           SizedBox(height: getProportionateScreenHeight(35)),
-
-          //Password
-          // buildPasswordFormField(),
 
           // [ Password ]
           TextFormField(
@@ -240,7 +257,6 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState!.save();
 
                 _onSubmit();
-                // final StorageItem newItem = await _secureStorage.writeSecureData(newItem);
 
                 // if all are valid then go to success screen
                 // KeyboardUtil.hideKeyboard(context);

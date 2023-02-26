@@ -24,7 +24,7 @@ class SellerHomeScreen extends StatelessWidget {
         shadowColor: Colors.black45,
         elevation: 20,
       ),
-      body: SellerBody(),
+      body: const SellerBody(),
       floatingActionButton: const SellerFAB(),
       bottomNavigationBar: const SellerBottomNavbar(),
     );

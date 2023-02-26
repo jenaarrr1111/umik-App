@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:umik/constants.dart';
 import 'package:umik/size_config.dart';
 
 class Categories extends StatefulWidget {
@@ -33,8 +34,8 @@ class _CategoriesState extends State<Categories> {
 
   Future _getData() async {
     try {
-      final response =
-          await http.get(Uri.parse("http://umik.test/api/categories"));
+      var url = '$kApiBaseUrl/categories';
+      final response = await http.get(Uri.parse(url));
 
       // if response successful
       if (response.statusCode == 200) {

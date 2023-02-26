@@ -108,7 +108,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
 
   Future _getData(String id, String token) async {
     try {
-      var url = 'http://umik.test/api/products/umkm/$id';
+      var url = '$kApiBaseUrl/products/umkm/$id';
       final response = await http.get(
         Uri.parse(url),
         headers: {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
 class UmkmCard extends StatefulWidget {
@@ -19,14 +20,12 @@ class UmkmCard extends StatefulWidget {
 class _UmkmCardState extends State<UmkmCard> {
   List _getUmkmWithCategories = [];
   final storage = StorageService();
-  // var userToken = '';
 
   Future _getData() async {
     try {
+      var url = '$kApiBaseUrl/categories/${widget.kategori}';
       final response = await http.get(
-        Uri.parse(
-          'http://umik.test/api/categories/${widget.kategori}',
-        ),
+        Uri.parse(url),
         headers: {'Accept': 'application/json'},
       );
       if (response.statusCode == 200) {

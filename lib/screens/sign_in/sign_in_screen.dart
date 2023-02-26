@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:umik/services/storage_service.dart';
 
 import 'components/body.dart';
 
