@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/screens/penjual/promo/components/seller_promo_listview.dart';
 
-import '../../../../constants.dart';
-
 class SellerPromo extends StatelessWidget {
   SellerPromo({super.key});
   final List<Map<String, dynamic>> dataProduk = [
@@ -55,13 +53,15 @@ class SellerPromo extends StatelessWidget {
       'status': 'Selesai',
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.all(8),
+      addAutomaticKeepAlives: false,
+      padding: const EdgeInsets.symmetric(vertical: 8),
       itemCount: dataProduk.length,
       itemBuilder: (BuildContext context, int index) {
-        return SellerPromoGridView(
+        return SellerPromoListView(
           namaMenu: dataProduk[index]['nama_menu'].toString(),
           thumbnail: dataProduk[index]['thumbnail'].toString(),
           harga: dataProduk[index]['harga'].toString(),
@@ -69,7 +69,7 @@ class SellerPromo extends StatelessWidget {
           keterangan: dataProduk[index]['keterangan'].toString(),
         );
       },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      separatorBuilder: (_, int index) => const SizedBox(height: 8),
     );
   }
 }

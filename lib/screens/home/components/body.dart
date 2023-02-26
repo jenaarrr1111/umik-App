@@ -8,6 +8,8 @@ import 'discount_banner.dart';
 import 'home_header.dart';
 
 class Body extends StatelessWidget {
+  const Body({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -15,7 +17,7 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: getProportionateScreenHeight(20)),
-            HomeHeader(),
+            const HomeHeader(),
             SizedBox(height: getProportionateScreenHeight(20)),
             Align(
               alignment: Alignment.centerLeft,
@@ -28,15 +30,15 @@ class Body extends StatelessWidget {
                 ),
               ),
             ),
-            DiscountBanner(),
+            const DiscountBanner(),
             GestureDetector(
               onTap: () => {
                 Navigator.pushNamed(context, SellerPromoScreenUser.routeName),
               },
-              child: Align(
+              child: const Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Text(
                     "Show more >>",
                     style: TextStyle(
@@ -59,7 +61,7 @@ class Body extends StatelessWidget {
               ),
             ),
 
-            Categories(),
+            const Categories(),
             // SpecialOffers(),
             // SizedBox(height: getProportionateScreenWidth(30)),
             // PopularProducts(),
