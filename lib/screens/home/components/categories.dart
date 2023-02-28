@@ -50,6 +50,13 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
+    if (_getCategories.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(20),
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
       child: Wrap(
@@ -59,9 +66,7 @@ class _CategoriesState extends State<Categories> {
           (index) {
             return CategoryCard(
               icon: imgPath[index],
-              text: _getCategories.isNotEmpty
-                  ? _getCategories[index]
-                  : 'loading...',
+              text: _getCategories[index],
               press: () {
                 Navigator.pushNamed(context, '/daftar_umkm', arguments: {
                   'title': _getCategories[index],

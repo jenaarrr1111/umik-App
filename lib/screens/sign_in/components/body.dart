@@ -4,6 +4,8 @@ import '../../../size_config.dart';
 import 'sign_form.dart';
 
 class Body extends StatelessWidget {
+  const Body({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,7 +20,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.01),
                 Text("Sign In", style: headingStyle),
                 SizedBox(height: SizeConfig.screenHeight * 0.09),
-                SignForm(),
+                const SignForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.05),
                 SizedBox(height: getProportionateScreenHeight(100)),
               ],

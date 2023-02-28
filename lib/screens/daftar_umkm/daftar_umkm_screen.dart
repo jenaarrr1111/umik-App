@@ -45,7 +45,7 @@ class DaftarUmkmScreen extends StatelessWidget {
     // Ekstrak argumen dari pushedNamed navigotor
     final args = (ModalRoute.of(context)?.settings.arguments ??
         <String, String>{}) as Map;
-    final String kategori = args.isNotEmpty ? args['title'] : 'Aneka Nasi';
+    final String kategori = args.isNotEmpty ? args['title'] : '';
 
     return Scaffold(
       body: Stack(
@@ -54,33 +54,65 @@ class DaftarUmkmScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Image.asset(
-                    kategoriHeader[kategori]!['banner_path'].toString(),
-                    fit: BoxFit.cover,
+                if (kategori.isEmpty) ...[
+                  /* Klo ga ada kategori dlm request */
+                  Container(
+                    width: double.infinity,
+                    height: 100,
+                    color: Colors.grey[300],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        kategori,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      Text(
-                        kategoriHeader[kategori]!['desc'].toString(),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Kategori',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        Text(
+                          'Deskripsi kategori',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: UmkmCard(kategori: kategori),
-                ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Maaf terjadi kesalahan. Mohon coba beberapa saat lagi.',
+                    ),
+                  ),
+                ] else ...[
+                  /* Klo ada kategori di dlm request */
+                  SizedBox(
+                    width: double.infinity,
+                    child: Image.asset(
+                      kategoriHeader[kategori]!['banner_path'].toString(),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          kategori,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        Text(
+                          kategoriHeader[kategori]!['desc'].toString(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: UmkmCard(kategori: kategori),
+                  ),
+                ],
               ],
             ),
           ),

@@ -61,12 +61,13 @@ class SellerPromo extends StatelessWidget {
       'thumbnail': 'assets/images/bakmie_ayam_madu.png',
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+          // padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
           shrinkWrap: true,
           children: [
             Row(

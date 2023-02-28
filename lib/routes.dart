@@ -26,6 +26,7 @@ import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/profile/profile_screen.dart';
 import 'package:umik/screens/rute/rute.dart';
 import 'package:umik/screens/sign_in/sign_in_screen.dart';
+import 'package:umik/screens/sign_out/sign_out.dart';
 import 'package:umik/screens/splash/splash_screen.dart';
 
 import 'screens/sign_up/sign_up_screen.dart';
@@ -52,6 +53,7 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   NamaScreen.routeName: (context) => NamaScreen(),
   HpScreen.routeName: (context) => HpScreen(),
+  SignOut.routeName: (context) => SignOut(),
 
   //penjual
   SellerWelcomeScreen.routeName: (context) => SellerWelcomeScreen(),
