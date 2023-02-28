@@ -219,7 +219,7 @@ class _AddProductBodyState extends State<AddProductBody> {
             // [ Kategori ]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
-              color: const Color(0xFFF5F6F9),
+              color: KBgColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

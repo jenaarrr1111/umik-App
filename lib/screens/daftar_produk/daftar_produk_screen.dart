@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
@@ -161,7 +162,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
       itemBuilder: (context, index) {
         String namaProduk = _productsOnUmkm[index]!['nama_produk'];
         String kategoriProduk = _productsOnUmkm[index]!['deskripsi'];
-        String harga = _productsOnUmkm[index]!['harga'];
+        String harga = fmtHarga.format(_productsOnUmkm[index]!['harga']);
 
         return GestureDetector(
           onTap: () {},
@@ -198,8 +199,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
                               .copyWith(color: kTextSecondColor))
                       : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
                   const SizedBox(height: 5),
-                  Text('Rp $harga',
-                      style: Theme.of(context).textTheme.titleMedium),
+                  Text(harga, style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 15),
                 ],
               ),

@@ -22,6 +22,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
   var namaUMKMController = TextEditingController();
   var namaController = TextEditingController();
   var estimasiController = TextEditingController();
+  var noTlpController = TextEditingController();
   var plat1Controller = TextEditingController();
   var plat2Controller = TextEditingController();
 
@@ -54,7 +55,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
         padding: const EdgeInsets.all(2),
         child: Column(
           children: [
-            // [  ]
+            // [ Nama UMKM ]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
               color: KBgColor,
@@ -63,30 +64,38 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: Row(
                       children: [
                         Expanded(
-                          child: Text('Nama UMKM',
-                              style: Theme.of(context).textTheme.titleLarge),
+                          child: Text(
+                            'Nama UMKM',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400),
+                          ),
                         ),
                         Text(
                           '${textNamaUMKMLength.toString()}/${namaUMKMLength.toString()}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium!
-                              .copyWith(color: kTextSecondColor),
+                              .copyWith(
+                                  color: kTextSecondColor,
+                                  fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
                   TextFormField(
                     controller: namaUMKMController,
                     decoration: const InputDecoration(
                       fillColor: Colors.transparent,
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
@@ -125,30 +134,38 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: Row(
                       children: [
                         Expanded(
-                          child: Text('Nama Lengkap',
-                              style: Theme.of(context).textTheme.titleLarge),
+                          child: Text(
+                            'Nama Lengkap',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400),
+                          ),
                         ),
                         Text(
                           '${textNamaLength.toString()}/${namaLength.toString()}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium!
-                              .copyWith(color: kTextSecondColor),
+                              .copyWith(
+                                  color: kTextSecondColor,
+                                  fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
                   TextFormField(
                     controller: namaController,
                     decoration: const InputDecoration(
                       fillColor: Colors.transparent,
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
@@ -191,6 +208,67 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
               },
             ),
 
+            // [ No Telp ]
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              color: KBgColor,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Nomor Telepon',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  TextFormField(
+                    controller: noTlpController,
+                    decoration: const InputDecoration(
+                      fillColor: Colors.transparent,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      floatingLabelAlignment: FloatingLabelAlignment.start,
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(
+                            color: Colors.black38,
+                            width: 0.5,
+                          )),
+                      enabledBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      hintText: 'Masukkan nomor telepon',
+                      filled: true,
+                      counterText: '',
+                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
+                    // maxLength: estimasiLength,
+                    onChanged: (value) {
+                      setState(() {
+                        // textEstimasiLength = value.length;
+                      });
+                    },
+                    validator: (value) => value!.isEmpty
+                        ? 'Nomor Telepon tidak boleh kososng!'
+                        : null,
+                  ),
+                ],
+              ),
+            ),
+
             // [ Estimasi Pengerjaan]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
@@ -200,23 +278,29 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: Row(
                       children: [
                         Expanded(
-                          child: Text('Estimasi Pengerjaan',
-                              style: Theme.of(context).textTheme.titleLarge),
+                          child: Text(
+                            'Estimasi Pengerjaan',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
                   TextFormField(
                     controller: estimasiController,
                     decoration: const InputDecoration(
                       fillColor: Colors.transparent,
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
@@ -255,30 +339,38 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: Row(
                       children: [
                         Expanded(
-                          child: Text('Plat Nomor kendaraan 1',
-                              style: Theme.of(context).textTheme.titleLarge),
+                          child: Text(
+                            'Plat Nomor kendaraan 1',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400),
+                          ),
                         ),
                         Text(
                           '${textPlat1Length.toString()}/${plat1Length.toString()}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium!
-                              .copyWith(color: kTextSecondColor),
+                              .copyWith(
+                                  color: kTextSecondColor,
+                                  fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
                   TextFormField(
                     controller: plat1Controller,
                     decoration: const InputDecoration(
                       fillColor: Colors.transparent,
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
@@ -317,30 +409,38 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: Row(
                       children: [
                         Expanded(
-                          child: Text('Plat Nomor kendaraan 2',
-                              style: Theme.of(context).textTheme.titleLarge),
+                          child: Text(
+                            'Plat Nomor kendaraan 2',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400),
+                          ),
                         ),
                         Text(
                           '${textPlat2Length.toString()}/${plat2Length.toString()}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium!
-                              .copyWith(color: kTextSecondColor),
+                              .copyWith(
+                                  color: kTextSecondColor,
+                                  fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
                   TextFormField(
                     controller: plat2Controller,
                     decoration: const InputDecoration(
                       fillColor: Colors.transparent,
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
@@ -381,7 +481,8 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
       child: TextButton(
         style: TextButton.styleFrom(
           foregroundColor: kTextColor,
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+          shape: const ContinuousRectangleBorder(),
           // shape:
           // RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           backgroundColor: KBgColor,
@@ -389,7 +490,15 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
         onPressed: press,
         child: Row(
           children: [
-            Expanded(child: Text(text)),
+            Expanded(
+              child: Text(
+                text,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
+              ),
+            ),
             const Icon(Icons.arrow_forward_ios),
           ],
         ),

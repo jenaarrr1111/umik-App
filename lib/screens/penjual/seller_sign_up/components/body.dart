@@ -24,7 +24,9 @@ class _BodyState extends State<Body> {
         width: double.infinity,
         child: SingleChildScrollView(
           child: Column(
-            children: [SellerSignUpForm()],
+            children: const [
+              SellerSignUpForm(),
+            ],
           ),
         ),
       ),

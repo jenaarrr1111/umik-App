@@ -25,7 +25,8 @@ class CustomTextField extends StatelessWidget {
           labelText: label,
           hintText: (hintText == "") ? label : hintText,
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          contentPadding: const EdgeInsets.all(30),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           enabledBorder: outlineInputBorder,
           focusedBorder: outlineInputBorder,
           border: outlineInputBorder,
