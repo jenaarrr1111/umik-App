@@ -23,11 +23,8 @@ class _BodyState extends State<Body> {
       child: SizedBox(
         width: double.infinity,
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [SellerAddressForm()],
-            ),
+          child: Column(
+            children: [SellerAddressForm()],
           ),
         ),
       ),

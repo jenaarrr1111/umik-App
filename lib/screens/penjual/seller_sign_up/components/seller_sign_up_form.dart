@@ -54,7 +54,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
         padding: const EdgeInsets.all(2),
         child: Column(
           children: [
-            // [  ]
+            // [Nama UMKM]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
               color: KBgColor,
