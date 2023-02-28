@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
@@ -110,6 +109,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
   Future _getData(String id, String token) async {
     try {
       var url = '$kApiBaseUrl/products/umkm/$id';
+      print(url);
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -161,7 +161,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
       itemCount: _productsOnUmkm.length,
       itemBuilder: (context, index) {
         String namaProduk = _productsOnUmkm[index]!['nama_produk'];
-        String kategoriProduk = _productsOnUmkm[index]!['deskripsi'];
+        String deskripsi = _productsOnUmkm[index]!['deskripsi'] ?? '';
         String harga = fmtHarga.format(_productsOnUmkm[index]!['harga']);
 
         return GestureDetector(
@@ -191,8 +191,8 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
                   Text(namaProduk,
                       style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 5),
-                  kategoriProduk != 'null' // render keterangan klo ada
-                      ? Text(kategoriProduk,
+                  deskripsi.isNotEmpty // render keterangan klo ada
+                      ? Text(deskripsi,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!

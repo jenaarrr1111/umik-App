@@ -13,16 +13,16 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> imgPath = [
-    "assets/images/KMinuman.png",
-    "assets/images/KJajanan.png",
-    "assets/images/KCepatsaji.png",
-    "assets/images/KNasi.png",
-    "assets/images/KRoti.png",
-    "assets/images/KKopi.png",
-    "assets/images/KSeafood.png",
-    "assets/images/KBakmie.png",
-  ];
+  Map<String, String> imgPath = {
+    'Minuman': "assets/images/KMinuman.png",
+    'Jajanan': "assets/images/KJajanan.png",
+    'Cepat Saji': "assets/images/KCepatsaji.png",
+    'Aneka Nasi': "assets/images/KNasi.png",
+    'Roti': "assets/images/KRoti.png",
+    'Kopi': "assets/images/KKopi.png",
+    'Seafood': "assets/images/KSeafood.png",
+    'Bakmie': "assets/images/KBakmie.png",
+  };
 
   List<dynamic> _getCategories = [];
 
@@ -66,7 +66,7 @@ class _CategoriesState extends State<Categories> {
           _getCategories.length,
           (index) {
             return CategoryCard(
-              icon: imgPath[index],
+              icon: imgPath[_getCategories[index]],
               text: _getCategories[index],
               press: () {
                 Navigator.pushNamed(context, '/daftar_umkm', arguments: {

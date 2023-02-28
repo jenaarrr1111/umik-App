@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:umik/constants.dart';
 import 'package:umik/screens/penjual/home/components/seller_menu_gridview.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:http/http.dart' as http;
@@ -19,33 +20,37 @@ class _SellerBodyState extends State<SellerBody> {
   Future<void> getUserTokenAndGetData() async {
     try {
       final String token = await storage.readSecureData('token') ?? '';
-      _getData(1.toString(), token);
+      _getProductsOnUmkm(1.toString(), token);
     } catch (e) {
       print(e);
     }
   }
 
-  Future _getData(String id, String token) async {
+  Future _getProductsOnUmkm(String id, String token) async {
     try {
-      var url = 'http://umik.test/api/products/umkm/1';
+      var url = '$kApiBaseUrl/products/umkm/1';
+      print(url);
       final response = await http.get(
         Uri.parse(url),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         },
-      );
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        print(response.statusCode);
+      ).then((value) {
+        final data = jsonDecode(value.body)['data'];
         print(data);
-        print(token);
+      });
+      /* if (response.statusCode == 200) {
+        final data = jsonDecode(response.body)['data'];
         // print(data['data']);
         setState(() {
           _productsOnUmkm = data;
           // imgPath = 'assets/images/bakmie_ayam_madu.png';
         });
-      }
+        print(response.statusCode);
+        print(_productsOnUmkm);
+        // print(token);
+      } */
       return response;
     } catch (e) {
       print(e);
