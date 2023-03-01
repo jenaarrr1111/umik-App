@@ -64,8 +64,17 @@ class _SignOutState extends State<SignOut> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+    return Scaffold(
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('Logging Out', style: Theme.of(context).textTheme.labelMedium),
+          const SizedBox(height: 10),
+          const CircularProgressIndicator(),
+        ],
+      )),
     );
   }
 }
