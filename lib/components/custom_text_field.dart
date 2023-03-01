@@ -4,11 +4,13 @@ import '../constants.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText, label;
+  final TextEditingController inputController;
 
   const CustomTextField({
     Key? key,
-    this.hintText = "",
+    this.hintText = '',
     required this.label,
+    required this.inputController,
   }) : super(key: key);
 
   @override

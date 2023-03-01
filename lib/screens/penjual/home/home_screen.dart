@@ -6,22 +6,39 @@ import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
-class SellerHomeScreen extends StatelessWidget {
+class SellerHomeScreen extends StatefulWidget {
   const SellerHomeScreen({super.key});
 
   static String routeName = "/seller_home";
 
   @override
-  Widget build(BuildContext context) {
-    // Ekstrak argumen
-    // final args = (ModalRoute.of(context)?.settings.arguments ??
-    //     <String, dynamic>{}) as Map;
-    const String namaUmkm = 'Bakmie Hokki, Soehat';
-    const String kategoriUmkm = 'Jajanan';
-    // Set idUmkm nya ke 0 klo ga ada args dari navigator
-    // supaya nnti return 404
-    const int idUmkm = 1;
+  State<SellerHomeScreen> createState() => _SellerHomeScreenState();
+}
 
+class _SellerHomeScreenState extends State<SellerHomeScreen> {
+  // initialize storage
+  final StorageService storage = StorageService();
+  late String idUmkm;
+
+  Future getUmkmData() async {
+    try {
+      final String id = await storage.readSecureData('umkm_id') ?? '';
+      setState(() {
+        idUmkm = id;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -77,7 +94,7 @@ class SellerHomeScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 20),
-          const GridItemDaftarProduk(idUmkm: idUmkm),
+          GridItemDaftarProduk(idUmkm: idUmkm),
         ],
       ),
     );
@@ -85,8 +102,8 @@ class SellerHomeScreen extends StatelessWidget {
 }
 
 class GridItemDaftarProduk extends StatefulWidget {
-  final int idUmkm;
-  const GridItemDaftarProduk({super.key, required this.idUmkm});
+  final int? idUmkm;
+  const GridItemDaftarProduk({super.key, this.idUmkm});
 
   @override
   State<GridItemDaftarProduk> createState() => _GridItemDaftarProdukState();

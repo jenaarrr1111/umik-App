@@ -66,11 +66,13 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
-  Future<void> storeUserCreds(String email, String pass, String token) async {
+  Future<void> storeUserCreds(
+      String email, String pass, String token, int userId) async {
     try {
       await storage.writeSecureData('email', email);
       await storage.writeSecureData('password', pass);
       await storage.writeSecureData('token', token);
+      await storage.writeSecureData('user_id', token);
     } catch (e) {
       print(e);
     }
@@ -78,14 +80,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Future _onSubmit() async {
     try {
-      // Aku bingung cara ngeblok user klo udh login, jd utk sementara aku lgsg cek klo udah ada tokennya, wkt disubmit lgsg ke home aja
-      // if (userToken.isNotEmpty) {
-      //   Navigator.of(context)
-      //       .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-      //   return;
-      // }
-      // logout dulu
-      // await storage.deleteAll();
       var url = '$kApiBaseUrl/register';
       return await http.post(
         Uri.parse(url),
@@ -105,11 +99,7 @@ class _SignUpFormState extends State<SignUpForm> {
         final res = jsonDecode(value.body);
         final resMsg = res['message'];
         final resToken = res['token'];
-        // print(res);
-        // print(res.runtimeType);
-        // print(resMsg);
-        // print(resMsg.runtimeType);
-        // print(resMsg.runtimeType.toString() == '_JsonMap');
+        final userId = res['data']['id'];
 
         // klo udh login / ter-autentikasi
         if (value.statusCode == 403 && userToken.isNotEmpty) {
@@ -126,15 +116,14 @@ class _SignUpFormState extends State<SignUpForm> {
 
           if (resMsg.runtimeType.toString() == '_JsonMap') {
             for (var item in resMsg.values) {
-              // print('item: ${item[0]}, type: ${item.runtimeType}');
-              // print(item[0]);
               addError(error: item[0]);
             }
-            return;
           }
+          return;
         }
 
-        storeUserCreds(emailController.text, passwordController.text, resToken);
+        storeUserCreds(
+            emailController.text, passwordController.text, resToken, userId);
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
       });

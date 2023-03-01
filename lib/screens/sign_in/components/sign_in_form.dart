@@ -57,8 +57,6 @@ class _SignInFormState extends State<SignInForm> {
       final String email = await storage.readSecureData('email') ?? '';
       final String password = await storage.readSecureData('password') ?? '';
       final String token = await storage.readSecureData('token') ?? '';
-      // final Map allData = await storage.readAll();
-      // print('all: $allData');
       setState(() {
         emailController.text = email;
         passwordController.text = password;
@@ -69,11 +67,13 @@ class _SignInFormState extends State<SignInForm> {
     }
   }
 
-  Future<void> storeUserCreds(String email, String pass, String token) async {
+  Future<void> storeUserCreds(
+      String email, String pass, String token, int userId) async {
     try {
       await storage.writeSecureData('email', email);
       await storage.writeSecureData('password', pass);
       await storage.writeSecureData('token', token);
+      await storage.writeSecureData('user_id', userId.toString());
     } catch (e) {
       print(e);
     }
@@ -96,6 +96,7 @@ class _SignInFormState extends State<SignInForm> {
         final res = jsonDecode(value.body);
         final resMsg = res['message'];
         final resToken = res['token'];
+        final userId = res['user_id'];
 
         // klo udh login / ter-autentikasi
         if (value.statusCode == 403 && userToken.isNotEmpty) {
@@ -119,7 +120,8 @@ class _SignInFormState extends State<SignInForm> {
           }
         }
 
-        storeUserCreds(emailController.text, passwordController.text, resToken);
+        storeUserCreds(
+            emailController.text, passwordController.text, resToken, userId);
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
       });
