@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
+import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
+import 'package:umik/screens/profile/profile_screen.dart';
 
 import '../../../../size_config.dart';
 import '../../home/home_screen.dart';
@@ -10,10 +12,12 @@ import 'profile_menu.dart';
 import 'profile_pic.dart';
 
 class SellerProfileBody extends StatelessWidget {
+  const SellerProfileBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: [
           // SizedBox(height: getProportionateScreenHeight(20)),
@@ -22,7 +26,7 @@ class SellerProfileBody extends StatelessWidget {
             style: heading1Style,
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
-          ProfilePic(),
+          const ProfilePic(),
           SizedBox(height: getProportionateScreenHeight(10)),
           TextButton(
             onPressed: () {},
@@ -35,7 +39,7 @@ class SellerProfileBody extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ProfileMenu(
             text: "Nama",
             press: () => {
@@ -57,7 +61,7 @@ class SellerProfileBody extends StatelessWidget {
             press: () {},
           ),
 
-          SizedBox(height: 50),
+          const SizedBox(height: 20),
           ProfileMenu3(
             text: "Lihat Toko Saya",
             press: () => {
@@ -66,7 +70,14 @@ class SellerProfileBody extends StatelessWidget {
           ),
           ProfileMenu3(
             text: "Rekap Penjualan",
-            press: () => {},
+            press: () => {
+              // Navigator.pushNamed(context, SellerHomeScreen.routeName),
+            },
+          ),
+          const SizedBox(height: 20),
+          ProfileMenu3(
+            text: "Beranda User",
+            press: () => {Navigator.pushNamed(context, HomeScreen.routeName)},
           ),
         ],
       ),

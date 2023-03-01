@@ -8,6 +8,7 @@ class CustomTextInputField extends StatefulWidget {
   final int? inputMaxLength;
   final TextEditingController fieldController;
   final bool isRequired;
+  final double horizontalPadding;
 
   const CustomTextInputField({
     super.key,
@@ -17,6 +18,7 @@ class CustomTextInputField extends StatefulWidget {
     this.inputMaxLength,
     required this.fieldController,
     required this.isRequired,
+    this.horizontalPadding = 10,
   });
 
   @override
@@ -40,7 +42,10 @@ class _CustomTextInputFieldState extends State<CustomTextInputField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+            padding: EdgeInsets.only(
+                left: widget.horizontalPadding,
+                right: widget.horizontalPadding,
+                top: 10),
             child: Row(
               children: [
                 if (widget.needLabel) ...[
@@ -68,8 +73,8 @@ class _CustomTextInputFieldState extends State<CustomTextInputField> {
               controller: widget.fieldController,
               decoration: InputDecoration(
                 fillColor: Colors.transparent,
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                contentPadding: EdgeInsets.symmetric(
+                    vertical: 5, horizontal: widget.horizontalPadding),
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.zero,
