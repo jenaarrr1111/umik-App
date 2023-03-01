@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:umik/screens/cart/cart_screen.dart';
 import 'package:umik/screens/home/components/search_field.dart';
 import 'package:umik/size_config.dart';
+
+import '../../keranjang/keranjang_screen.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -39,7 +40,7 @@ class HomeHeader extends StatelessWidget {
             // ),
             IconButton(
               onPressed: () =>
-                  Navigator.pushNamed(context, CartScreen.routeName),
+                  Navigator.pushNamed(context, KeranjangScreen.routeName),
               icon: Image.asset(
                 "assets/images/Keranjang.png",
               ),
