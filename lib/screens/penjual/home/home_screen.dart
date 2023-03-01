@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
+import 'package:umik/screens/penjual/edit_produk/seller_edit_product.dart';
+import 'package:umik/screens/penjual/home/components/seller_bottom_navbar.dart';
+import 'package:umik/screens/penjual/home/components/seller_fab.dart';
 import 'package:umik/services/storage_service.dart';
 
 // Target
@@ -21,24 +24,36 @@ class SellerHomeScreen extends StatefulWidget {
 }
 
 class _SellerHomeScreenState extends State<SellerHomeScreen> {
-  String _idUmkm = '';
+  String? _umkmId;
   String? _namaUmkm;
   String? _kategori;
-  String _token = '';
+  String? _token;
   List _productsOnUmkm = [];
   final storage = StorageService();
 
   Future _getIdNamaUmkmToken() async {
-    _idUmkm = await storage.readSecureData('id_umkm') ?? '';
-    print(_idUmkm);
-    _namaUmkm = await storage.readSecureData('nama_umkm');
-    _token = await storage.readSecureData('token') ?? '';
+    try {
+      final String? umkmId = await storage.readSecureData('umkm_id');
+      // print('auesaeua: $umkmId');
+      final namaUmkm = await storage.readSecureData('nama_umkm');
+      final token = await storage.readSecureData('token');
+      setState(() {
+        _umkmId = umkmId;
+        _namaUmkm = namaUmkm;
+        _token = token;
+      });
+      // set id umkm jadi 0, biar return 404
+      _getProductsOnUmkm(_umkmId ?? '0', _token ?? '');
+    } catch (e) {
+      print(e);
+    }
   }
 
   // Buat req
   Future _getProductsOnUmkm(String idUmkm, String token) async {
     try {
       var url = '$kApiBaseUrl/products/umkm/$idUmkm';
+      // print(url);
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -50,9 +65,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
         final res = jsonDecode(response.body);
         setState(() {
           _productsOnUmkm = res['data'];
-          _kategori = res['kategori'] ?? 'kategori1, kategori2';
-          print('products: $_productsOnUmkm');
-          print('katgeri: $_kategori');
+          _kategori = res['kategori'];
         });
       }
       return response;
@@ -69,14 +82,6 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Ekstrak argumen
-    // final args = (ModalRoute.of(context)?.settings.arguments ??
-    //     <String, dynamic>{}) as Map;
-    // final int idUmkm = args.isNotEmpty ? args['idUmkm'] : 0;
-    // // Buat req
-    _getProductsOnUmkm(_idUmkm, _token);
-    print('idUmkm: $_idUmkm, $_token');
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -102,22 +107,24 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
                 child: Text(_namaUmkm ?? 'Nama Umkm',
                     style: Theme.of(context).textTheme.titleLarge),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 10, right: 3.0),
-                child: Icon(
-                  Icons.star,
-                  color: Colors.yellow,
-                  size: 16,
+              if (_productsOnUmkm.isNotEmpty) ...[
+                const Padding(
+                  padding: EdgeInsets.only(left: 10, right: 3.0),
+                  child: Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                    size: 16,
+                  ),
                 ),
-              ),
-              Text('4.8', style: Theme.of(context).textTheme.headlineMedium),
+                Text('4.8', style: Theme.of(context).textTheme.headlineMedium),
+              ],
             ],
           ),
           Row(
             children: [
               Flexible(
                 child: Text(
-                  _kategori ?? 'Kategori1, kategori2',
+                  _kategori ?? 'Belum ada kategori',
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
@@ -126,172 +133,18 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 15),
-          Text(
-            'Recomended',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 20),
-          // GridItemDaftarProduk(idUmkm: _idUmkm),
-          AlignedGridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 30,
-            crossAxisSpacing: 20,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            addAutomaticKeepAlives: false,
-            itemCount: _productsOnUmkm.length,
-            itemBuilder: (context, index) {
-              String namaProduk =
-                  _productsOnUmkm[index]!['nama_produk'] ?? 'Nama Menu';
-              String deskripsi =
-                  _productsOnUmkm[index]!['deskripsi'] ?? 'deskripsi';
-              String harga = fmtHarga.format(_productsOnUmkm[index]!['harga']);
-
-              return ProdukAsGridItem(
-                namaProduk: namaProduk,
-                deskripsi: deskripsi,
-                harga: harga,
-              );
-            },
-          ),
+          const SizedBox(height: 35),
+          renderAlignedGridView(),
         ],
       ),
+      floatingActionButton: const SellerFAB(),
+      bottomNavigationBar: const SellerBottomNavbar(),
     );
   }
-}
 
-class ProdukAsGridItem extends StatelessWidget {
-  final String namaProduk;
-  final String deskripsi;
-  final String harga;
-  const ProdukAsGridItem({
-    super.key,
-    required this.namaProduk,
-    required this.deskripsi,
-    required this.harga,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        'assets/images/bakmie_ayam_suwir.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(namaProduk, style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 5),
-              deskripsi.isNotEmpty // render keterangan klo ada
-                  ? Text(deskripsi,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(color: kTextSecondColor))
-                  : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
-              const SizedBox(height: 5),
-              Text(harga, style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 15),
-            ],
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(0),
-                backgroundColor: kPrimaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              onPressed: () => {},
-              child: Text(
-                'Tambah',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium!
-                    .copyWith(fontSize: 12),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-// Kelas 2
-// terima nama produk, deskripsi, harga
-/* class GridItemDaftarProduk extends StatefulWidget {
-  const GridItemDaftarProduk({super.key});
-
-  @override
-  State<GridItemDaftarProduk> createState() => _GridItemDaftarProdukState();
-}
-
-class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
-  List _productsOnUmkm = [];
-  final storage = StorageService();
-
-  Future<void> getUserTokenAndGetData() async {
-    try {
-      final String token = await storage.readSecureData('token') ?? '';
-      _getData(widget.idUmkm.toString(), token);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future _getData(String id, String token) async {
-    try {
-      var url = '$kApiBaseUrl/products/umkm/$id';
-      print(url);
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body)['data'];
-        setState(() {
-          _productsOnUmkm = data;
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getUserTokenAndGetData();
-    // _getData(widget.idUmkm.toString());
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAlignedGridView() {
     // Handle error klo ngga ada idUmkm nya
-    if (widget.idUmkm == 0) {
+    if (_umkmId == '0') {
       return const Text(
         'Maaf terjadi kesalahan. Mohon coba beberapa saat lagi. (404)',
         textAlign: TextAlign.center,
@@ -311,111 +164,133 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       addAutomaticKeepAlives: false,
-      itemCount: _productsOnUmkm.length,
+      itemCount: _productsOnUmkm.length /* 12 */,
       itemBuilder: (context, index) {
-        String namaProduk = _productsOnUmkm[index]!['nama_produk'];
-        String deskripsi = _productsOnUmkm[index]!['deskripsi'] ?? '';
-        String harga = fmtHarga.format(_productsOnUmkm[index]!['harga']);
-
-        return GestureDetector(
-          onTap: () {},
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            'assets/images/bakmie_ayam_suwir.png',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(namaProduk,
-                      style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 5),
-                  deskripsi.isNotEmpty // render keterangan klo ada
-                      ? Text(deskripsi,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(color: kTextSecondColor))
-                      : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
-                  const SizedBox(height: 5),
-                  Text(harga, style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 15),
-                ],
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(0),
-                    backgroundColor: kPrimaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  onPressed: () => {},
-                  child: Text(
-                    'Tambah',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(fontSize: 12),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        return ProdukAsGridItem(
+          // tes
+          // namaProduk: 'Nama Menu',
+          // deskripsi: 'deskripsi',
+          // harga: 'Rp 30.000',
+          namaProduk: _productsOnUmkm[index]!['nama_produk'] ?? 'Nama Menu',
+          deskripsi: _productsOnUmkm[index]!['deskripsi'] ?? 'deskripsi',
+          harga: fmtHarga.format(_productsOnUmkm[index]!['harga']),
         );
       },
     );
   }
-} */
+}
 
-/* class Tile extends StatelessWidget {
-  const Tile({
-    Key? key,
-    required this.index,
-    this.extent,
-    this.bottomSpace,
-  }) : super(key: key);
+class ProdukAsGridItem extends StatefulWidget {
+  final String namaProduk;
+  final String deskripsi;
+  final String harga;
+  const ProdukAsGridItem({
+    super.key,
+    required this.namaProduk,
+    required this.deskripsi,
+    required this.harga,
+  });
 
-  final int index;
-  final double? extent;
-  final double? bottomSpace;
+  @override
+  State<ProdukAsGridItem> createState() => _ProdukAsGridItemState();
+}
+
+class _ProdukAsGridItemState extends State<ProdukAsGridItem> {
+  bool isOn = false;
 
   @override
   Widget build(BuildContext context) {
-    final child = Container(
-      color: Colors.pink,
-      height: extent,
-      child: const Text('saoeuhsaoe'),
-    );
-
-    if (bottomSpace == null) {
-      return child;
-    }
-
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: child),
-        Container(
-          height: bottomSpace,
-          color: Colors.green,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      'assets/images/bakmie_ayam_suwir.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: PopupMenuButton<String>(
+                    onSelected: (value) {
+                      if (value == 'Edit') {
+                        Navigator.pushNamed(
+                            context, SellerEditProductScreen.routeName);
+                      } else if (value == 'Hapus') {
+                        print(context);
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.more_vert,
+                      size: 20,
+                    ),
+                    padding: const EdgeInsets.all(0),
+                    offset: const Offset(0, 30),
+                    // Return PopupMenuEntry with String as value
+                    itemBuilder: (BuildContext context) =>
+                        <PopupMenuEntry<String>>[
+                      PopupMenuItem<String>(
+                        value: 'Edit',
+                        child: Text('Edit',
+                            style: Theme.of(context).textTheme.labelMedium),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'Hapus',
+                        child: Text('Hapus',
+                            style: Theme.of(context).textTheme.labelMedium),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(widget.namaProduk,
+                style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 5),
+            widget.deskripsi.isNotEmpty // render keterangan klo ada
+                ? Text(widget.deskripsi,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: kTextSecondColor))
+                : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
+            const SizedBox(height: 5),
+            Text(widget.harga, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 15),
+          ],
+        ),
+        Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                padding: const EdgeInsets.all(0),
+                iconSize: 40.0,
+                alignment: Alignment.topRight,
+                icon: isOn
+                    ? const Icon(Icons.toggle_on_rounded, color: kPrimaryColor)
+                    : const Icon(Icons.toggle_off_rounded),
+                onPressed: () {
+                  setState(() => isOn = !isOn);
+                  // TODO: simpan status on atau off utk tiap produk
+                },
+              ),
+            ),
+          ],
         )
       ],
     );
   }
-} */
+}

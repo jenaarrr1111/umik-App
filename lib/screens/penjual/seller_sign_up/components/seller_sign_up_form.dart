@@ -53,7 +53,6 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
   final StorageService storage = StorageService();
   String userToken = '';
   int userId = 0;
-  int umkmId = 0;
 
   void addError({String? error}) {
     if (!errors.contains(error)) {
@@ -72,17 +71,9 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
   }
 
   // Simpan dan baca supaya bisa prepopulate form field
-  Future storeUmkmData(
-      String umkmId,
-      String namaUmkm,
-      String namaLengkap,
-      String email,
-      String noTlp,
-      String estimasi,
-      String plat1,
-      String plat2) async {
+  Future storeUmkmData(String namaUmkm, String namaLengkap, String email,
+      String noTlp, String estimasi, String plat1, String plat2) async {
     try {
-      await storage.writeSecureData('umkm_id', umkmId);
       await storage.writeSecureData('nama_umkm', namaUmkm);
       await storage.writeSecureData('nama_lengkap', namaLengkap);
       await storage.writeSecureData('email_umkm', email);
@@ -117,6 +108,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
       final String? kodePos = await storage.readSecureData('kode_pos');
       final String? namaJln = await storage.readSecureData('nama_jln');
       final String? detail = await storage.readSecureData('detail');
+
       setState(() {
         userToken = token;
         userId = int.parse(usrId);
@@ -143,23 +135,13 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
 
   Future _storeIdUmkm(int id) async {
     try {
-      await storage.writeSecureData('id_umkm', id.toString());
+      await storage.writeSecureData('umkm_id', id.toString());
     } catch (e) {
       print(e);
     }
   }
 
   Future _onSubmit() async {
-    storeUmkmData(
-      umkmId.toString(),
-      namaUMKMController.text,
-      namaController.text,
-      emailController.text,
-      noTlpController.text,
-      estimasiController.text,
-      plat1Controller.text,
-      plat2Controller.text,
-    );
     try {
       var url = '$kApiBaseUrl/register/umkm';
       return await http.post(
@@ -204,6 +186,15 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
         // Store id umkm
         _storeIdUmkm(idUmkm);
         Navigator.pushNamed(context, SellerProfileScreen.routeName);
+        storeUmkmData(
+          namaUMKMController.text,
+          namaController.text,
+          emailController.text,
+          noTlpController.text,
+          estimasiController.text,
+          plat1Controller.text,
+          plat2Controller.text,
+        );
       });
     } catch (e) {
       print(e);
@@ -306,7 +297,6 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
               "Alamat",
               () {
                 storeUmkmData(
-                  umkmId.toString(),
                   namaUMKMController.text,
                   namaController.text,
                   emailController.text,

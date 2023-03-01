@@ -45,8 +45,8 @@ class _SignOutState extends State<SignOut> {
         },
       ).then((value) {
         final data = jsonDecode(value.body);
-        print('token: $userToken');
-        print('data: $data');
+        // print('token: $userToken');
+        // print('data: $data');
         deleteData();
         Navigator.pushNamedAndRemoveUntil(
             context, '/sign_in', (route) => false);
