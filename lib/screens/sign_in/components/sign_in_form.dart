@@ -5,11 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:umik/components/custom_surfix_icon.dart';
 import 'package:umik/components/default_button.dart';
 import 'package:umik/components/form_error.dart';
-import 'package:umik/components/second_button.dart';
 import 'package:umik/constants.dart';
-import 'package:umik/helper/keyboard.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
-import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/sign_up/sign_up_screen.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
@@ -73,6 +70,7 @@ class _SignInFormState extends State<SignInForm> {
       await storage.writeSecureData('email', email);
       await storage.writeSecureData('password', pass);
       await storage.writeSecureData('token', token);
+      // dipake utk daftar sbg umkm
       await storage.writeSecureData('user_id', userId.toString());
     } catch (e) {
       print(e);
@@ -95,8 +93,6 @@ class _SignInFormState extends State<SignInForm> {
       ).then((value) {
         final res = jsonDecode(value.body);
         final resMsg = res['message'];
-        final resToken = res['token'];
-        final userId = res['user_id'];
 
         // klo udh login / ter-autentikasi
         if (value.statusCode == 403 && userToken.isNotEmpty) {
@@ -120,6 +116,10 @@ class _SignInFormState extends State<SignInForm> {
           }
         }
 
+        // definisikan userId harus stlhnya kondisi error soalnya klo error ga adares['data']['id']
+        final resToken = res['token'];
+        final userId = res['data']['id'];
+        // print(res);
         storeUserCreds(
             emailController.text, passwordController.text, resToken, userId);
         Navigator.of(context)
@@ -263,43 +263,6 @@ class _SignInFormState extends State<SignInForm> {
                 // if all are valid then go to success screen
                 // KeyboardUtil.hideKeyboard(context);
                 // Navigator.pushNamed(context, HomeScreen.routeName);
-              }
-            },
-          ),
-          SizedBox(height: getProportionateScreenHeight(20)),
-
-          //Sign in With google
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Divider(
-                      color: Colors.black,
-                      height: 16,
-                    )),
-              ),
-              const Text("Atau"),
-              Expanded(
-                child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Divider(
-                      color: Colors.black,
-                      height: 16,
-                    )),
-              ),
-            ],
-          ),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          SecondButton(
-            text: "Sign In With Google",
-            icon: "assets/icons/google-icon.svg",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),

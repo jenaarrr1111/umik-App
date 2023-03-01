@@ -121,7 +121,8 @@ class _SellerAddressScreenState extends State<SellerAddressScreen> {
                   nmJalanController.text,
                   detailController.text,
                 );
-                Navigator.pop(context);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, SellerSignUpScreen.routeName, (route) => false);
               }
             }),
       ),

@@ -13,6 +13,8 @@ import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
 
+// Awal
+// Store idumkm ke storage
 class SellerSignUpForm extends StatefulWidget {
   const SellerSignUpForm({super.key});
 
@@ -20,6 +22,7 @@ class SellerSignUpForm extends StatefulWidget {
   State<SellerSignUpForm> createState() => _SellerSignUpFormState();
 }
 
+// Mohon maaf yg sebesar"nya krn sangat repetitif, TT
 class _SellerSignUpFormState extends State<SellerSignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
@@ -40,7 +43,6 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
   String? detail;
 
   String addressErrMsg = '';
-  String emailErrMsg = '';
 
   final nmUmkmMaxLength = 100;
   final nmMaxLength = 100;
@@ -139,6 +141,14 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
     }
   }
 
+  Future _storeIdUmkm(int id) async {
+    try {
+      await storage.writeSecureData('id_umkm', id.toString());
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future _onSubmit() async {
     storeUmkmData(
       umkmId.toString(),
@@ -177,8 +187,6 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
       ).then((value) {
         final res = jsonDecode(value.body);
         final resMsg = res['message'];
-        final data = res['data'];
-        final idUmkm = data['id'];
 
         if (value.statusCode != 201) {
           if (resMsg.runtimeType.toString() == '_JsonMap') {
@@ -189,10 +197,13 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
           return;
         }
 
+        final data = res['data'];
+        final idUmkm = data['data_umkm']['id'];
+        print('data: {$res["data"]}');
         print('idumkm: $idUmkm');
-        Navigator.pushNamed(context, SellerProfileScreen.routeName, arguments: {
-          'idUmkm': idUmkm,
-        });
+        // Store id umkm
+        _storeIdUmkm(idUmkm);
+        Navigator.pushNamed(context, SellerProfileScreen.routeName);
       });
     } catch (e) {
       print(e);
@@ -236,22 +247,24 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
                 child: RectangleFirst(
                   text: "Kirim",
                   press: () {
-                    if ([provinsi, kota, kecamatan, kodePos, namaJln]
-                        .contains(null)) {
-                      setState(() {
-                        addressErrMsg = 'Data alamat harus terisi lengkap';
-                      });
+                    // remove err msg
+                    setState(() {
+                      addressErrMsg = '';
+                    });
+
+                    if (!_formKey.currentState!.validate()) {
+                      if ([provinsi, kota, kecamatan, kodePos, namaJln]
+                          .contains(null)) {
+                        print([provinsi, kota, kecamatan, kodePos, namaJln]);
+                        setState(() {
+                          addressErrMsg = 'Data alamat harus terisi lengkap';
+                        });
+                      }
                       return;
                     }
 
-                    if (_formKey.currentState!.validate()) {
-                      // remove err msg
-                      setState(() {
-                        addressErrMsg = '';
-                        emailErrMsg = '';
-                      });
-                      _onSubmit();
-                    }
+                    // klo semua baik" saja
+                    _onSubmit();
                   },
                 ),
               ),

@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
+// Awal
+// Oper kategori, nama, id
 class UmkmCard extends StatefulWidget {
   final String kategori;
 

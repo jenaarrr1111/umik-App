@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
+// Target
+// terima kategori, nama, idkmkm (semua dipake di sini)
 class DaftarProdukScreen extends StatelessWidget {
   const DaftarProdukScreen({super.key});
 

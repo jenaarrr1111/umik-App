@@ -6,6 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
+// Target
+// read umkm_id dari storage
+// buat req pake idumkm umkm utk ambil+oper nama, kategori
+// Cuma perlu satu req
+// Perlu namaumkm, kategori, data produk
 class SellerHomeScreen extends StatefulWidget {
   const SellerHomeScreen({super.key});
 
@@ -16,16 +21,41 @@ class SellerHomeScreen extends StatefulWidget {
 }
 
 class _SellerHomeScreenState extends State<SellerHomeScreen> {
-  // initialize storage
-  final StorageService storage = StorageService();
-  late String idUmkm;
+  String _idUmkm = '';
+  String? _namaUmkm;
+  String? _kategori;
+  String _token = '';
+  List _productsOnUmkm = [];
+  final storage = StorageService();
 
-  Future getUmkmData() async {
+  Future _getIdNamaUmkmToken() async {
+    _idUmkm = await storage.readSecureData('id_umkm') ?? '';
+    print(_idUmkm);
+    _namaUmkm = await storage.readSecureData('nama_umkm');
+    _token = await storage.readSecureData('token') ?? '';
+  }
+
+  // Buat req
+  Future _getProductsOnUmkm(String idUmkm, String token) async {
     try {
-      final String id = await storage.readSecureData('umkm_id') ?? '';
-      setState(() {
-        idUmkm = id;
-      });
+      var url = '$kApiBaseUrl/products/umkm/$idUmkm';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 200) {
+        final res = jsonDecode(response.body);
+        setState(() {
+          _productsOnUmkm = res['data'];
+          _kategori = res['kategori'] ?? 'kategori1, kategori2';
+          print('products: $_productsOnUmkm');
+          print('katgeri: $_kategori');
+        });
+      }
+      return response;
     } catch (e) {
       print(e);
     }
@@ -33,12 +63,20 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _getIdNamaUmkmToken();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Ekstrak argumen
+    // final args = (ModalRoute.of(context)?.settings.arguments ??
+    //     <String, dynamic>{}) as Map;
+    // final int idUmkm = args.isNotEmpty ? args['idUmkm'] : 0;
+    // // Buat req
+    _getProductsOnUmkm(_idUmkm, _token);
+    print('idUmkm: $_idUmkm, $_token');
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -61,7 +99,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
           Row(
             children: [
               Flexible(
-                child: Text(namaUmkm,
+                child: Text(_namaUmkm ?? 'Nama Umkm',
                     style: Theme.of(context).textTheme.titleLarge),
               ),
               const Padding(
@@ -79,7 +117,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
             children: [
               Flexible(
                 child: Text(
-                  kategoriUmkm,
+                  _kategori ?? 'Kategori1, kategori2',
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
@@ -94,16 +132,115 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 20),
-          GridItemDaftarProduk(idUmkm: idUmkm),
+          // GridItemDaftarProduk(idUmkm: _idUmkm),
+          AlignedGridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 30,
+            crossAxisSpacing: 20,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            addAutomaticKeepAlives: false,
+            itemCount: _productsOnUmkm.length,
+            itemBuilder: (context, index) {
+              String namaProduk =
+                  _productsOnUmkm[index]!['nama_produk'] ?? 'Nama Menu';
+              String deskripsi =
+                  _productsOnUmkm[index]!['deskripsi'] ?? 'deskripsi';
+              String harga = fmtHarga.format(_productsOnUmkm[index]!['harga']);
+
+              return ProdukAsGridItem(
+                namaProduk: namaProduk,
+                deskripsi: deskripsi,
+                harga: harga,
+              );
+            },
+          ),
         ],
       ),
     );
   }
 }
 
-class GridItemDaftarProduk extends StatefulWidget {
-  final int? idUmkm;
-  const GridItemDaftarProduk({super.key, this.idUmkm});
+class ProdukAsGridItem extends StatelessWidget {
+  final String namaProduk;
+  final String deskripsi;
+  final String harga;
+  const ProdukAsGridItem({
+    super.key,
+    required this.namaProduk,
+    required this.deskripsi,
+    required this.harga,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/images/bakmie_ayam_suwir.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(namaProduk, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 5),
+              deskripsi.isNotEmpty // render keterangan klo ada
+                  ? Text(deskripsi,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: kTextSecondColor))
+                  : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
+              const SizedBox(height: 5),
+              Text(harga, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 15),
+            ],
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(0),
+                backgroundColor: kPrimaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              onPressed: () => {},
+              child: Text(
+                'Tambah',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium!
+                    .copyWith(fontSize: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+// Kelas 2
+// terima nama produk, deskripsi, harga
+/* class GridItemDaftarProduk extends StatefulWidget {
+  const GridItemDaftarProduk({super.key});
 
   @override
   State<GridItemDaftarProduk> createState() => _GridItemDaftarProdukState();
@@ -245,9 +382,9 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
       },
     );
   }
-}
+} */
 
-class Tile extends StatelessWidget {
+/* class Tile extends StatelessWidget {
   const Tile({
     Key? key,
     required this.index,
@@ -281,4 +418,4 @@ class Tile extends StatelessWidget {
       ],
     );
   }
-}
+} */
