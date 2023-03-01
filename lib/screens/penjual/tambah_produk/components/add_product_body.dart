@@ -77,7 +77,7 @@ class _AddProductBodyState extends State<AddProductBody> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: const Color(0xFFF5F6F9),
+                      backgroundColor: KBgColor,
                       shape: const ContinuousRectangleBorder(),
                     ),
                     onPressed: () {},
@@ -97,7 +97,7 @@ class _AddProductBodyState extends State<AddProductBody> {
             // [ Nama Produk ]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
-              color: const Color(0xFFF5F6F9),
+              color: KBgColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -158,7 +158,7 @@ class _AddProductBodyState extends State<AddProductBody> {
             // [ Deskripsi Produk ]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
-              color: const Color(0xFFF5F6F9),
+              color: KBgColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -258,7 +258,7 @@ class _AddProductBodyState extends State<AddProductBody> {
             // [ Harga Produk ]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
-              color: const Color(0xFFF5F6F9),
+              color: KBgColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -318,7 +318,7 @@ class _AddProductBodyState extends State<AddProductBody> {
             // [ Stok Produk ]
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
-              color: const Color(0xFFF5F6F9),
+              color: KBgColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

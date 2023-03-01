@@ -13,7 +13,6 @@ import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
 
-// Awal
 // Store idumkm ke storage
 class SellerSignUpForm extends StatefulWidget {
   const SellerSignUpForm({super.key});

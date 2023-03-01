@@ -5,8 +5,6 @@ import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
 
-// import '../seller_sign_up/seller_sign_up_screen.dart';
-
 class SellerAddressScreen extends StatefulWidget {
   static String routeName = "/seller_address";
 

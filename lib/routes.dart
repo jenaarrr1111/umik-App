@@ -6,6 +6,7 @@ import 'package:umik/screens/daftar_umkm/daftar_umkm_screen.dart';
 import 'package:umik/screens/details/details_screen.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
 import 'package:umik/screens/home/home_screen.dart';
+import 'package:umik/screens/keranjang/keranjang_screen.dart';
 import 'package:umik/screens/penjual/promo/promo_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/no_handphone/hp_screen.dart';
@@ -44,6 +45,7 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  KeranjangScreen.routeName: (context) => KeranjangScreen(),
   UserRute.routeName: (context) => UserRute(),
   DaftarUmkmScreen.routeName: (context) => DaftarUmkmScreen(),
   DaftarProdukScreen.routeName: (context) => DaftarProdukScreen(),
