@@ -9,7 +9,6 @@ import 'package:umik/screens/penjual/home/components/seller_bottom_navbar.dart';
 import 'package:umik/screens/penjual/home/components/seller_fab.dart';
 import 'package:umik/services/storage_service.dart';
 
-// Target
 // read umkm_id dari storage
 // buat req pake idumkm umkm utk ambil+oper nama, kategori
 // Cuma perlu satu req
