@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umik/constants.dart';
 
 class ProfileMenu extends StatelessWidget {
   const ProfileMenu({
     Key? key,
     required this.text,
-    this.fieldValue,
+    this.fieldValue = '',
     this.press,
   }) : super(key: key);
 
   final String text;
   final VoidCallback? press;
-  final String? fieldValue;
+  final String fieldValue;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,7 @@ class ProfileMenu extends StatelessWidget {
         child: Row(
           children: [
             Expanded(child: Text(text)),
+            Text(fieldValue),
             const Icon(Icons.arrow_forward_ios_rounded),
           ],
         ),

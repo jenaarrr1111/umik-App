@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
+import 'package:http/http.dart' as http;
 import 'package:umik/screens/profile/components/profile_menu.dart';
 import 'package:umik/screens/profile/components/profile_pic.dart';
 import 'package:umik/screens/profile/nama/nama_screen.dart';
@@ -23,20 +26,42 @@ class _BodyState extends State<Body> {
   String nama = '';
   String noTelp = '';
   String email = '';
+  String userId = '';
+  String userToken = '';
+
+  Future _readUserIdAndToken() async {
+    try {
+      final String usrId = await storage.readSecureData('user_id') ?? '';
+      final String token = await storage.readSecureData('token') ?? '';
+      setState(() {
+        userId = usrId;
+        userToken = token;
+      });
+      _getUserData();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future _getUserData() async {
     try {
-      final username = await storage.readSecureData('username');
-      final nama = await storage.readSecureData('nama');
-      final noTelp = await storage.readSecureData('no_tlp');
-      final email = await storage.readSecureData('email');
-
-      setState(() {
-        this.username = username ?? 'usrname';
-        this.nama = nama ?? 'nama';
-        this.noTelp = noTelp ?? 'notlp';
-        this.email = email ?? 'email';
-      });
+      var url = '$kApiBaseUrl/users/$userId';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $userToken',
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body)['data'];
+        setState(() {
+          username = data['username'];
+          nama = data['nama'];
+          noTelp = data['no_tlp'];
+          email = data['email'];
+        });
+      }
     } catch (e) {
       print(e);
     }
@@ -45,7 +70,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    _getUserData();
+    _readUserIdAndToken();
   }
 
   @override

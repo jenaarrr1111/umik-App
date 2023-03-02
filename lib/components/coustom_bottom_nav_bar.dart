@@ -100,9 +100,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 ),
                 onPressed: () {
                   if (levelUser == 'penjual') {
-                    Navigator.pushNamed(context, ProfileScreen.routeName);
+                    Navigator.pushNamed(context, SellerProfileScreen.routeName);
                   }
-                  Navigator.pushNamed(context, SellerProfileScreen.routeName);
+                  Navigator.pushNamed(context, ProfileScreen.routeName);
                 }),
             // Text("Saya"),
           ],

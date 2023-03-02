@@ -112,7 +112,7 @@ class _AddProductBodyState extends State<AddProductBody> {
         print(resMsg);
 
         if (value.statusCode != 201) {
-          print('aeoeao');
+          print('halo');
         }
       });
     } catch (e) {
