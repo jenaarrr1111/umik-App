@@ -13,7 +13,8 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+      bottomNavigationBar:
+          const CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 }

@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:umik/components/custom_surfix_icon.dart';
 import 'package:umik/components/default_button.dart';
 import 'package:umik/components/form_error.dart';
-import 'package:umik/components/second_button.dart';
 import 'package:umik/constants.dart';
-import 'package:umik/helper/keyboard.dart';
-import 'package:umik/screens/sign_in/sign_in_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
@@ -57,11 +54,19 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
-  Future<void> storeUserCreds(String email, String pass, String token) async {
+  Future<void> getUserCreds() async {
+    try {
+      final String token = await storage.readSecureData('token') ?? '';
+      setState(() => userToken = token);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> storeUserCreds(String email, String pass) async {
     try {
       await storage.writeSecureData('email', email);
       await storage.writeSecureData('password', pass);
-      await storage.writeSecureData('token', token);
     } catch (e) {
       print(e);
     }
@@ -69,17 +74,14 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Future _onSubmit() async {
     try {
-      // Aku bingung cara ngeblok user klo udh login, jd utk sementara aku lgsg cek klo udah ada tokennya, wkt disubmit lgsg ke home aja
-      if (userToken.isNotEmpty) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            '/sign_in', (Route<dynamic> route) => false);
-        return;
-      }
-      // logout dulu
-      await storage.deleteAll();
+      var url = '$kApiBaseUrl/register';
+
       return await http.post(
-        Uri.parse('http://umik.test/api/register'),
-        headers: {'Accept': 'application/json'},
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $userToken',
+        },
         body: {
           'username': usernameController.text,
           'nama': namaController.text,
@@ -88,17 +90,43 @@ class _SignUpFormState extends State<SignUpForm> {
           'password': passwordController.text,
         },
       ).then((value) {
-        final data = jsonDecode(value.body);
-        print(data);
-        print(data['token']);
-        storeUserCreds(
-            emailController.text, passwordController.text, data['token']);
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        final res = jsonDecode(value.body);
+        final resMsg = res['message'];
+
+        // klo udh login / ter-autentikasi
+        if (value.statusCode == 403 && userToken.isNotEmpty) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/home', (Route<dynamic> route) => false);
+          return;
+        }
+
+        if (value.statusCode != 201) {
+          if (resMsg is String) {
+            addError(error: resMsg);
+            return;
+          }
+
+          if (resMsg.runtimeType.toString() == '_JsonMap') {
+            for (var item in resMsg.values) {
+              addError(error: item[0]);
+            }
+          }
+          return;
+        }
+
+        storeUserCreds(emailController.text, passwordController.text);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/sign_in', (Route<dynamic> route) => false);
       });
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserCreds();
   }
 
   @override
@@ -135,7 +163,6 @@ class _SignUpFormState extends State<SignUpForm> {
               }
             },
           ),
-          SizedBox(height: getProportionateScreenHeight(20)),
         ],
       ),
     );

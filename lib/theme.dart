@@ -75,6 +75,12 @@ TextTheme textTheme() {
     ),
 
     // Label
+    labelLarge: TextStyle(
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.w500,
+      fontSize: 15,
+      color: kTextColor,
+    ),
     labelMedium: TextStyle(
       fontFamily: 'Poppins',
       fontWeight: FontWeight.w500,

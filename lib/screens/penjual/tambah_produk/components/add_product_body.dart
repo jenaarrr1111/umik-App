@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
+import 'package:umik/components/custom_text_input_field.dart';
 
 class AddProductBody extends StatefulWidget {
   const AddProductBody({super.key});
@@ -10,6 +14,8 @@ class AddProductBody extends StatefulWidget {
 
 class _AddProductBodyState extends State<AddProductBody> {
   final _formKey = GlobalKey<FormState>();
+  List<String> _kategoriList = [];
+  String kategoriVal = '';
 
   // Initialize form field controller
   var namaProdukController = TextEditingController();
@@ -17,44 +23,43 @@ class _AddProductBodyState extends State<AddProductBody> {
   var hargaController = TextEditingController();
   var stokController = TextEditingController();
 
-  final namaProdukLength = 255;
-  final deskripsiLength = 3000;
-  final hargaLength = 100;
-  final stokLength = 300;
+  final nmProdukMaxLength = 255;
+  final descMaxLength = 3000;
+  final hargaMaxLength = 100;
+  final stokMaxLength = 300;
 
-  var textNamaProdukLength = 0;
-  var textDeskripsiLength = 0;
-  var textHargaLength = 0;
-  var textStokLength = 0;
+  Future _getKategori() async {
+    try {
+      var url = '$kApiBaseUrl/categories';
+      final response = await http.get(Uri.parse(url));
 
-  static const List<String> kategoriList = [
-    'Kategori 1',
-    'Kategori 2',
-    'Kategori 3',
-    'Kategori 4',
-    'Kategori 5',
-    'Kategori 6',
-    'Kategori 7',
-    'Kategori 8',
-    'Kategori 9',
-    'Kategori 10',
-    'Kategori 11',
-    'Kategori 12 super duper absolutely massively long category',
-    'Kategori 13 super duper absolutely massively long category',
-    'Kategori 14 super duper absolutely massively long category',
-    'Kategori 15 super duper absolutely massively long category',
-    'Kategori 16 super duper absolutely massively long category',
-    'Kategori 17 super duper absolutely massively long category',
-  ];
+      print(jsonDecode(response.body));
+      // if response successful
+      if (response.statusCode == 200) {
+        final List data = jsonDecode(response.body)['data'];
+        // print(data);
+        setState(() {
+          _kategoriList = data.map((item) => item.toString()).toList();
+          kategoriVal = _kategoriList.first;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
-  String kategoriVal = kategoriList.first;
+  @override
+  void initState() {
+    super.initState();
+    _getKategori();
+  }
 
   Future _onSubmit() async {
     try {
       print('Nama produk ${namaProdukController.text}');
       print('Deskripsi produk ${deskripsiController.text}');
     } catch (e) {
-      print('Fuck, gagal');
+      print(e);
     }
   }
 
@@ -82,12 +87,14 @@ class _AddProductBodyState extends State<AddProductBody> {
                     ),
                     onPressed: () {},
                     child: Center(
-                      child: Text('+ Tambah Foto',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontSize: 13)),
+                      child: Text(
+                        '+ Tambah Foto',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontSize: 13),
+                      ),
                     ),
                   ),
                 ),
@@ -95,125 +102,25 @@ class _AddProductBodyState extends State<AddProductBody> {
             ),
 
             // [ Nama Produk ]
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              color: KBgColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text('Nama Produk',
-                              style: Theme.of(context).textTheme.titleLarge),
-                        ),
-                        Text(
-                            '${textNamaProdukLength.toString()}/${namaProdukLength.toString()}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(color: kTextSecondColor)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: namaProdukController,
-                    decoration: const InputDecoration(
-                      fillColor: Colors.transparent,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 0.5,
-                          )),
-                      enabledBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      hintText: 'Masukkan nama produk',
-                      filled: true,
-                      counterText: '',
-                    ),
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLength: namaProdukLength,
-                    onChanged: (value) {
-                      setState(() {
-                        textNamaProdukLength = value.length;
-                      });
-                    },
-                    validator: (value) => value!.isEmpty
-                        ? 'Nama produk tidak boleh kososng!'
-                        : null,
-                  ),
-                ],
-              ),
+            CustomTextInputField(
+              label: 'Nama Produk',
+              needLabel: true,
+              hint: 'Masukkan nama produk',
+              inputMaxLength: nmProdukMaxLength,
+              fieldController: namaProdukController,
+              isRequired: true,
+              horizontalPadding: 20,
             ),
 
             // [ Deskripsi Produk ]
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              color: KBgColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text('Deskripsi Produk',
-                              style: Theme.of(context).textTheme.titleLarge),
-                        ),
-                        Text(
-                            '${textDeskripsiLength.toString()}/${deskripsiLength.toString()}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(color: kTextSecondColor)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: deskripsiController,
-                    decoration: const InputDecoration(
-                      fillColor: Colors.transparent,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 0.5,
-                          )),
-                      enabledBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      hintText: 'Masukkan deskripsi produk',
-                      filled: true,
-                      counterText: '',
-                    ),
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLength: deskripsiLength,
-                    onChanged: (value) {
-                      setState(() {
-                        textDeskripsiLength = value.length;
-                      });
-                    },
-                    validator: (value) => value!.isEmpty
-                        ? 'Deskripsi produk tidak boleh kososng!'
-                        : null,
-                  ),
-                ],
-              ),
+            CustomTextInputField(
+              label: 'Deskripsi Produk',
+              needLabel: true,
+              hint: 'Masukkan deskripsi produk',
+              inputMaxLength: descMaxLength,
+              fieldController: deskripsiController,
+              isRequired: true,
+              horizontalPadding: 20,
             ),
 
             // [ Kategori ]
@@ -222,33 +129,38 @@ class _AddProductBodyState extends State<AddProductBody> {
               color: KBgColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: Text('Kategori',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Kategori',
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Colors.black, fontWeight: FontWeight.w400),
+                    ),
                   ),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          itemHeight: 60,
-                          value: kategoriVal,
-                          isExpanded: true,
-                          style: Theme.of(context).textTheme.titleMedium,
-                          items: kategoriList.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() => kategoriVal = value!);
-                          },
-                        ),
-                      ),
+                      child: kategoriVal.isEmpty
+                          ? const SizedBox(height: 60)
+                          : DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                itemHeight: 60,
+                                value: kategoriVal,
+                                isExpanded: true,
+                                style: Theme.of(context).textTheme.labelMedium,
+                                items: _kategoriList.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() => kategoriVal = value!);
+                                },
+                              ),
+                            ),
                     ),
                   ),
                 ],
@@ -256,123 +168,25 @@ class _AddProductBodyState extends State<AddProductBody> {
             ),
 
             // [ Harga Produk ]
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              color: KBgColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text('Harga',
-                              style: Theme.of(context).textTheme.titleLarge),
-                        ),
-                        Text(
-                            '${textHargaLength.toString()}/${hargaLength.toString()}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(color: kTextSecondColor)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: hargaController,
-                    decoration: const InputDecoration(
-                      fillColor: Colors.transparent,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 0.5,
-                          )),
-                      enabledBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      hintText: 'Masukkan harga',
-                      filled: true,
-                      counterText: '',
-                    ),
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLength: hargaLength,
-                    onChanged: (value) {
-                      setState(() {
-                        textHargaLength = value.length;
-                      });
-                    },
-                    validator: (value) =>
-                        value!.isEmpty ? 'Harga tidak boleh kososng!' : null,
-                  ),
-                ],
-              ),
+            CustomTextInputField(
+              label: 'Harga',
+              needLabel: true,
+              hint: 'Masukkan harga',
+              inputMaxLength: hargaMaxLength,
+              fieldController: hargaController,
+              isRequired: true,
+              horizontalPadding: 20,
             ),
 
             // [ Stok Produk ]
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              color: KBgColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text('Stok',
-                              style: Theme.of(context).textTheme.titleLarge),
-                        ),
-                        Text(
-                            '${textStokLength.toString()}/${stokLength.toString()}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(color: kTextSecondColor)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: stokController,
-                    decoration: const InputDecoration(
-                      fillColor: Colors.transparent,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 0.5,
-                          )),
-                      enabledBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      hintText: 'Masukkan jumlah stok',
-                      filled: true,
-                      counterText: '',
-                    ),
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLength: stokLength,
-                    onChanged: (value) {
-                      setState(() {
-                        textStokLength = value.length;
-                      });
-                    },
-                    validator: (value) =>
-                        value!.isEmpty ? 'Stok boleh kososng!' : null,
-                  ),
-                ],
-              ),
+            CustomTextInputField(
+              label: 'Stok',
+              needLabel: true,
+              hint: 'Masukkan Stok',
+              inputMaxLength: stokMaxLength,
+              fieldController: stokController,
+              isRequired: true,
+              horizontalPadding: 20,
             ),
 
             Padding(
