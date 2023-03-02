@@ -19,9 +19,9 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
-  final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
+  final _formKey = GlobalKey<FormState>();
   bool? remember = false;
   final List<String?> errors = [];
 
@@ -33,6 +33,7 @@ class _SignInFormState extends State<SignInForm> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
+  // Err related
   void addError({String? error}) {
     if (!errors.contains(error)) {
       setState(() {
@@ -49,6 +50,7 @@ class _SignInFormState extends State<SignInForm> {
     }
   }
 
+  // future and api calls
   Future<void> getUserCreds() async {
     try {
       final String email = await storage.readSecureData('email') ?? '';
