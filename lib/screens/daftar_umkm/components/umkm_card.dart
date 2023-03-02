@@ -79,11 +79,12 @@ class _UmkmCardState extends State<UmkmCard> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Container(
+                          /* child: Container(
                             color: Colors.grey[100],
                             height: 100,
                             width: 100,
-                          ),
+                          ), */
+                          child: Image.asset('assets/images/cth_gbr_umkm.png'),
                         ),
                         const SizedBox(width: 10),
                         Flexible(
@@ -101,9 +102,9 @@ class _UmkmCardState extends State<UmkmCard> {
                               Text('Diantar dalam 25 menit - 1,5 km',
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
-                              Text('Diskon xxxxxx',
+                              /* Text('Diskon xxxxxx',
                                   style:
-                                      Theme.of(context).textTheme.bodyMedium),
+                                      Theme.of(context).textTheme.bodyMedium), */
                             ],
                           ),
                         ),
