@@ -64,14 +64,15 @@ class _SignInFormState extends State<SignInForm> {
     }
   }
 
-  Future<void> storeUserCreds(
-      String email, String pass, String token, int userId) async {
+  Future<void> storeUserCreds(String email, String pass, String token,
+      int userId, String lvlUser) async {
     try {
       await storage.writeSecureData('email', email);
       await storage.writeSecureData('password', pass);
       await storage.writeSecureData('token', token);
       // dipake utk daftar sbg umkm
       await storage.writeSecureData('user_id', userId.toString());
+      await storage.writeSecureData('level_user', lvlUser);
     } catch (e) {
       print(e);
     }
@@ -119,9 +120,16 @@ class _SignInFormState extends State<SignInForm> {
         // definisikan userId harus stlhnya kondisi error soalnya klo error ga adares['data']['id']
         final resToken = res['token'];
         final userId = res['data']['id'];
+        final levelUser = res['data']['level_user'];
+        print(levelUser);
         // print(res);
         storeUserCreds(
-            emailController.text, passwordController.text, resToken, userId);
+          emailController.text,
+          passwordController.text,
+          resToken,
+          userId,
+          levelUser,
+        );
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
       });
