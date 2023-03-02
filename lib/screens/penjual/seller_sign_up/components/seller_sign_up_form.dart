@@ -21,7 +21,6 @@ class SellerSignUpForm extends StatefulWidget {
   State<SellerSignUpForm> createState() => _SellerSignUpFormState();
 }
 
-// Mohon maaf yg sebesar"nya krn sangat repetitif, TT
 class _SellerSignUpFormState extends State<SellerSignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
@@ -85,7 +84,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
     }
   }
 
-  Future<void> getUserAndUmkmData() async {
+  Future<void> readUserAndUmkmData() async {
     try {
       final String token = await storage.readSecureData('token') ?? '';
       final String usrId = await storage.readSecureData('user_id') ?? '';
@@ -205,7 +204,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
   @override
   void initState() {
     super.initState();
-    getUserAndUmkmData();
+    readUserAndUmkmData();
   }
 
   @override

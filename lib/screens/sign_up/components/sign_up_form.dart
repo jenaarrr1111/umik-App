@@ -35,7 +35,7 @@ class _SignUpFormState extends State<SignUpForm> {
   var usernameController = TextEditingController();
   var emailController = TextEditingController();
   var namaController = TextEditingController();
-  var phoneNumberController = TextEditingController();
+  var noTelpController = TextEditingController();
   var passwordController = TextEditingController();
 
   void addError({String? error}) {
@@ -63,7 +63,10 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
-  Future<void> storeUserCreds(String email, String pass) async {
+  Future<void> storeUserCreds(
+    String email,
+    String pass,
+  ) async {
     try {
       await storage.writeSecureData('email', email);
       await storage.writeSecureData('password', pass);
@@ -85,7 +88,7 @@ class _SignUpFormState extends State<SignUpForm> {
         body: {
           'username': usernameController.text,
           'nama': namaController.text,
-          'no_tlp': phoneNumberController.text,
+          'no_tlp': noTelpController.text,
           'email': emailController.text,
           'password': passwordController.text,
         },
@@ -114,7 +117,10 @@ class _SignUpFormState extends State<SignUpForm> {
           return;
         }
 
-        storeUserCreds(emailController.text, passwordController.text);
+        storeUserCreds(
+          emailController.text,
+          passwordController.text,
+        );
         Navigator.of(context).pushNamedAndRemoveUntil(
             '/sign_in', (Route<dynamic> route) => false);
       });
@@ -290,7 +296,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
-      controller: phoneNumberController,
+      controller: noTelpController,
       onSaved: (newValue) => phoneNumber = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {

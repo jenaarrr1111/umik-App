@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
 import 'package:umik/components/custom_text_input_field.dart';
+import 'package:umik/services/storage_service.dart';
 
 class AddProductBody extends StatefulWidget {
   const AddProductBody({super.key});
@@ -14,12 +15,18 @@ class AddProductBody extends StatefulWidget {
 
 class _AddProductBodyState extends State<AddProductBody> {
   final _formKey = GlobalKey<FormState>();
+
+  final StorageService storage = StorageService();
+  String? _umkmId;
+  String? _token;
+
   List<String> _kategoriList = [];
-  String kategoriVal = '';
+  final List<String?> errors = [];
 
   // Initialize form field controller
   var namaProdukController = TextEditingController();
   var deskripsiController = TextEditingController();
+  String kategoriVal = '';
   var hargaController = TextEditingController();
   var stokController = TextEditingController();
 
@@ -28,12 +35,44 @@ class _AddProductBodyState extends State<AddProductBody> {
   final hargaMaxLength = 100;
   final stokMaxLength = 300;
 
+  // Err related
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  // storage and api calls
+  Future _readUserAndUmkmData() async {
+    try {
+      final token = await storage.readSecureData('token') ?? '';
+      final umkmId = await storage.readSecureData('umkm_id') ?? '';
+      setState(() {
+        _token = token;
+        _umkmId = umkmId;
+      });
+      _getKategori();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future _getKategori() async {
     try {
       var url = '$kApiBaseUrl/categories';
       final response = await http.get(Uri.parse(url));
 
-      print(jsonDecode(response.body));
+      // print(jsonDecode(response.body));
       // if response successful
       if (response.statusCode == 200) {
         final List data = jsonDecode(response.body)['data'];
@@ -48,19 +87,43 @@ class _AddProductBodyState extends State<AddProductBody> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _getKategori();
-  }
-
   Future _onSubmit() async {
     try {
-      print('Nama produk ${namaProdukController.text}');
-      print('Deskripsi produk ${deskripsiController.text}');
+      var url = '$kApiBaseUrl/product';
+      return await http.post(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $_token',
+        },
+        body: {
+          'umkm_id': _umkmId,
+          'nama_produk': namaProdukController.text,
+          'deskripsi': deskripsiController.text,
+          'gbr_prodk': '',
+          'kategori': kategoriVal,
+          'harga': hargaController.text,
+          'stok': stokController.text,
+        },
+      ).then((value) {
+        final res = jsonDecode(value.body);
+        final resMsg = res['message'];
+        print(res);
+        print(resMsg);
+
+        if (value.statusCode != 201) {
+          print('aeoeao');
+        }
+      });
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _readUserAndUmkmData();
   }
 
   @override
@@ -194,7 +257,6 @@ class _AddProductBodyState extends State<AddProductBody> {
               child: SizedBox(
                 width: double.infinity, // set width to match the parent
                 child: ElevatedButton(
-                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 15),
@@ -209,6 +271,11 @@ class _AddProductBodyState extends State<AddProductBody> {
                         .labelMedium!
                         .copyWith(fontSize: 14),
                   ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _onSubmit();
+                    }
+                  },
                 ),
               ),
             ),

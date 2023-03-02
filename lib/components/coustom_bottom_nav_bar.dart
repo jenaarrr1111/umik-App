@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:umik/enums.dart';
 import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/seller_profile_screen.dart';
+import 'package:umik/screens/profile/profile_screen.dart';
 import 'package:umik/services/storage_service.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
@@ -19,14 +20,14 @@ class CustomBottomNavBar extends StatefulWidget {
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   // initialize storage
   final StorageService storage = StorageService();
-  String? lvlUser;
+  String? levelUser;
 
   Future _readLevelUser() async {
     try {
-      final lvl = await storage.readSecureData('level_user');
+      final level = await storage.readSecureData('level_user');
       setState(() {
-        lvlUser = lvl;
-        print('$lvlUser, lvl: ${lvl.toString()}');
+        levelUser = level;
+        // print('$levelUser, lvl: ${level.toString()}');
       });
     } catch (e) {
       print(e);
@@ -98,8 +99,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   //     : inActiveIconColor,
                 ),
                 onPressed: () {
-                  if (lvlUser == 'penjual') {
-                    Navigator.pushNamed(context, SellerProfileScreen.routeName);
+                  if (levelUser == 'penjual') {
+                    Navigator.pushNamed(context, ProfileScreen.routeName);
                   }
                   Navigator.pushNamed(context, SellerProfileScreen.routeName);
                 }),
