@@ -42,7 +42,7 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
               borderRadius: BorderRadius.circular(10),
               child: SizedBox(
                 width: 92.0,
-                height: 64.0,
+                height: 92.0,
                 child: Image.asset(
                   widget.thumbnail,
                   fit: BoxFit.contain,
