@@ -18,7 +18,7 @@ class _HpBodyState extends State<HpBody> {
     try {
       print('No Handphone ${HpController.text}');
     } catch (e) {
-      print('Fuck, gagal');
+      print(e);
     }
   }
 

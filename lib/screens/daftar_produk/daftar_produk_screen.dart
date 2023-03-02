@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
 import 'package:umik/services/storage_service.dart';
 
+// Target
+// terima kategori, nama, idkmkm (semua dipake di sini)
 class DaftarProdukScreen extends StatelessWidget {
   const DaftarProdukScreen({super.key});
 
@@ -108,7 +110,8 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
 
   Future _getData(String id, String token) async {
     try {
-      var url = 'http://umik.test/api/products/umkm/$id';
+      var url = '$kApiBaseUrl/products/umkm/$id';
+      print(url);
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -160,8 +163,8 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
       itemCount: _productsOnUmkm.length,
       itemBuilder: (context, index) {
         String namaProduk = _productsOnUmkm[index]!['nama_produk'];
-        String kategoriProduk = _productsOnUmkm[index]!['deskripsi'];
-        String harga = _productsOnUmkm[index]!['harga'];
+        String deskripsi = _productsOnUmkm[index]!['deskripsi'] ?? '';
+        String harga = fmtHarga.format(_productsOnUmkm[index]!['harga']);
 
         return GestureDetector(
           onTap: () {},
@@ -190,16 +193,15 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
                   Text(namaProduk,
                       style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 5),
-                  kategoriProduk != 'null' // render keterangan klo ada
-                      ? Text(kategoriProduk,
+                  deskripsi.isNotEmpty // render keterangan klo ada
+                      ? Text(deskripsi,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
                               .copyWith(color: kTextSecondColor))
                       : const SizedBox(), // render sizedbox kosong, biar ga makan tempat kosong
                   const SizedBox(height: 5),
-                  Text('Rp $harga',
-                      style: Theme.of(context).textTheme.titleMedium),
+                  Text(harga, style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 15),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/size_config.dart';
+import 'package:intl/intl.dart';
 
 const kPrimaryColor = Color(0xFFFBC02D);
 const kSecondColor = Color(0xFF546E7A);
@@ -57,6 +58,13 @@ final otpInputDecoration = InputDecoration(
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),
-    borderSide: BorderSide(color: kTextColor),
+    borderSide: const BorderSide(color: kTextColor),
   );
 }
+
+// api urls
+const kApiBaseUrl = 'http://umik.test/api';
+const kApiWilayah =
+    'https://markus-langgeng.github.io/api-wilayah-indonesia/api';
+
+NumberFormat fmtHarga = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');

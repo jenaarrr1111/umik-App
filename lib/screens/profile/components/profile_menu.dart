@@ -16,11 +16,11 @@ class ProfileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: TextButton(
         style: TextButton.styleFrom(
           foregroundColor: kTextColor,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           // shape:
           // RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           backgroundColor: KBgColor,
@@ -29,7 +29,7 @@ class ProfileMenu extends StatelessWidget {
         child: Row(
           children: [
             Expanded(child: Text(text)),
-            Icon(Icons.arrow_forward_ios_rounded),
+            const Icon(Icons.arrow_forward_ios_rounded),
           ],
         ),
       ),
@@ -50,17 +50,51 @@ class ProfileMenu2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: TextButton(
         style: TextButton.styleFrom(
           foregroundColor: kTextColor,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           backgroundColor: KBgColor,
         ),
         onPressed: press,
         child: Row(
           children: [
             Expanded(child: Text(text)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileMenu3 extends StatelessWidget {
+  const ProfileMenu3({
+    Key? key,
+    required this.text,
+    this.press,
+  }) : super(key: key);
+
+  final String text;
+  final VoidCallback? press;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          foregroundColor: kTextColor,
+          padding: const EdgeInsets.all(20),
+          // shape:
+          // RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          backgroundColor: KBgColor,
+        ),
+        onPressed: press,
+        child: Row(
+          children: [
+            Expanded(child: Text(text)),
+            const Icon(Icons.double_arrow_rounded),
           ],
         ),
       ),

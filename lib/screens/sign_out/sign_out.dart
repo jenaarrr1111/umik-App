@@ -45,8 +45,8 @@ class _SignOutState extends State<SignOut> {
         },
       ).then((value) {
         final data = jsonDecode(value.body);
-        print('token: $userToken');
-        print('data: $data');
+        // print('token: $userToken');
+        // print('data: $data');
         deleteData();
         Navigator.pushNamedAndRemoveUntil(
             context, '/sign_in', (route) => false);
@@ -64,8 +64,17 @@ class _SignOutState extends State<SignOut> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+    return Scaffold(
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('Logging Out', style: Theme.of(context).textTheme.labelMedium),
+          const SizedBox(height: 10),
+          const CircularProgressIndicator(),
+        ],
+      )),
     );
   }
 }

@@ -6,16 +6,18 @@ import 'package:umik/screens/daftar_umkm/daftar_umkm_screen.dart';
 import 'package:umik/screens/details/details_screen.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
 import 'package:umik/screens/home/home_screen.dart';
+import 'package:umik/screens/keranjang/keranjang_screen.dart';
+import 'package:umik/screens/lokasi/lokasi_screen.dart';
 import 'package:umik/screens/penjual/promo/promo_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/seller_profile_screen.dart';
+import 'package:umik/screens/pilih_lokasi/pilih_lokasi_screen.dart';
 import 'package:umik/screens/promo/promo_screen.dart';
 import 'package:umik/screens/penjual/pilih_menu/pilih_menu_screen.dart';
 import 'package:umik/screens/penjual/tambah_promo/add_promo_screenA.dart';
 import 'package:umik/screens/otp/otp_screen.dart';
 import 'package:umik/screens/penjual/seller_address/seller_address_screen.dart';
-import 'package:umik/screens/penjual/seller_email/seller_email_screen.dart';
 import 'package:umik/screens/penjual/edit_produk/seller_edit_product.dart';
 import 'package:umik/screens/penjual/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_rute/seller_rute.dart';
@@ -45,9 +47,12 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  KeranjangScreen.routeName: (context) => KeranjangScreen(),
   UserRute.routeName: (context) => UserRute(),
   DaftarUmkmScreen.routeName: (context) => DaftarUmkmScreen(),
   DaftarProdukScreen.routeName: (context) => DaftarProdukScreen(),
+  LokasiScrees.routeName: (context) => LokasiScrees(),
+  PilihLokasiScreen.routeName: (context) => PilihLokasiScreen(),
 
   //profile
   ProfileScreen.routeName: (context) => ProfileScreen(),
@@ -59,7 +64,6 @@ final Map<String, WidgetBuilder> routes = {
   SellerWelcomeScreen.routeName: (context) => SellerWelcomeScreen(),
   SellerSignUpScreen.routeName: (context) => SellerSignUpScreen(),
   SellerAddressScreen.routeName: (context) => SellerAddressScreen(),
-  SellerEmailScreen.routeName: (context) => SellerEmailScreen(),
   SellerHomeScreen.routeName: (context) => SellerHomeScreen(),
   SellerPromoScreen.routeName: (context) => SellerPromoScreen(),
   SellerAddPromoScreen.routeName: (context) => SellerAddPromoScreen(),

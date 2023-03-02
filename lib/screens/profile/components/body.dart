@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
-
-import '../../../size_config.dart';
-import '../nama/nama_screen.dart';
-import '../no_handphone/hp_screen.dart';
-import 'profile_menu.dart';
-import 'profile_pic.dart';
+import 'package:umik/screens/profile/components/profile_menu.dart';
+import 'package:umik/screens/profile/components/profile_pic.dart';
+import 'package:umik/screens/profile/nama/nama_screen.dart';
+import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
+import 'package:umik/screens/sign_out/sign_out.dart';
+import 'package:umik/size_config.dart';
 
 class Body extends StatelessWidget {
+  const Body({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: [
           // SizedBox(height: getProportionateScreenHeight(20)),
@@ -21,7 +23,7 @@ class Body extends StatelessWidget {
             style: heading1Style,
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
-          ProfilePic(),
+          const ProfilePic(),
           SizedBox(height: getProportionateScreenHeight(10)),
           TextButton(
             onPressed: () {},
@@ -34,7 +36,7 @@ class Body extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ProfileMenu(
             text: "Nama",
             press: () => {
@@ -60,6 +62,12 @@ class Body extends StatelessWidget {
             press: () => {
               Navigator.pushNamed(context, SellerWelcomeScreen.routeName),
             },
+          ),
+          const SizedBox(height: 20),
+          ProfileMenu3(
+            text: "Logout",
+            press: () => Navigator.pushNamedAndRemoveUntil(
+                context, SignOut.routeName, (route) => false),
           ),
         ],
       ),

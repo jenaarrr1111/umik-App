@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
-import '../../../size_config.dart';
-import 'sign_form.dart';
+import 'package:umik/screens/sign_in/components/sign_in_form.dart';
+import 'package:umik/size_config.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.01),
                 Text("Sign In", style: headingStyle),
                 SizedBox(height: SizeConfig.screenHeight * 0.09),
-                const SignForm(),
+                const SignInForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.05),
                 SizedBox(height: getProportionateScreenHeight(100)),
               ],
