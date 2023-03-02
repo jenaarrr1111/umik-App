@@ -1,44 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:umik/screens/promo/components/seller_promo_listview.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../../constants.dart';
 
 class SellerPromo extends StatelessWidget {
   SellerPromo({super.key});
   final List<Map<String, dynamic>> dataProduk = [
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
     {
       'thumbnail': 'assets/images/bakmie_ayam_madu.png',
     },
@@ -72,19 +39,22 @@ class SellerPromo extends StatelessWidget {
           children: [
             Row(
               children: [
-                Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 80),
-                      child: Text('Pasti ada promo',
-                          style: Theme.of(context).textTheme.titleLarge),
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      'Makan hemat dari resto favorit kamu',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 15),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 80),
+                        child: Text('Pasti ada promo',
+                            style: Theme.of(context).textTheme.titleLarge),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Makan hemat dari resto favorit kamu',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -93,7 +63,7 @@ class SellerPromo extends StatelessWidget {
               child: GridView.builder(
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 120, childAspectRatio: 2 / 3.1),
+                      maxCrossAxisExtent: 120, childAspectRatio: 2.55 / 3.1),
                   itemCount: dataProduk.length,
                   itemBuilder: (_, index) {
                     return SellerPromoGridView(

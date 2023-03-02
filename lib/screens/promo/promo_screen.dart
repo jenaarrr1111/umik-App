@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:umik/screens/promo/components/body.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../constants.dart';
 
