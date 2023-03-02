@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 import 'package:umik/screens/home/home_screen.dart';
-import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
-import 'package:umik/screens/profile/profile_screen.dart';
+import 'package:umik/screens/penjual/home/home_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/no_handphone/hp_screen.dart';
+import 'package:umik/screens/sign_out/sign_out.dart';
+import 'package:umik/size_config.dart';
 
-import '../../../../size_config.dart';
-import '../../home/home_screen.dart';
-import '../nama/seller_nama_screen.dart';
-import '../no_handphone/hp_screen.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -78,6 +77,11 @@ class SellerProfileBody extends StatelessWidget {
           ProfileMenu3(
             text: "Beranda User",
             press: () => {Navigator.pushNamed(context, HomeScreen.routeName)},
+          ),
+          ProfileMenu3(
+            text: "Logout",
+            press: () => Navigator.pushNamedAndRemoveUntil(
+                context, SignOut.routeName, (route) => false),
           ),
         ],
       ),

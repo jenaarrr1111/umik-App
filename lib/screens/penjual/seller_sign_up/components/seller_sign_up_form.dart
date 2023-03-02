@@ -85,7 +85,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
     }
   }
 
-  Future<void> getUserAndUmkmDatas() async {
+  Future<void> getUserAndUmkmData() async {
     try {
       final String token = await storage.readSecureData('token') ?? '';
       final String usrId = await storage.readSecureData('user_id') ?? '';
@@ -132,9 +132,10 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
     }
   }
 
-  Future _storeIdUmkm(int id) async {
+  Future _storeIdAndLevel(int id, String levelUser) async {
     try {
       await storage.writeSecureData('umkm_id', id.toString());
+      await storage.writeSecureData('level_user', levelUser);
     } catch (e) {
       print(e);
     }
@@ -180,10 +181,11 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
 
         final data = res['data'];
         final idUmkm = data['data_umkm']['id'];
+        final lvlUser = data['profile']['level_user'];
         // print('data: {$res["data"]}');
         // print('idumkm: $idUmkm');
         // Store id umkm
-        _storeIdUmkm(idUmkm);
+        _storeIdAndLevel(idUmkm, lvlUser);
         Navigator.pushNamed(context, SellerProfileScreen.routeName);
         storeUmkmData(
           namaUMKMController.text,
@@ -203,7 +205,7 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
   @override
   void initState() {
     super.initState();
-    getUserAndUmkmDatas();
+    getUserAndUmkmData();
   }
 
   @override
