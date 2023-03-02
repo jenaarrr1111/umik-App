@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/models/Cart.dart';
+import 'package:umik/screens/keranjang/components/custom_stepper.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -35,7 +36,7 @@ class CardProduk extends StatelessWidget {
                     child: Row(
                       children: [
                         Image.asset(
-                          'assets/images/bakmie_ayam_madu.png',
+                          'assets/images/bakmie_ayam_suwir.png',
                           width: 80,
                           height: 64,
                         ),
@@ -63,17 +64,12 @@ class CardProduk extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Expanded(
-                          child: Text(
-                            '2x',
-                            textAlign: TextAlign.end,
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
+                        CustomStepper(
+                            lowerLimit: 1,
+                            upperLimit: 10,
+                            stepValue: 1,
+                            iconSize: 15,
+                            value: 1)
                       ],
                     ),
                   ),
