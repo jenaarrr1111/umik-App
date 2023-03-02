@@ -4,6 +4,7 @@ import 'package:umik/constants.dart';
 
 import '../../../components/custom_profile.dart';
 import '../profile_screen.dart';
+import 'components/nama_form.dart';
 
 class NamaScreen extends StatelessWidget {
   static String routeName = "/profile_nama";
@@ -43,39 +44,7 @@ class NamaScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  CustomProfile(
-                    label: "Nama",
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                      child: Text(
-                        "Maks. 30 karakter",
-                        style: TextStyle(
-                          color: kTextSecondColor,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      body: NamaFromScreen(),
     );
   }
 }

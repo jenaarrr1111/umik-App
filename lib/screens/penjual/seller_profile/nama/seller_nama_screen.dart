@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 // import 'package:umik/screens/profile/components/nama/components/body.dart';
 
-import '../../../../components/custom_profile.dart';
 import '../seller_profile_screen.dart';
+import 'components/seller_nama_form.dart';
 
 class SellerNamaScreen extends StatelessWidget {
   static String routeName = "/seller_profile_nama";
@@ -20,6 +20,8 @@ class SellerNamaScreen extends StatelessWidget {
             fontSize: 20,
           ),
         ),
+        shadowColor: Colors.black45,
+        elevation: 20,
         actions: <Widget>[
           TextButton(
             onPressed: () => {
@@ -41,39 +43,7 @@ class SellerNamaScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  CustomProfile(
-                    label: "Nama",
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                      child: Text(
-                        "Maks. 30 karakter",
-                        style: TextStyle(
-                          color: kTextSecondColor,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      body: SellerNamaFromScreen(),
     );
   }
 }
