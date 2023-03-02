@@ -180,8 +180,8 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
 
         final data = res['data'];
         final idUmkm = data['data_umkm']['id'];
-        print('data: {$res["data"]}');
-        print('idumkm: $idUmkm');
+        // print('data: {$res["data"]}');
+        // print('idumkm: $idUmkm');
         // Store id umkm
         _storeIdUmkm(idUmkm);
         Navigator.pushNamed(context, SellerProfileScreen.routeName);
@@ -326,14 +326,14 @@ class _SellerSignUpFormState extends State<SellerSignUpForm> {
               isRequired: true,
             ),
 
-            // TODO: ubah input nya jadi input waktu
             // [ Estimasi Pengerjaan]
             CustomTextInputField(
               label: 'Estimasi waktu pengerjaan',
               needLabel: true,
-              hint: 'Masukkan estimasi waktu',
+              hint: 'Masukkan estimasi waktu (hh:mm:ss)',
               fieldController: estimasiController,
               isRequired: true,
+              showTimePicker: true,
             ),
 
             // [ Plat 1 ]
