@@ -249,42 +249,6 @@ class _SignFormState extends State<SignForm> {
             },
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
-
-          //Sign in With google
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Divider(
-                      color: Colors.black,
-                      height: 16,
-                    )),
-              ),
-              const Text("Atau"),
-              Expanded(
-                child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Divider(
-                      color: Colors.black,
-                      height: 16,
-                    )),
-              ),
-            ],
-          ),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          SecondButton(
-            text: "Sign In With Google",
-            icon: "assets/icons/google-icon.svg",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, HomeScreen.routeName);
-              }
-            },
-          ),
         ],
       ),
     );

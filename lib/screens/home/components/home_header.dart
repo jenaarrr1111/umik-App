@@ -17,13 +17,58 @@ class HomeHeader extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+            ),
             child: Image.asset(
               "assets/images/umik.png",
             ),
           ),
         ),
-        SizedBox(height: getProportionateScreenHeight(80)),
+        SizedBox(height: getProportionateScreenHeight(20)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  "Lokasi Kamu",
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 10,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              "Malang",
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: getProportionateScreenHeight(30)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

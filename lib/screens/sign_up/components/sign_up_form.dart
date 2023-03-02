@@ -71,8 +71,8 @@ class _SignUpFormState extends State<SignUpForm> {
     try {
       // Aku bingung cara ngeblok user klo udh login, jd utk sementara aku lgsg cek klo udah ada tokennya, wkt disubmit lgsg ke home aja
       if (userToken.isNotEmpty) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/sign_in', (Route<dynamic> route) => false);
         return;
       }
       // logout dulu
@@ -136,41 +136,6 @@ class _SignUpFormState extends State<SignUpForm> {
             },
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
-          //Sign Up With Google
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Divider(
-                      color: Colors.black,
-                      height: 16,
-                    )),
-              ),
-              const Text("Atau"),
-              Expanded(
-                child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Divider(
-                      color: Colors.black,
-                      height: 16,
-                    )),
-              ),
-            ],
-          ),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          SecondButton(
-            icon: "assets/icons/google-icon.svg",
-            text: "Sign Up With Google",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              }
-            },
-          ),
         ],
       ),
     );
