@@ -45,7 +45,7 @@ class CardProduk extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [
                               Text(
-                                'Bakmie Ayam Madu',
+                                'Pangsit Isi',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 15,
@@ -53,7 +53,7 @@ class CardProduk extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '19.000',
+                                '21.000',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 15,

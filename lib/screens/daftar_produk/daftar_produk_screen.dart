@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
+import 'package:umik/screens/keranjang/keranjang_screen.dart';
 import 'package:umik/services/storage_service.dart';
 
 // Target
@@ -215,7 +216,9 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.pushNamed(context, KeranjangScreen.routeName),
+                  },
                   child: Text(
                     'Tambah',
                     style: Theme.of(context)
