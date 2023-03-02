@@ -52,7 +52,6 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
   Future _getProductsOnUmkm(String idUmkm, String token) async {
     try {
       var url = '$kApiBaseUrl/products/umkm/$idUmkm';
-      // print(url);
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -65,6 +64,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
         setState(() {
           _productsOnUmkm = res['data'];
           _kategori = res['kategori'];
+          _namaUmkm = res['nama_umkm'];
         });
       }
       return response;
@@ -157,37 +157,45 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
     }
 
     return AlignedGridView.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: 30,
-      crossAxisSpacing: 20,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      addAutomaticKeepAlives: false,
-      itemCount: _productsOnUmkm.length /* 12 */,
-      itemBuilder: (context, index) {
-        return ProdukAsGridItem(
-          // tes
-          // namaProduk: 'Nama Menu',
-          // deskripsi: 'deskripsi',
-          // harga: 'Rp 30.000',
-          namaProduk: _productsOnUmkm[index]!['nama_produk'] ?? 'Nama Menu',
-          deskripsi: _productsOnUmkm[index]!['deskripsi'] ?? 'deskripsi',
-          harga: fmtHarga.format(_productsOnUmkm[index]!['harga']),
-        );
-      },
-    );
+        crossAxisCount: 2,
+        mainAxisSpacing: 30,
+        crossAxisSpacing: 20,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        addAutomaticKeepAlives: false,
+        itemCount: _productsOnUmkm.length /* 12 */,
+        itemBuilder: (context, index) {
+          return ProdukAsGridItem(
+            // tes
+            // namaProduk: 'Nama Menu',
+            // deskripsi: 'deskripsi',
+            // harga: 'Rp 30.000',
+            token: _token ?? '',
+            idProduk: _productsOnUmkm[index]!['id'].toString(),
+            namaProduk: _productsOnUmkm[index]!['nama_produk'] ?? 'Nama Menu',
+            deskripsi: _productsOnUmkm[index]!['deskripsi'] ?? '',
+            harga: fmtHarga.format(_productsOnUmkm[index]!['harga']),
+            imagePath: _productsOnUmkm[index]['gbr_produk'] ?? '',
+          );
+        });
   }
 }
 
 class ProdukAsGridItem extends StatefulWidget {
+  final String token;
+  final String idProduk;
   final String namaProduk;
   final String deskripsi;
   final String harga;
+  final String imagePath;
   const ProdukAsGridItem({
     super.key,
+    required this.idProduk,
     required this.namaProduk,
     required this.deskripsi,
     required this.harga,
+    required this.imagePath,
+    required this.token,
   });
 
   @override
@@ -196,6 +204,24 @@ class ProdukAsGridItem extends StatefulWidget {
 
 class _ProdukAsGridItemState extends State<ProdukAsGridItem> {
   bool isOn = false;
+
+  Future _onDelete(String token, String id) async {
+    try {
+      var url = Uri.parse('$kApiBaseUrl/product/$id');
+      await http.delete(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      ).then((value) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, SellerHomeScreen.routeName, (route) => false);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +238,21 @@ class _ProdukAsGridItemState extends State<ProdukAsGridItem> {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/images/bakmie_ayam_suwir.png',
-                      fit: BoxFit.cover,
+                    /* child: FadeInImage(
+                      image:
+                          NetworkImage('$kPublicStorage/${widget.imagePath}'),
+                      placeholder: const AssetImage(
+                          'assets/images/bakmie_ayam_suwir.png'),
+                    ), */
+                    child: Image(
+                      image:
+                          NetworkImage('$kPublicStorage/${widget.imagePath}'),
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Image(
+                          image:
+                              AssetImage('assets/images/bakmie_ayam_suwir.png'),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -225,9 +263,12 @@ class _ProdukAsGridItemState extends State<ProdukAsGridItem> {
                     onSelected: (value) {
                       if (value == 'Edit') {
                         Navigator.pushNamed(
-                            context, SellerEditProductScreen.routeName);
+                          context,
+                          SellerEditProductScreen.routeName,
+                          arguments: {'idProduk': widget.idProduk},
+                        );
                       } else if (value == 'Hapus') {
-                        print(context);
+                        _onDelete(widget.token, widget.idProduk);
                       }
                     },
                     icon: const Icon(

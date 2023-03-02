@@ -7,6 +7,7 @@ import 'package:umik/components/default_button.dart';
 import 'package:umik/components/form_error.dart';
 import 'package:umik/constants.dart';
 import 'package:umik/screens/forgot_password/forgot_password_screen.dart';
+import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/sign_up/sign_up_screen.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
@@ -66,8 +67,13 @@ class _SignInFormState extends State<SignInForm> {
     }
   }
 
-  Future<void> storeUserCreds(String email, String pass, String token,
-      int userId, String lvlUser) async {
+  Future<void> storeUserCreds(
+    String email,
+    String pass,
+    String token,
+    int userId,
+    String lvlUser,
+  ) async {
     try {
       await storage.writeSecureData('email', email);
       await storage.writeSecureData('password', pass);
@@ -112,28 +118,26 @@ class _SignInFormState extends State<SignInForm> {
 
           if (resMsg.runtimeType.toString() == '_JsonMap') {
             for (var item in resMsg.values) {
-              // print('item: $item[0]');
               addError(error: item[0]);
             }
             return;
           }
         }
 
-        // definisikan userId harus stlhnya kondisi error soalnya klo error ga adares['data']['id']
+        // definisikan userId harus stlhnya kondisi error soalnya klo error ga addres['data']['id']
         final resToken = res['token'];
         final userId = res['data']['id'];
         final levelUser = res['data']['level_user'];
-        print(levelUser);
-        // print(res);
         storeUserCreds(
           emailController.text,
           passwordController.text,
           resToken,
           userId,
           levelUser,
-        );
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        ).then((value) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              HomeScreen.routeName, (Route<dynamic> route) => false);
+        });
       });
     } catch (e) {
       print(e);

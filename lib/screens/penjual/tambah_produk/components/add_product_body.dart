@@ -1,10 +1,15 @@
+// import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:umik/constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 import 'package:umik/components/custom_text_input_field.dart';
+import 'package:umik/constants.dart';
+import 'package:umik/screens/penjual/home/home_screen.dart';
 import 'package:umik/services/storage_service.dart';
+// import 'package:http_parser/http_parser.dart';
 
 class AddProductBody extends StatefulWidget {
   const AddProductBody({super.key});
@@ -20,20 +25,23 @@ class _AddProductBodyState extends State<AddProductBody> {
   String? _umkmId;
   String? _token;
 
-  List<String> _kategoriList = [];
-  final List<String?> errors = [];
-
-  // Initialize form field controller
+  /* === Form fields === */
+  XFile? imageFile;
+  String imageName = '';
   var namaProdukController = TextEditingController();
   var deskripsiController = TextEditingController();
   String kategoriVal = '';
   var hargaController = TextEditingController();
   var stokController = TextEditingController();
 
+  final ImagePicker _picker = ImagePicker();
   final nmProdukMaxLength = 255;
   final descMaxLength = 3000;
   final hargaMaxLength = 100;
   final stokMaxLength = 300;
+
+  List<String> _kategoriList = [];
+  final List<String?> errors = [];
 
   // Err related
   void addError({String? error}) {
@@ -52,7 +60,15 @@ class _AddProductBodyState extends State<AddProductBody> {
     }
   }
 
-  // storage and api calls
+  Future _showImagePicker() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imageFile = image;
+      imageName = image!.name;
+    });
+  }
+
+  /* === SECURE STORAGE === */
   Future _readUserAndUmkmData() async {
     try {
       final token = await storage.readSecureData('token') ?? '';
@@ -67,6 +83,7 @@ class _AddProductBodyState extends State<AddProductBody> {
     }
   }
 
+  /* === API Calls === */
   Future _getKategori() async {
     try {
       var url = '$kApiBaseUrl/categories';
@@ -87,34 +104,53 @@ class _AddProductBodyState extends State<AddProductBody> {
     }
   }
 
+  // https://sahasuthpala.medium.com/image-upload-request-using-http-package-in-flutter-77faa467e215
+  // https://stackoverflow.com/questions/51161862/how-to-send-an-image-to-an-api-in-dart-flutter
+  // https://stackoverflow.com/questions/51075166/trying-to-upload-the-image-to-server-in-the-flutter-using-dart
   Future _onSubmit() async {
     try {
-      var url = '$kApiBaseUrl/product';
-      return await http.post(
-        Uri.parse(url),
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $_token',
-        },
-        body: {
-          'umkm_id': _umkmId,
-          'nama_produk': namaProdukController.text,
-          'deskripsi': deskripsiController.text,
-          'gbr_prodk': '',
-          'kategori': kategoriVal,
-          'harga': hargaController.text,
-          'stok': stokController.text,
-        },
-      ).then((value) {
-        final res = jsonDecode(value.body);
-        final resMsg = res['message'];
-        print(res);
-        print(resMsg);
-
-        if (value.statusCode != 201) {
-          print('aeoeao');
-        }
+      // to byte stream
+      var stream = http.ByteStream(imageFile!.openRead());
+      // get length for http post
+      var length = await imageFile!.length();
+      // string to uri
+      var uri = Uri.parse('$kApiBaseUrl/product');
+      // new multipart request
+      var request = http.MultipartRequest('POST', uri);
+      // add headers
+      request.headers.addAll({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $_token',
       });
+      var multipartFile = http.MultipartFile(
+        'gbr_produk',
+        stream,
+        length,
+        filename: path.basename(imageFile!.path),
+        // filename: basename(imageFile!.path),
+        // contentType: MediaType('image', 'png'),
+      );
+
+      request.fields['umkm_id'] = _umkmId ?? '';
+      request.fields['nama_produk'] = namaProdukController.text;
+      request.fields['deskripsi'] = deskripsiController.text;
+      request.fields['kategori'] = kategoriVal;
+      request.fields['harga'] = hargaController.text;
+      request.fields['stok'] = stokController.text;
+
+      // add multipart form to request
+      request.files.add(multipartFile);
+      // send request
+      final streamedResponse = await request.send();
+      // get response
+      final response =
+          await http.Response.fromStream(streamedResponse).then((value) {
+        // final data = jsonDecode(value.body);
+        // Navigator.of(this.context)
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            SellerHomeScreen.routeName, (Route<dynamic> route) => false);
+      });
+      return response;
     } catch (e) {
       print(e);
     }
@@ -128,6 +164,7 @@ class _AddProductBodyState extends State<AddProductBody> {
 
   @override
   Widget build(BuildContext context) {
+    /* === FORM === */
     return Form(
       key: _formKey,
       child: Container(
@@ -148,16 +185,25 @@ class _AddProductBodyState extends State<AddProductBody> {
                       backgroundColor: KBgColor,
                       shape: const ContinuousRectangleBorder(),
                     ),
-                    onPressed: () {},
+                    onPressed: _showImagePicker,
                     child: Center(
-                      child: Text(
-                        '+ Tambah Foto',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontSize: 13),
-                      ),
+                      child: imageName.isEmpty
+                          ? Text(
+                              '+ Tambah Foto',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 13),
+                            )
+                          : Text(
+                              imageName,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 13),
+                            ),
                     ),
                   ),
                 ),
@@ -272,7 +318,8 @@ class _AddProductBodyState extends State<AddProductBody> {
                         .copyWith(fontSize: 14),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey.currentState!.validate() &&
+                        imageFile != null) {
                       _onSubmit();
                     }
                   },
