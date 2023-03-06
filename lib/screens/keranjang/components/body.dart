@@ -4,6 +4,7 @@ import 'package:umik/screens/keranjang/components/bayar_form.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../rute/rute.dart';
 import 'bayar.dart';
 import 'card_produk.dart';
 
@@ -40,7 +41,9 @@ class Body extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.pushNamed(context, UserRute.routeName),
+              },
               child: Text(
                 'Order',
                 style: Theme.of(context)
