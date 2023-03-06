@@ -109,6 +109,7 @@ class _BodyState extends State<Body> {
           ProfileMenu2(
             text: "Username",
             fieldValue: username,
+            press: () {},
           ),
           ProfileMenu(
             text: "Handphone",
@@ -120,6 +121,7 @@ class _BodyState extends State<Body> {
           ProfileMenu2(
             text: "Email",
             fieldValue: email,
+            press: () {},
           ),
           ProfileMenu(
             text: "Mulai Sebagai Penjual",
