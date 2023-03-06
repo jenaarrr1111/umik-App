@@ -65,7 +65,6 @@ class _EditProductBodyState extends State<EditProductBody> {
     }
   }
 
-  /* === SECURE STORAGE === */
   Future _showImagePicker() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -74,6 +73,7 @@ class _EditProductBodyState extends State<EditProductBody> {
     });
   }
 
+  /* === SECURE STORAGE === */
   Future _readUserAndUmkmData() async {
     try {
       final token = await storage.readSecureData('token') ?? '';
@@ -214,14 +214,23 @@ class _EditProductBodyState extends State<EditProductBody> {
                     ),
                     onPressed: _showImagePicker,
                     child: Center(
-                      child: Text(
-                        'Edit Foto',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontSize: 13),
-                      ),
+                      child: imageName.isEmpty
+                          ? Text(
+                              'Edit Foto',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 13),
+                            )
+                          : Text(
+                              imageName,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 13),
+                            ),
                     ),
                   ),
                 ),
