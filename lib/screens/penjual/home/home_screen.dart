@@ -64,6 +64,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
         setState(() {
           _productsOnUmkm = res['data'];
           _kategori = res['kategori'];
+          _namaUmkm = res['nama_umkm'];
         });
       }
       return response;
@@ -253,7 +254,10 @@ class _ProdukAsGridItemState extends State<ProdukAsGridItem> {
                     onSelected: (value) {
                       if (value == 'Edit') {
                         Navigator.pushNamed(
-                            context, SellerEditProductScreen.routeName);
+                          context,
+                          SellerEditProductScreen.routeName,
+                          arguments: {'idProduk': widget.idProduk},
+                        );
                       } else if (value == 'Hapus') {
                         _onDelete(widget.token, widget.idProduk);
                       }
