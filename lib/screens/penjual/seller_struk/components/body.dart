@@ -24,7 +24,7 @@ class _BodyState extends State<Body> {
             Container(
               width: double.infinity,
               height: 100,
-              color: Colors.yellow,
+              color: kPrimaryColor,
             ),
             Padding(
               padding:
@@ -245,23 +245,24 @@ class _BodyState extends State<Body> {
                 color: Colors.white,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     margin: new EdgeInsets.symmetric(
                         vertical: 20.0, horizontal: 80),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.check_circle_rounded,
-                          color: Colors.yellow,
+                          color: kPrimaryColor,
                           size: 22.0,
                         ),
                         Text(
                           'Berhasil',
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Color.fromARGB(255, 221, 210, 50),
+                                    color: kPrimaryColor,
                                   ),
                         ),
                       ],
