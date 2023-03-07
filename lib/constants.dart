@@ -64,7 +64,7 @@ OutlineInputBorder outlineInputBorder() {
 
 // api urls
 const kApiBaseUrl = 'http://umik.test/api';
+const kPublicStorage = 'http://umik.test/storage';
 const kApiWilayah =
     'https://markus-langgeng.github.io/api-wilayah-indonesia/api';
-
 NumberFormat fmtHarga = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
