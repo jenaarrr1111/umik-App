@@ -7,19 +7,16 @@ class SellerSignUpScreen extends StatelessWidget {
   const SellerSignUpScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Atur Informasi UMKM",
-            style: TextStyle(color: Colors.black),
-          ),
-          shadowColor: Colors.black45,
-          elevation: 20,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Atur Informasi UMKM",
+          style: TextStyle(color: Colors.black),
         ),
-        body: const Body(),
+        shadowColor: Colors.black45,
+        elevation: 20,
       ),
+      body: const Body(),
     );
   }
 }
