@@ -20,15 +20,20 @@ class CustomBottomNavBar extends StatefulWidget {
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   // initialize storage
   final StorageService storage = StorageService();
-  String? levelUser;
+  // String? levelUser;
+  String routeToProfile = ProfileScreen.routeName;
 
   Future _readLevelUser() async {
     try {
       final level = await storage.readSecureData('level_user');
+      print('lvl: $level');
       setState(() {
-        levelUser = level;
-        // print('$levelUser, lvl: ${level.toString()}');
+        if (level == 'penjual') {
+          print('hi lvl');
+          routeToProfile = SellerProfileScreen.routeName;
+        }
       });
+      print('route: $routeToProfile');
     } catch (e) {
       print(e);
     }
@@ -86,25 +91,15 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               onPressed: () =>
                   Navigator.pushNamed(context, HomeScreen.routeName),
             ),
-            // Text(
-            //   "Pesanan Saya",
-            // ),
 
             //Icon button Profile
             IconButton(
                 icon: Image.asset(
                   "assets/images/Nav Vector.png",
-                  // color: MenuState.profile == selectedMenu
-                  //     ? kPrimaryColor
-                  //     : inActiveIconColor,
                 ),
                 onPressed: () {
-                  if (levelUser == 'penjual') {
-                    Navigator.pushNamed(context, SellerProfileScreen.routeName);
-                  }
-                  Navigator.pushNamed(context, ProfileScreen.routeName);
+                  Navigator.pushNamed(context, routeToProfile);
                 }),
-            // Text("Saya"),
           ],
         ),
       ),

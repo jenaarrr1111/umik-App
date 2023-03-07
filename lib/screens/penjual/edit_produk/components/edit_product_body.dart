@@ -1,9 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 import 'package:umik/constants.dart';
 import 'package:umik/components/custom_text_input_field.dart';
+import 'package:umik/screens/penjual/home/home_screen.dart';
+import 'package:umik/services/storage_service.dart';
 
 class EditProductBody extends StatefulWidget {
   const EditProductBody({super.key});
@@ -14,35 +20,158 @@ class EditProductBody extends StatefulWidget {
 
 class _EditProductBodyState extends State<EditProductBody> {
   final _formKey = GlobalKey<FormState>();
-  List<String> _kategoriList = [];
-  String kategoriVal = '';
 
-  // Initialize form field controller
+  final StorageService storage = StorageService();
+  String? _produkId;
+  String? _umkmId;
+  String? _token;
+
+  /* === Form fields === */
+  XFile? imageFile;
+  String imageName = '';
   var namaProdukController = TextEditingController();
   var deskripsiController = TextEditingController();
+  String kategoriVal = '';
   var hargaController = TextEditingController();
   var stokController = TextEditingController();
 
+  final ImagePicker _picker = ImagePicker();
   final nmProdukMaxLength = 255;
   final descMaxLength = 3000;
   final hargaMaxLength = 100;
   final stokMaxLength = 300;
 
+  List<String> _kategoriList = [];
+  final List<String?> errors = [];
+
+  void _setProdukId(String id) {
+    _produkId = id;
+  }
+
+  // Err related
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  Future _showImagePicker() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imageFile = image;
+      imageName = image!.name;
+    });
+  }
+
+  /* === SECURE STORAGE === */
+  Future _readUserAndUmkmData() async {
+    try {
+      final token = await storage.readSecureData('token') ?? '';
+      final umkmId = await storage.readSecureData('umkm_id') ?? '';
+      setState(() {
+        _token = token;
+        _umkmId = umkmId;
+      });
+      _getKategori();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  /* === API Calls === */
   Future _getKategori() async {
     try {
       var url = '$kApiBaseUrl/categories';
       final response = await http.get(Uri.parse(url));
 
-      print(jsonDecode(response.body));
-      // if response successful
+      // print(jsonDecode(response.body));
       if (response.statusCode == 200) {
         final List data = jsonDecode(response.body)['data'];
-        // print(data);
         setState(() {
           _kategoriList = data.map((item) => item.toString()).toList();
           kategoriVal = _kategoriList.first;
         });
+        _getFormValue();
       }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _getFormValue() async {
+    try {
+      var url = Uri.parse('$kApiBaseUrl/product/$_produkId');
+
+      return await http.get(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $_token',
+        },
+      ).then((value) {
+        final data = jsonDecode(value.body)['data'];
+        print(data);
+        if (value.statusCode == 200) {
+          print('hello, success');
+          setState(() {
+            namaProdukController.text = data['nama_produk'];
+            deskripsiController.text = data['deskripsi'];
+            kategoriVal = data['kategori'];
+            hargaController.text = data['harga'].toString();
+            stokController.text = data['stok'].toString();
+          });
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _onSubmit() async {
+    try {
+      var uri = Uri.parse('$kApiBaseUrl/product/$_produkId');
+      var request = http.MultipartRequest('POST', uri);
+      request.headers.addAll({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $_token',
+      });
+
+      request.fields['_method'] = 'PUT';
+      request.fields['umkm_id'] = _umkmId ?? '';
+      request.fields['nama_produk'] = namaProdukController.text;
+      request.fields['deskripsi'] = deskripsiController.text;
+      request.fields['kategori'] = kategoriVal;
+      request.fields['harga'] = hargaController.text;
+      request.fields['stok'] = stokController.text;
+
+      if (imageFile != null) {
+        var stream = http.ByteStream(imageFile!.openRead());
+        var length = await imageFile!.length();
+        var multipartFile = http.MultipartFile(
+          'gbr_produk',
+          stream,
+          length,
+          filename: path.basename(imageFile!.path),
+        );
+        request.files.add(multipartFile);
+      }
+      final streamedResponse = await request.send();
+      final response =
+          await http.Response.fromStream(streamedResponse).then((value) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            SellerHomeScreen.routeName, (Route<dynamic> route) => false);
+      });
+      return response;
     } catch (e) {
       print(e);
     }
@@ -51,20 +180,18 @@ class _EditProductBodyState extends State<EditProductBody> {
   @override
   void initState() {
     super.initState();
-    _getKategori();
-  }
-
-  Future _onSubmit() async {
-    try {
-      print('Nama produk ${namaProdukController.text}');
-      print('Deskripsi produk ${deskripsiController.text}');
-    } catch (e) {
-      print(e);
-    }
+    _readUserAndUmkmData();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Ekstrak argumen dari pushedNamed navigotor
+    final args = (ModalRoute.of(context)?.settings.arguments ??
+        <String, String>{}) as Map;
+    final String produkId = args.isNotEmpty ? args['idProduk'] : '';
+    _setProdukId(produkId);
+
+    /* === FORM === */
     return Form(
       key: _formKey,
       child: Container(
@@ -85,16 +212,25 @@ class _EditProductBodyState extends State<EditProductBody> {
                       backgroundColor: KBgColor,
                       shape: const ContinuousRectangleBorder(),
                     ),
-                    onPressed: () {},
+                    onPressed: _showImagePicker,
                     child: Center(
-                      child: Text(
-                        'Edit Foto',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontSize: 13),
-                      ),
+                      child: imageName.isEmpty
+                          ? Text(
+                              'Edit Foto',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 13),
+                            )
+                          : Text(
+                              imageName,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 13),
+                            ),
                     ),
                   ),
                 ),

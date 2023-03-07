@@ -60,7 +60,6 @@ class _AddProductBodyState extends State<AddProductBody> {
     }
   }
 
-  /* === SECURE STORAGE === */
   Future _showImagePicker() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -69,6 +68,7 @@ class _AddProductBodyState extends State<AddProductBody> {
     });
   }
 
+  /* === SECURE STORAGE === */
   Future _readUserAndUmkmData() async {
     try {
       final token = await storage.readSecureData('token') ?? '';
