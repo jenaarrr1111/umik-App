@@ -238,12 +238,6 @@ class _ProdukAsGridItemState extends State<ProdukAsGridItem> {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    /* child: FadeInImage(
-                      image:
-                          NetworkImage('$kPublicStorage/${widget.imagePath}'),
-                      placeholder: const AssetImage(
-                          'assets/images/bakmie_ayam_suwir.png'),
-                    ), */
                     child: Image(
                       image:
                           NetworkImage('$kPublicStorage/${widget.imagePath}'),
