@@ -7,7 +7,6 @@ import 'package:umik/constants.dart';
 import 'package:umik/screens/keranjang/keranjang_screen.dart';
 import 'package:umik/services/storage_service.dart';
 
-// Target
 // terima kategori, nama, idkmkm (semua dipake di sini)
 class DaftarProdukScreen extends StatelessWidget {
   const DaftarProdukScreen({super.key});
@@ -112,7 +111,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
   Future _getData(String id, String token) async {
     try {
       var url = '$kApiBaseUrl/products/umkm/$id';
-      print(url);
+      // print(url);
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -217,7 +216,10 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
                     ),
                   ),
                   onPressed: () => {
-                    Navigator.pushNamed(context, KeranjangScreen.routeName),
+                    Navigator.pushNamed(context, KeranjangScreen.routeName,
+                        arguments: {
+                          'idProduk': widget.idUmkm.toString(),
+                        }),
                   },
                   child: Text(
                     'Tambah',

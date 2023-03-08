@@ -22,6 +22,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   // initialize storage
   final StorageService storage = StorageService();
+
   String username = '';
   String nama = '';
   String noTelp = '';
@@ -37,17 +38,17 @@ class _BodyState extends State<Body> {
         userId = usrId;
         userToken = token;
       });
-      _getUserData();
+      _getDataUser();
     } catch (e) {
       print(e);
     }
   }
 
-  Future _getUserData() async {
+  Future _getDataUser() async {
     try {
-      var url = '$kApiBaseUrl/users/$userId';
+      var url = Uri.parse('$kApiBaseUrl/users/$userId');
       final response = await http.get(
-        Uri.parse(url),
+        url,
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $userToken',
