@@ -45,6 +45,10 @@ dependencies:
   intl: ^0.18.0
   flutter_picker: ^2.1.0
   image_picker: ^0.8.6+4
+  flutter_rating_bar: ^4.0.1
+  async: ^2.10.0
+  path: ^1.8.2
+  http_parser: ^4.0.2
 
   flutter_rating_bar: ^4.0.1
   async: ^2.10.0
