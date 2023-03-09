@@ -2,32 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:umik/screens/promo/components/seller_promo_listview.dart';
 import 'package:http/http.dart' as http;
 import '../../../../constants.dart';
+import 'dart:convert';
+import 'package:umik/services/storage_service.dart';
 
-class SellerPromo extends StatelessWidget {
-  SellerPromo({super.key});
-  final List<Map<String, dynamic>> dataProduk = [
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-    {
-      'thumbnail': 'assets/images/bakmie_ayam_madu.png',
-    },
-  ];
+class SellerPromo extends StatefulWidget {
+  const SellerPromo({
+    super.key,
+  });
+
+  @override
+  State<SellerPromo> createState() => _SellerPromoCardstate();
+}
+
+class _SellerPromoCardstate extends State<SellerPromo> {
+  List _getUmkmWithCategories = [];
+  final storage = StorageService();
+
+  Future<void> getUserTokenAndGetData() async {
+    try {
+      final String token = await storage.readSecureData('token') ?? '';
+      getData(token);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future getData(String token) async {
+    try {
+      var url = '$kApiBaseUrl/allpromo';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body)['data'];
+        setState(() {
+          _getUmkmWithCategories = data;
+        });
+      }
+      return response;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserTokenAndGetData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +90,10 @@ class SellerPromo extends StatelessWidget {
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 120, childAspectRatio: 2.55 / 3.1),
-                  itemCount: dataProduk.length,
+                  itemCount: _getUmkmWithCategories.length,
                   itemBuilder: (_, index) {
                     return SellerPromoGridView(
-                      thumbnail: dataProduk[index]['thumbnail'].toString(),
+                      gambar: _getUmkmWithCategories[index]['gbr_produk'] ?? '',
                     );
                   }),
             ),
