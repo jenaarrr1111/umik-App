@@ -6,7 +6,7 @@ import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:umik/screens/profile/components/profile_menu.dart';
 import 'package:umik/screens/profile/components/profile_pic.dart';
-import 'package:umik/screens/profile/nama/nama_screen.dart';
+import 'package:umik/screens/profile/nama/nama_form.dart';
 import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/sign_out/sign_out.dart';
 import 'package:umik/services/storage_service.dart';
@@ -103,7 +103,7 @@ class _BodyState extends State<Body> {
             text: "Nama",
             fieldValue: nama,
             press: () => {
-              Navigator.pushNamed(context, NamaScreen.routeName),
+              Navigator.pushNamed(context, NamaFromScreen.routeName),
             },
           ),
           ProfileMenu2(
