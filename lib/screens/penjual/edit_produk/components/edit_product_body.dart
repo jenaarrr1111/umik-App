@@ -125,7 +125,7 @@ class _EditProductBodyState extends State<EditProductBody> {
           print('hello, success');
           setState(() {
             namaProdukController.text = data['nama_produk'];
-            deskripsiController.text = data['deskripsi'];
+            deskripsiController.text = data['deskripsi'] ?? '';
             kategoriVal = data['kategori'];
             hargaController.text = data['harga'].toString();
             stokController.text = data['stok'].toString();

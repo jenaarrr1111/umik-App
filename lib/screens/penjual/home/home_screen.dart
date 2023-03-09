@@ -173,7 +173,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
             token: _token ?? '',
             idProduk: _productsOnUmkm[index]!['id'].toString(),
             namaProduk: _productsOnUmkm[index]!['nama_produk'] ?? 'Nama Menu',
-            deskripsi: _productsOnUmkm[index]!['deskripsi'] ?? 'deskripsi',
+            deskripsi: _productsOnUmkm[index]!['deskripsi'] ?? '',
             harga: fmtHarga.format(_productsOnUmkm[index]!['harga']),
             imagePath: _productsOnUmkm[index]['gbr_produk'] ?? '',
           );
@@ -238,12 +238,15 @@ class _ProdukAsGridItemState extends State<ProdukAsGridItem> {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: FadeInImage(
+                    child: Image(
                       image:
                           NetworkImage('$kPublicStorage/${widget.imagePath}'),
-                      placeholder: const AssetImage(
-                          'assets/images/bakmie_ayam_suwir.png'),
-                      // ),
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Image(
+                          image:
+                              AssetImage('assets/images/bakmie_ayam_suwir.png'),
+                        );
+                      },
                     ),
                   ),
                 ),
