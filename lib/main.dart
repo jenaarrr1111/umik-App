@@ -21,14 +21,6 @@ class MyApp extends StatelessWidget {
       // We use routeName so that we dont need to remember the name
       initialRoute: SplashScreen.routeName,
       routes: routes,
-      /* onGenerateRoute: (settings) {
-        print('build route for  ${settings.name}');
-        // WidgetBuilder builder = routes
-        /* if (settings.name == '') {
-          print('build route for  ${settings.name}');
-          re
-        } */
-      }, */
     );
   }
 }

@@ -44,7 +44,7 @@ class _BodyState extends State<Body> {
   int? _stok; // TODO: tampilin stok
 
   // Utk buat pesanan
-  int? _jmlhProduk;
+  int _jmlhProduk = 0;
   /* int? _pajak;
   int? _promo;
   int? _totalHarga; */
@@ -94,7 +94,7 @@ class _BodyState extends State<Body> {
     }
   }
 
-  Future _addPesanan(String idProduk) async {
+  Future _onSubmit(String idProduk) async {
     try {
       var url = Uri.parse('$kApiBaseUrl/pesanan');
 
@@ -127,10 +127,15 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     // Ekstrak argumen dari pushedNamed navigotor
     // Cara lain pass argumen
-    final args = (ModalRoute.of(context)?.settings.arguments ??
+    /* final args = (ModalRoute.of(context)?.settings.arguments ??
         <String, String>{}) as Map;
     final String produkId = args.isNotEmpty ? args['idProduk'] : '';
-    _setProdukId(produkId);
+    _setProdukId(produkId); */
+
+    bool disable = true;
+    if (_jmlhProduk != 0) {
+      setState(() => disable = false);
+    }
 
     /* === FORM === */
     return SingleChildScrollView(
@@ -150,11 +155,12 @@ class _BodyState extends State<Body> {
           const Alamat(),
           SizedBox(height: getProportionateScreenHeight(20)),
           CardProduk(
-            jmlProduk: _jmlhProduk ?? 1,
+            jmlProduk: _jmlhProduk,
             stokProduk: _stok ?? 1, // stok nya brp ya enak e?
             hargaProduk: _harga ?? 0,
             namaProduk: _namaProduk ?? 'Nama Menu',
             imagePath: _imagePath ?? '',
+            setJumlahProduk: (val) => setState(() => _jmlhProduk = val),
           ),
           SizedBox(height: getProportionateScreenHeight(10)),
           // const Bayar(),
@@ -170,54 +176,63 @@ class _BodyState extends State<Body> {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              onPressed: () {
-                setState(() {});
-                showDialog<String>(
-                  context: context,
-                  builder: (context) => Dialog(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Konfirmasi Pemesanan',
-                              style: Theme.of(context).textTheme.bodyLarge),
-                          const SizedBox(height: 15),
-                          Bayar(
-                            namaProduk: _namaProduk ?? 'Nama Menu',
-                            harga: _harga ?? 0,
-                            jmlhProduk: _jmlhProduk ?? 0,
-                            /* pajak: _pajak,
-                            promo: promo,
-                            totalHarga: totalHarga, */
-                          ),
-                          Text('Apa Anda yakin ingin membuat pesanan',
-                              style: Theme.of(context).textTheme.bodyMedium),
-                          const SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text('Batal',
+              onPressed: disable
+                  ? null
+                  : () {
+                      // setState(() {});
+                      showDialog<String>(
+                        context: context,
+                        builder: (context) => Dialog(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Konfirmasi Pemesanan',
                                     style:
-                                        Theme.of(context).textTheme.labelLarge),
-                              ),
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text('Konfirmasi',
+                                        Theme.of(context).textTheme.bodyLarge),
+                                const SizedBox(height: 15),
+                                Bayar(
+                                  namaProduk: _namaProduk ?? 'Nama Menu',
+                                  harga: _harga,
+                                  jmlhProduk: _jmlhProduk,
+                                ),
+                                Text('Apa Anda yakin ingin membuat pesanan',
                                     style:
-                                        Theme.of(context).textTheme.labelLarge),
-                              ),
-                            ],
+                                        Theme.of(context).textTheme.bodyMedium),
+                                const SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text('Batal',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        /* _onSubmit().then((value) {
+                                          Navigator.pushNamed(
+                                              context, UserRute.routeName);
+                                        }); */
+                                      },
+                                      child: Text('Konfirmasi',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+                        ),
+                      );
+                    },
               // onPressed: () => {
               //   Navigator.pushNamed(context, UserRute.routeName),
               // },
