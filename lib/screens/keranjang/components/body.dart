@@ -45,10 +45,9 @@ class _BodyState extends State<Body> {
 
   // Utk buat pesanan
   int? _jmlhProduk;
-  int? _subTotal;
-  int? _pajak;
+  /* int? _pajak;
   int? _promo;
-  int? _totalHarga;
+  int? _totalHarga; */
 
   void _setProdukId(String id) {
     produkId = id;
@@ -185,7 +184,14 @@ class _BodyState extends State<Body> {
                           Text('Konfirmasi Pemesanan',
                               style: Theme.of(context).textTheme.bodyLarge),
                           const SizedBox(height: 15),
-                          // const Bayar(),
+                          Bayar(
+                            namaProduk: _namaProduk ?? 'Nama Menu',
+                            harga: _harga ?? 0,
+                            jmlhProduk: _jmlhProduk ?? 0,
+                            /* pajak: _pajak,
+                            promo: promo,
+                            totalHarga: totalHarga, */
+                          ),
                           Text('Apa Anda yakin ingin membuat pesanan',
                               style: Theme.of(context).textTheme.bodyMedium),
                           const SizedBox(height: 15),

@@ -108,9 +108,9 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
     }
   }
 
-  Future _getData(String id, String token) async {
+  Future _getData(String idUmkm, String token) async {
     try {
-      var url = '$kApiBaseUrl/products/umkm/$id';
+      var url = '$kApiBaseUrl/products/umkm/$idUmkm';
       // print(url);
       final response = await http.get(
         Uri.parse(url),
@@ -165,6 +165,7 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
         String namaProduk = _productsOnUmkm[index]!['nama_produk'];
         String deskripsi = _productsOnUmkm[index]!['deskripsi'] ?? '';
         String harga = fmtHarga.format(_productsOnUmkm[index]!['harga']);
+        int idProduk = _productsOnUmkm[index]!['id'] ?? 0;
 
         return GestureDetector(
           onTap: () {},
@@ -215,11 +216,11 @@ class _GridItemDaftarProdukState extends State<GridItemDaftarProduk> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: () => {
+                  onPressed: () {
                     Navigator.pushNamed(context, KeranjangScreen.routeName,
                         arguments: {
-                          'idProduk': widget.idUmkm.toString(),
-                        }),
+                          'idProduk': idProduk.toString(),
+                        });
                   },
                   child: Text(
                     'Tambah',

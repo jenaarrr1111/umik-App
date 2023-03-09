@@ -4,20 +4,18 @@ class Bayar extends StatelessWidget {
   final String namaProduk;
   final int harga;
   final int jmlhProduk;
-  final int subTotal;
-  final int pajak;
+  /* final int pajak;
   final int promo;
-  final int totalHarga;
+  final int totalHarga; */
 
   const Bayar({
     Key? key,
     required this.namaProduk,
     required this.harga,
     required this.jmlhProduk,
-    required this.subTotal,
-    required this.pajak,
+/*     required this.pajak,
     required this.promo,
-    required this.totalHarga,
+    required this.totalHarga, */
   }) : super(key: key);
 
   @override
@@ -32,7 +30,7 @@ class Bayar extends StatelessWidget {
                 top: 8,
                 bottom: 8,
               ),
-              child: Text('2X Pangsit Isi',
+              child: Text(namaProduk,
                   style: Theme.of(context).textTheme.bodyMedium),
             ),
             Padding(
