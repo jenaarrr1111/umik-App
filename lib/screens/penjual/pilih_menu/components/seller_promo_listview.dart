@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
+import 'package:umik/screens/penjual/tambah_promo/add_promo_screenA.dart';
 
 // ignore: must_be_immutable
 class SellerPromoGridView extends StatefulWidget {
@@ -27,13 +28,14 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
         Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
               child: SizedBox(
                 width: 110.0,
                 height: 100.0,
-                child: Image.asset(
-                  widget.thumbnail,
-                  fit: BoxFit.contain,
+                child: FadeInImage(
+                  image: NetworkImage('$kPublicStorage/${widget.thumbnail}'),
+                  placeholder: const AssetImage(''),
+                  // ),
                 ),
               ),
             ),
@@ -63,15 +65,10 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
             ),
             Align(
               child: IconButton(
-                iconSize: 25.0,
-                icon: isOn
-                    ? const Icon(Icons.check_circle_rounded,
-                        color: kPrimaryColor)
-                    : const Icon(Icons.check_circle_rounded),
-                onPressed: () {
-                  setState(() {
-                    isOn = !isOn;
-                  });
+                iconSize: 20,
+                icon: const Icon(Icons.arrow_forward_ios),
+                onPressed: () => {
+                  Navigator.pushNamed(context, SellerAddPromoScreen.routeName),
                 },
               ),
             ),
