@@ -12,7 +12,7 @@ class BayarForm extends StatefulWidget {
 
 class _BayarFormState extends State<BayarForm> {
   final _formKey = GlobalKey<FormState>();
-  var CatatanController = TextEditingController();
+  var catatanController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _BayarFormState extends State<BayarForm> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: TextFormField(
-                      controller: CatatanController,
+                      controller: catatanController,
                       decoration: const InputDecoration(
                         fillColor: Colors.transparent,
                         contentPadding: EdgeInsets.only(

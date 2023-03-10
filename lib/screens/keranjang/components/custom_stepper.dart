@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 
+typedef JumlahProdukCallback = void Function(int jmlProduk);
+
 class CustomStepper extends StatefulWidget {
   CustomStepper({
+    super.key,
     required this.lowerLimit,
     required this.upperLimit,
     required this.stepValue,
     required this.iconSize,
     required this.value,
+    required this.setJumlahProduk,
   });
 
   final int lowerLimit;
   final int upperLimit;
   final int stepValue;
   final double iconSize;
+  final JumlahProdukCallback setJumlahProduk;
   int value;
 
   @override
@@ -23,7 +28,7 @@ class _CustomStepperState extends State<CustomStepper> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         RoundedIconButton(
           icon: Icons.remove,
@@ -34,17 +39,15 @@ class _CustomStepperState extends State<CustomStepper> {
                   ? widget.lowerLimit
                   : widget.value -= widget.stepValue;
             });
+            widget.setJumlahProduk(widget.value);
           },
         ),
-        Container(
-          width: widget.iconSize,
-          child: Text(
-            '${widget.value}',
-            style: TextStyle(
-              fontSize: widget.iconSize * 0.8,
-            ),
-            textAlign: TextAlign.center,
+        Text(
+          '${widget.value}',
+          style: TextStyle(
+            fontSize: widget.iconSize * 0.8,
           ),
+          textAlign: TextAlign.center,
         ),
         RoundedIconButton(
           icon: Icons.add,
@@ -55,6 +58,7 @@ class _CustomStepperState extends State<CustomStepper> {
                   ? widget.upperLimit
                   : widget.value += widget.stepValue;
             });
+            widget.setJumlahProduk(widget.value);
           },
         ),
       ],
@@ -63,7 +67,8 @@ class _CustomStepperState extends State<CustomStepper> {
 }
 
 class RoundedIconButton extends StatelessWidget {
-  RoundedIconButton({
+  const RoundedIconButton({
+    super.key,
     required this.icon,
     required this.onPress,
     required this.iconSize,

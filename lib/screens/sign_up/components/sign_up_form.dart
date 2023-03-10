@@ -6,6 +6,7 @@ import 'package:umik/components/default_button.dart';
 import 'package:umik/components/form_error.dart';
 import 'package:umik/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:umik/screens/sign_in/sign_in_screen.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
 
@@ -120,9 +121,10 @@ class _SignUpFormState extends State<SignUpForm> {
         storeUserCreds(
           emailController.text,
           passwordController.text,
-        );
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            '/sign_in', (Route<dynamic> route) => false);
+        ).then((value) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              SignInScreen.routeName, (Route<dynamic> route) => false);
+        });
       });
     } catch (e) {
       print(e);

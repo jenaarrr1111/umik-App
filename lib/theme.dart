@@ -67,6 +67,18 @@ TextTheme textTheme() {
       color: kTextColor,
     ),
 
+    bodyLarge: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 16,
+      color: kTextColor,
+    ),
+
+    bodyMedium: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 14,
+      color: kTextColor,
+    ),
+
     bodySmall: TextStyle(
       fontFamily: 'Inter',
       fontSize: 12,

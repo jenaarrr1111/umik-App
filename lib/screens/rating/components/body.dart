@@ -15,11 +15,11 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  var _myColorOne = Colors.grey;
-  var _myColorTwo = Colors.grey;
-  var _myColorThree = Colors.grey;
-  var _myColorFour = Colors.grey;
-  var _myColorFive = Colors.grey;
+  final _myColorOne = Colors.grey;
+  final _myColorTwo = Colors.grey;
+  final _myColorThree = Colors.grey;
+  final _myColorFour = Colors.grey;
+  final _myColorFive = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class _BodyState extends State<Body> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 80),
+              const Padding(
+                padding: EdgeInsets.only(top: 80),
                 child: Text(
                   "Gimana Makanannya?",
                   style: TextStyle(
@@ -52,8 +52,8 @@ class _BodyState extends State<Body> {
                   allowHalfRating: true,
                   itemCount: 5,
                   itemSize: 25,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
                     Icons.star,
                     color: Colors.amber,
                   ),
@@ -62,7 +62,7 @@ class _BodyState extends State<Body> {
                   },
                 ),
               ),
-              Text(
+              const Text(
                 "Apa yang kamu suka dari makanannya?",
                 style: TextStyle(
                   fontFamily: "Inter",
@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "Kesegaran",
                           style: TextStyle(
                             fontFamily: "Inter",
@@ -108,7 +108,7 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "Rasa",
                           style: TextStyle(
                             fontFamily: "Inter",
@@ -132,7 +132,7 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "Kebersihan",
                           style: TextStyle(
                             fontFamily: "Inter",
@@ -163,7 +163,7 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "Porsi",
                           style: TextStyle(
                             fontFamily: "Inter",
@@ -187,7 +187,7 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "Kemasan",
                           style: TextStyle(
                             fontFamily: "Inter",
@@ -214,7 +214,7 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Kemasan",
                     style: TextStyle(
                       fontFamily: "Inter",
@@ -246,7 +246,7 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Kirim",
                     style: TextStyle(
                       fontFamily: "Inter",
