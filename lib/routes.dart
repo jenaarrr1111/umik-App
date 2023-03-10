@@ -1,5 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:umik/screens/cart/cart_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_form.dart';
+import 'package:umik/screens/penjual/seller_profile/no_handphone/Seller_hp_screen.dart';
+import 'package:umik/screens/profile/no_handphone/hp_body.dart';
+import 'package:umik/screens/profile/nama/nama_form.dart';
 import 'package:umik/screens/struk/struk_screen.dart';
 import 'package:umik/screens/penjual/seller_struk/seller_struk_screen.dart';
 import 'package:umik/screens/complete_profile/complete_profile_screen.dart';
@@ -11,8 +15,6 @@ import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/keranjang/keranjang_screen.dart';
 import 'package:umik/screens/lokasi/lokasi_screen.dart';
 import 'package:umik/screens/penjual/promo/promo_screen.dart';
-import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
-import 'package:umik/screens/penjual/seller_profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/seller_profile_screen.dart';
 import 'package:umik/screens/pilih_lokasi/pilih_lokasi_screen.dart';
 import 'package:umik/screens/promo/promo_screen.dart';
@@ -25,8 +27,6 @@ import 'package:umik/screens/penjual/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_rute/seller_rute.dart';
 import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
 import 'package:umik/screens/penjual/tambah_produk/seller_add_product.dart';
-import 'package:umik/screens/profile/nama/nama_screen.dart';
-import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/profile/profile_screen.dart';
 import 'package:umik/screens/rating/rating_screen.dart';
 import 'package:umik/screens/riwayat/riwayat_screen.dart';
@@ -43,46 +43,50 @@ import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 // All our routes will be available here
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => SplashScreen(),
-  SignInScreen.routeName: (context) => SignInScreen(),
+  SignInScreen.routeName: (context) => const SignInScreen(),
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
-  SignUpScreen.routeName: (context) => SignUpScreen(),
+  SignUpScreen.routeName: (context) => const SignUpScreen(),
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   OtpScreen.routeName: (context) => OtpScreen(),
-  HomeScreen.routeName: (context) => HomeScreen(),
+  HomeScreen.routeName: (context) => const HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   StrukScreen.routeName: (context) => StrukScreen(),
   SellerStrukScreen.routeName: (context) => SellerStrukScreen(),
-  KeranjangScreen.routeName: (context) => KeranjangScreen(),
-  UserRute.routeName: (context) => UserRute(),
-  DaftarUmkmScreen.routeName: (context) => DaftarUmkmScreen(),
-  DaftarProdukScreen.routeName: (context) => DaftarProdukScreen(),
-  LokasiScrees.routeName: (context) => LokasiScrees(),
-  PilihLokasiScreen.routeName: (context) => PilihLokasiScreen(),
-  RatingScreen.routeName: (context) => RatingScreen(),
-  RiwayatScreen.routeName: (context) => RiwayatScreen(),
+  KeranjangScreen.routeName: (context) => KeranjangScreen(
+        arguments: ModalRoute.of(context)!.settings.arguments as Map,
+      ),
+  UserRute.routeName: (context) => const UserRute(),
+  DaftarUmkmScreen.routeName: (context) => const DaftarUmkmScreen(),
+  DaftarProdukScreen.routeName: (context) => const DaftarProdukScreen(),
+  LokasiScrees.routeName: (context) => const LokasiScrees(),
+  PilihLokasiScreen.routeName: (context) => const PilihLokasiScreen(),
+  RatingScreen.routeName: (context) => const RatingScreen(),
+  RiwayatScreen.routeName: (context) => const RiwayatScreen(),
 
   //profile
-  ProfileScreen.routeName: (context) => ProfileScreen(),
-  NamaScreen.routeName: (context) => NamaScreen(),
-  HpScreen.routeName: (context) => HpScreen(),
-  SignOut.routeName: (context) => SignOut(),
+  ProfileScreen.routeName: (context) => const ProfileScreen(),
+  NamaFromScreen.routeName: (context) => const NamaFromScreen(),
+  HpBodyScreen.routeName: (context) => const HpBodyScreen(),
+  SignOut.routeName: (context) => const SignOut(),
 
   //penjual
-  SellerWelcomeScreen.routeName: (context) => SellerWelcomeScreen(),
-  SellerSignUpScreen.routeName: (context) => SellerSignUpScreen(),
-  SellerAddressScreen.routeName: (context) => SellerAddressScreen(),
-  SellerHomeScreen.routeName: (context) => SellerHomeScreen(),
-  SellerPromoScreen.routeName: (context) => SellerPromoScreen(),
+
+  SellerWelcomeScreen.routeName: (context) => const SellerWelcomeScreen(),
+  SellerSignUpScreen.routeName: (context) => const SellerSignUpScreen(),
+  SellerAddressScreen.routeName: (context) => const SellerAddressScreen(),
+  SellerHomeScreen.routeName: (context) => const SellerHomeScreen(),
+  SellerPromoScreen.routeName: (context) => const SellerPromoScreen(),
   SellerAddPromoScreen.routeName: (context) => SellerAddPromoScreen(
         arguments: ModalRoute.of(context)!.settings.arguments as Map,
       ),
-  SellerPilihMenuScreen.routeName: (context) => SellerPilihMenuScreen(),
-  SellerAddProductScreen.routeName: (context) => SellerAddProductScreen(),
-  SellerEditProductScreen.routeName: (context) => SellerEditProductScreen(),
-  SellerPromoScreenUser.routeName: (context) => SellerPromoScreenUser(),
-  SellerRute.routeName: (context) => SellerRute(),
-  SellerProfileScreen.routeName: (context) => SellerProfileScreen(),
-  SellerNamaScreen.routeName: (context) => SellerNamaScreen(),
-  SellerHpScreen.routeName: (context) => SellerHpScreen(),
+  SellerPilihMenuScreen.routeName: (context) => const SellerPilihMenuScreen(),
+  SellerAddProductScreen.routeName: (context) => const SellerAddProductScreen(),
+  SellerEditProductScreen.routeName: (context) =>
+      const SellerEditProductScreen(),
+  SellerPromoScreenUser.routeName: (context) => const SellerPromoScreenUser(),
+  SellerRute.routeName: (context) => const SellerRute(),
+  SellerProfileScreen.routeName: (context) => const SellerProfileScreen(),
+  SellerNamaFromScreen.routeName: (context) => const SellerNamaFromScreen(),
+  SellerHpScreen.routeName: (context) => const SellerHpScreen(),
 };

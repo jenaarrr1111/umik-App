@@ -6,8 +6,8 @@ import 'package:umik/screens/penjual/seller_welcome/seller_welcome_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:umik/screens/profile/components/profile_menu.dart';
 import 'package:umik/screens/profile/components/profile_pic.dart';
-import 'package:umik/screens/profile/nama/nama_screen.dart';
-import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
+import 'package:umik/screens/profile/nama/nama_form.dart';
+import 'package:umik/screens/profile/no_handphone/hp_body.dart';
 import 'package:umik/screens/sign_out/sign_out.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
@@ -22,6 +22,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   // initialize storage
   final StorageService storage = StorageService();
+
   String username = '';
   String nama = '';
   String noTelp = '';
@@ -37,17 +38,17 @@ class _BodyState extends State<Body> {
         userId = usrId;
         userToken = token;
       });
-      _getUserData();
+      _getDataUser();
     } catch (e) {
       print(e);
     }
   }
 
-  Future _getUserData() async {
+  Future _getDataUser() async {
     try {
-      var url = '$kApiBaseUrl/users/$userId';
+      var url = Uri.parse('$kApiBaseUrl/users/$userId');
       final response = await http.get(
-        Uri.parse(url),
+        url,
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $userToken',
@@ -103,7 +104,7 @@ class _BodyState extends State<Body> {
             text: "Nama",
             fieldValue: nama,
             press: () => {
-              Navigator.pushNamed(context, NamaScreen.routeName),
+              Navigator.pushNamed(context, NamaFromScreen.routeName),
             },
           ),
           ProfileMenu2(
@@ -115,7 +116,7 @@ class _BodyState extends State<Body> {
             text: "Handphone",
             fieldValue: noTelp,
             press: () => {
-              Navigator.pushNamed(context, HpScreen.routeName),
+              Navigator.pushNamed(context, HpBodyScreen.routeName),
             },
           ),
           ProfileMenu2(

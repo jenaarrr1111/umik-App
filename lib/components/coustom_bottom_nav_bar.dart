@@ -20,20 +20,16 @@ class CustomBottomNavBar extends StatefulWidget {
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   // initialize storage
   final StorageService storage = StorageService();
-  // String? levelUser;
   String routeToProfile = ProfileScreen.routeName;
 
   Future _readLevelUser() async {
     try {
       final level = await storage.readSecureData('level_user');
-      print('lvl: $level');
       setState(() {
         if (level == 'penjual') {
-          print('hi lvl');
           routeToProfile = SellerProfileScreen.routeName;
         }
       });
-      print('route: $routeToProfile');
     } catch (e) {
       print(e);
     }

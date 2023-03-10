@@ -78,6 +78,7 @@ class _EditProductBodyState extends State<EditProductBody> {
     try {
       final token = await storage.readSecureData('token') ?? '';
       final umkmId = await storage.readSecureData('umkm_id') ?? '';
+
       setState(() {
         _token = token;
         _umkmId = umkmId;
