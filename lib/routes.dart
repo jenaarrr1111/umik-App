@@ -19,7 +19,7 @@ import 'package:umik/screens/penjual/seller_profile/seller_profile_screen.dart';
 import 'package:umik/screens/pilih_lokasi/pilih_lokasi_screen.dart';
 import 'package:umik/screens/promo/promo_screen.dart';
 import 'package:umik/screens/penjual/pilih_menu/pilih_menu_screen.dart';
-import 'package:umik/screens/penjual/tambah_promo/add_promo_screenA.dart';
+import 'package:umik/screens/penjual/tambah_promo/add_promo_screen.dart';
 import 'package:umik/screens/otp/otp_screen.dart';
 import 'package:umik/screens/penjual/seller_address/seller_address_screen.dart';
 import 'package:umik/screens/penjual/edit_produk/seller_edit_product.dart';
@@ -71,12 +71,15 @@ final Map<String, WidgetBuilder> routes = {
   SignOut.routeName: (context) => const SignOut(),
 
   //penjual
+
   SellerWelcomeScreen.routeName: (context) => const SellerWelcomeScreen(),
   SellerSignUpScreen.routeName: (context) => const SellerSignUpScreen(),
   SellerAddressScreen.routeName: (context) => const SellerAddressScreen(),
   SellerHomeScreen.routeName: (context) => const SellerHomeScreen(),
   SellerPromoScreen.routeName: (context) => const SellerPromoScreen(),
-  SellerAddPromoScreen.routeName: (context) => const SellerAddPromoScreen(),
+  SellerAddPromoScreen.routeName: (context) => SellerAddPromoScreen(
+        arguments: ModalRoute.of(context)!.settings.arguments as Map,
+      ),
   SellerPilihMenuScreen.routeName: (context) => const SellerPilihMenuScreen(),
   SellerAddProductScreen.routeName: (context) => const SellerAddProductScreen(),
   SellerEditProductScreen.routeName: (context) =>
