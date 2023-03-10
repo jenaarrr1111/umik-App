@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:umik/constants.dart';
 import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/penjual/home/home_screen.dart';
-import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_form.dart';
+
 import 'package:umik/screens/sign_out/sign_out.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
@@ -24,10 +25,10 @@ class SellerProfileBody extends StatefulWidget {
 class _SellerProfileBodyState extends State<SellerProfileBody> {
   // initialize storage
   final StorageService storage = StorageService();
-  String username = '';
+  String nama_umkm = '';
   String nama = '';
   String noTelp = '';
-  String email = '';
+  String email_umkm = '';
   String userId = '';
   String umkmId = '';
   String userToken = '';
@@ -35,13 +36,41 @@ class _SellerProfileBodyState extends State<SellerProfileBody> {
   Future _readUserIdAndToken() async {
     try {
       final String usrId = await storage.readSecureData('user_id') ?? '';
+      final String umkId = await storage.readSecureData('umkm_id') ?? '';
       final String token = await storage.readSecureData('token') ?? '';
       setState(() {
         userId = usrId;
+        umkmId = umkId;
         userToken = token;
       });
-      print('read success: $userId, $userToken');
-      _getUserData();
+      print('read success: $userId, $userToken, $umkmId, $umkId');
+      _getUserData().then(
+        (value) => _getUmkmData(),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _getUmkmData() async {
+    try {
+      var url = '$kApiBaseUrl/umkm/$umkmId';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $userToken',
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body)['data'];
+        setState(() {
+          nama_umkm = data['nama_umkm'];
+          noTelp = data['no_tlp'];
+          email_umkm = data['email_umkm'];
+        });
+        print('fetch umkm success: $nama_umkm, $noTelp, $email_umkm, $umkmId');
+      }
     } catch (e) {
       print(e);
     }
@@ -60,13 +89,10 @@ class _SellerProfileBodyState extends State<SellerProfileBody> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body)['data'];
         setState(() {
-          username = data['username'];
           nama = data['nama'];
-          noTelp = data['no_tlp'];
-          email = data['email'];
           umkmId = data['umkm_id'].toString();
         });
-        print('fetch success: $username, $nama, $noTelp, $email, $umkmId');
+        print('fetch success: $nama');
         await storage.writeSecureData('umkm_id', umkmId);
       }
     } catch (e) {
@@ -110,12 +136,12 @@ class _SellerProfileBodyState extends State<SellerProfileBody> {
             text: "Nama",
             fieldValue: nama,
             press: () => {
-              Navigator.pushNamed(context, SellerNamaScreen.routeName),
+              Navigator.pushNamed(context, SellerNamaFromScreen.routeName),
             },
           ),
           ProfileMenu2(
-            text: "Username",
-            fieldValue: username,
+            text: "Nama UMKM",
+            fieldValue: nama_umkm,
             press: () {},
           ),
           ProfileMenu(
@@ -127,7 +153,7 @@ class _SellerProfileBodyState extends State<SellerProfileBody> {
           ),
           ProfileMenu2(
             text: "Email",
-            fieldValue: email,
+            fieldValue: email_umkm,
             press: () {},
           ),
 

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:umik/screens/cart/cart_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_form.dart';
 import 'package:umik/screens/penjual/seller_profile/no_handphone/Seller_hp_screen.dart';
 import 'package:umik/screens/profile/no_handphone/hp_body.dart';
 import 'package:umik/screens/profile/nama/nama_form.dart';
@@ -14,8 +15,6 @@ import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/keranjang/keranjang_screen.dart';
 import 'package:umik/screens/lokasi/lokasi_screen.dart';
 import 'package:umik/screens/penjual/promo/promo_screen.dart';
-import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
-import 'package:umik/screens/penjual/seller_profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/seller_profile_screen.dart';
 import 'package:umik/screens/pilih_lokasi/pilih_lokasi_screen.dart';
 import 'package:umik/screens/promo/promo_screen.dart';
@@ -82,6 +81,6 @@ final Map<String, WidgetBuilder> routes = {
   SellerPromoScreenUser.routeName: (context) => SellerPromoScreenUser(),
   SellerRute.routeName: (context) => SellerRute(),
   SellerProfileScreen.routeName: (context) => SellerProfileScreen(),
-  SellerNamaScreen.routeName: (context) => SellerNamaScreen(),
+  SellerNamaFromScreen.routeName: (context) => SellerNamaFromScreen(),
   SellerHpScreen.routeName: (context) => SellerHpScreen(),
 };

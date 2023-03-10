@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
+import 'package:http/http.dart' as http;
 
+import '../../../../services/storage_service.dart';
 import '../seller_profile_screen.dart';
 
 class SellerHpScreen extends StatefulWidget {
@@ -13,16 +16,136 @@ class SellerHpScreen extends StatefulWidget {
 
 class _SellerHpScreenState extends State<SellerHpScreen> {
   final _formKey = GlobalKey<FormState>();
+  final List<String?> errors = [];
 
   // Initialize form field controller
   var HpController = TextEditingController();
 
-  Future _onSubmit() async {
+  String? no_tlp;
+  String noErrMsg = '';
+
+  final StorageService storage = StorageService();
+  String? _UmkmId;
+  String? _Token;
+
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  Future _storeIdAndLevel(String no_tlp) async {
     try {
-      print('Nama produk ${HpController.text}');
+      await storage.writeSecureData('no_tlp', no_tlp);
     } catch (e) {
       print(e);
     }
+  }
+
+  // Simpan dan baca supaya bisa prepopulate form field
+  Future storeProfileUser(String no_tlp) async {
+    try {
+      await storage.writeSecureData('no_tlp', no_tlp);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  /* === SECURE STORAGE === */
+  Future _readProfileUmkmData() async {
+    try {
+      final String token = await storage.readSecureData('token') ?? '';
+      final String umkmId = await storage.readSecureData('umkm_id') ?? '';
+      final String noumkm = await storage.readSecureData('no_tlp') ?? '';
+
+      setState(() {
+        _Token = token;
+        _UmkmId = umkmId;
+        HpController.text = noumkm;
+      });
+      _getFormValue();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _getFormValue() async {
+    try {
+      var url = Uri.parse('$kApiBaseUrl/umkm/$_UmkmId');
+      return await http.get(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $_Token',
+        },
+      ).then((value) {
+        final data = jsonDecode(value.body)['data'];
+        print(data);
+        if (value.statusCode == 200) {
+          print('hello, success');
+          setState(() {
+            HpController.text = data['no_tlp'];
+          });
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _onSubmit() async {
+    try {
+      var url = '$kApiBaseUrl/umkm/$_UmkmId';
+      return await http.put(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $_Token',
+        },
+        body: {
+          'no_tlp': HpController.text,
+        },
+      ).then((value) {
+        final res = jsonDecode(value.body);
+        final resMsg = res['message'];
+
+        if (value.statusCode != 200) {
+          if (resMsg.runtimeType.toString() == '_JsonMap') {
+            for (var item in resMsg.values) {
+              addError(error: item[0]);
+            }
+          }
+          return;
+        }
+
+        final data = res['data'];
+        final no_tlp = data['no_tlp'];
+        _storeIdAndLevel(no_tlp);
+        Navigator.pushNamedAndRemoveUntil(
+            context, SellerProfileScreen.routeName, (route) => false);
+        storeProfileUser(
+          HpController.text,
+        );
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _readProfileUmkmData();
   }
 
   @override
@@ -40,8 +163,23 @@ class _SellerHpScreenState extends State<SellerHpScreen> {
         elevation: 20,
         actions: <Widget>[
           TextButton(
-            onPressed: () => {
-              Navigator.pushNamed(context, SellerProfileScreen.routeName),
+            onPressed: () {
+              // remove err msg
+              setState(() {
+                noErrMsg = '';
+              });
+
+              if (!_formKey.currentState!.validate()) {
+                if ([no_tlp].contains(null)) {
+                  print([no_tlp]);
+                  setState(() {
+                    noErrMsg = 'No Handphone harus terisi!';
+                  });
+                }
+                return;
+              }
+              // klo semua baik" saja
+              _onSubmit();
             },
             child: Text(
               "Simpan",
