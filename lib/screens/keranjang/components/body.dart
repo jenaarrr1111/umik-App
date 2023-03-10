@@ -198,7 +198,7 @@ class _BodyState extends State<Body> {
                                   harga: _harga,
                                   jmlhProduk: _jmlhProduk,
                                 ),
-                                Text('Apa Anda yakin ingin membuat pesanan',
+                                Text('Apa Anda yakin ingin membuat pesanan?',
                                     style:
                                         Theme.of(context).textTheme.bodyMedium),
                                 const SizedBox(height: 15),
@@ -215,9 +215,9 @@ class _BodyState extends State<Body> {
                                     ),
                                     TextButton(
                                       onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, UserRute.routeName);
                                         /* _onSubmit().then((value) {
-                                          Navigator.pushNamed(
-                                              context, UserRute.routeName);
                                         }); */
                                       },
                                       child: Text('Konfirmasi',
