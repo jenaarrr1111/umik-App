@@ -6,11 +6,11 @@ import 'package:umik/constants.dart';
 import 'package:umik/screens/home/home_screen.dart';
 import 'package:umik/screens/penjual/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_profile/nama/seller_nama_screen.dart';
-import 'package:umik/screens/penjual/seller_profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/sign_out/sign_out.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
 
+import '../no_handphone/Seller_hp_screen.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 

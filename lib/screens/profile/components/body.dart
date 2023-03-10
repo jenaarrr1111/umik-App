@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:umik/screens/profile/components/profile_menu.dart';
 import 'package:umik/screens/profile/components/profile_pic.dart';
 import 'package:umik/screens/profile/nama/nama_form.dart';
-import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
+import 'package:umik/screens/profile/no_handphone/hp_body.dart';
 import 'package:umik/screens/sign_out/sign_out.dart';
 import 'package:umik/services/storage_service.dart';
 import 'package:umik/size_config.dart';
@@ -115,7 +115,7 @@ class _BodyState extends State<Body> {
             text: "Handphone",
             fieldValue: noTelp,
             press: () => {
-              Navigator.pushNamed(context, HpScreen.routeName),
+              Navigator.pushNamed(context, HpBodyScreen.routeName),
             },
           ),
           ProfileMenu2(

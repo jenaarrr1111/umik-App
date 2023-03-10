@@ -3,31 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../components/custom_text_input_field.dart';
-import '../../../components/form_error.dart';
 import '../../../services/storage_service.dart';
-import '../../../size_config.dart';
 import '../profile_screen.dart';
-// import 'package:umik/screens/profile/components/nama/components/body.dart';
 
-class NamaFromScreen extends StatefulWidget {
-  static String routeName = "/profile_nama";
-  const NamaFromScreen({super.key});
+class HpBodyScreen extends StatefulWidget {
+  static String routeName = "/profile_hp";
+  const HpBodyScreen({super.key});
 
   @override
-  State<NamaFromScreen> createState() => _NamaFromScreenState();
+  State<HpBodyScreen> createState() => _HpBodyScreenState();
 }
 
-class _NamaFromScreenState extends State<NamaFromScreen> {
+class _HpBodyScreenState extends State<HpBodyScreen> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
 
-  var namaController = TextEditingController();
+  // Initialize form field controller
+  var HpController = TextEditingController();
 
-  String? nama;
-  String namaErrMsg = '';
-
-  final nmMaxLength = 30;
+  String? no_tlp;
+  String noErrMsg = '';
 
   final StorageService storage = StorageService();
   String? _userId;
@@ -59,24 +54,24 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
   }
 
   // Simpan dan baca supaya bisa prepopulate form field
-  Future storeProfileUser(String nama) async {
+  Future storeProfileUser(String no_tlp) async {
     try {
-      await storage.writeSecureData('nama', nama);
+      await storage.writeSecureData('no_tlp', no_tlp);
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> readProfileNamaUser() async {
+  Future<void> readProfileNoTlpUser() async {
     try {
       final String token = await storage.readSecureData('token') ?? '';
       final String usrId = await storage.readSecureData('user_id') ?? '';
-      final String nmusr = await storage.readSecureData('nama') ?? '';
+      final String nousr = await storage.readSecureData('no_tlp') ?? '';
 
       setState(() {
         _Token = token;
         _userId = usrId;
-        namaController.text = nmusr;
+        HpController.text = nousr;
       });
       _getFormValue();
     } catch (e) {
@@ -99,7 +94,7 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
         if (value.statusCode == 200) {
           print('hello, success');
           setState(() {
-            namaController.text = data['nama'];
+            HpController.text = data['no_tlp'];
           });
         }
       });
@@ -118,7 +113,7 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
           'Authorization': 'Bearer $_Token',
         },
         body: {
-          'nama': namaController.text,
+          'no_tlp': HpController.text,
         },
       ).then((value) {
         final res = jsonDecode(value.body);
@@ -140,7 +135,7 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
         Navigator.pushNamedAndRemoveUntil(
             context, ProfileScreen.routeName, (route) => false);
         storeProfileUser(
-          namaController.text,
+          HpController.text,
         );
       });
     } catch (e) {
@@ -151,7 +146,7 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
   @override
   void initState() {
     super.initState();
-    readProfileNamaUser();
+    readProfileNoTlpUser();
   }
 
   @override
@@ -159,10 +154,10 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Ubah Nama",
+          "Ubah No.Handphone",
           style: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 17,
           ),
         ),
         shadowColor: Colors.black45,
@@ -172,14 +167,14 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
             onPressed: () {
               // remove err msg
               setState(() {
-                namaErrMsg = '';
+                noErrMsg = '';
               });
 
               if (!_formKey.currentState!.validate()) {
-                if ([nama].contains(null)) {
-                  print([nama]);
+                if ([no_tlp].contains(null)) {
+                  print([no_tlp]);
                   setState(() {
-                    namaErrMsg = 'Nama harus terisi!';
+                    noErrMsg = 'No Handphone harus terisi!';
                   });
                 }
                 return;
@@ -187,56 +182,62 @@ class _NamaFromScreenState extends State<NamaFromScreen> {
               // klo semua baik" saja
               _onSubmit();
             },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
+            child: Text(
+              "Simpan",
+              style: TextStyle(
+                color: Color(0xFF33691E),
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
-              child: Text(
-                "Simpan",
-                style: TextStyle(
-                  color: Color(0xFF33691E),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+      body: Form(
+        key: _formKey,
+        child: Container(
+          margin: const EdgeInsets.only(top: 5),
+          child: Column(
+            children: [
+              // [ No Handphone ]
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                color: KBgColor,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: HpController,
+                      decoration: const InputDecoration(
+                        fillColor: Colors.transparent,
+                        contentPadding: EdgeInsets.all(5),
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.zero,
+                            borderSide: BorderSide(
+                              color: Colors.black38,
+                              width: 0.5,
+                            )),
+                        enabledBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        icon: Padding(
+                          padding: EdgeInsets.only(left: 25),
+                          child: Icon(Icons.call),
+                        ),
+                        hintText: 'No Handphone Baru',
+                        filled: true,
+                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
+                      validator: (value) => value!.isEmpty
+                          ? 'No Handphone tidak boleh kososng!'
+                          : null,
+                    ),
+                  ],
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: getProportionateScreenHeight(10)),
-            child: Column(
-              children: [
-                form(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget form() {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(2),
-        child: Column(
-          children: [
-            // [ Nama ]
-            CustomTextInputField(
-              label: 'Nama',
-              needLabel: true,
-              hint: 'Masukkan nama ',
-              inputMaxLength: nmMaxLength,
-              fieldController: namaController,
-              isRequired: true,
-            ),
-            FormError(errors: errors),
-            const SizedBox(height: 10),
-          ],
         ),
       ),
     );

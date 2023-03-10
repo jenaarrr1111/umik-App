@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:umik/screens/cart/cart_screen.dart';
+import 'package:umik/screens/penjual/seller_profile/no_handphone/Seller_hp_screen.dart';
+import 'package:umik/screens/profile/no_handphone/hp_body.dart';
 import 'package:umik/screens/profile/nama/nama_form.dart';
 import 'package:umik/screens/struk/struk_screen.dart';
 import 'package:umik/screens/penjual/seller_struk/seller_struk_screen.dart';
@@ -26,7 +28,6 @@ import 'package:umik/screens/penjual/home/home_screen.dart';
 import 'package:umik/screens/penjual/seller_rute/seller_rute.dart';
 import 'package:umik/screens/penjual/seller_sign_up/seller_sign_up_screen.dart';
 import 'package:umik/screens/penjual/tambah_produk/seller_add_product.dart';
-import 'package:umik/screens/profile/no_handphone/hp_screen.dart';
 import 'package:umik/screens/profile/profile_screen.dart';
 import 'package:umik/screens/rating/rating_screen.dart';
 import 'package:umik/screens/riwayat/riwayat_screen.dart';
@@ -65,7 +66,7 @@ final Map<String, WidgetBuilder> routes = {
   //profile
   ProfileScreen.routeName: (context) => ProfileScreen(),
   NamaFromScreen.routeName: (context) => NamaFromScreen(),
-  HpScreen.routeName: (context) => HpScreen(),
+  HpBodyScreen.routeName: (context) => HpBodyScreen(),
   SignOut.routeName: (context) => SignOut(),
 
   //penjual
