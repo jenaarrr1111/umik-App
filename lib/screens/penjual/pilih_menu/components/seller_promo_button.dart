@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
 
-import '../../tambah_promo/add_promo_screenA.dart';
+import '../../tambah_promo/add_promo_screen.dart';
 
 class PromoButton extends StatelessWidget {
   const PromoButton({super.key});

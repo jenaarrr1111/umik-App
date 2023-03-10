@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:umik/constants.dart';
-import 'package:umik/screens/penjual/tambah_promo/add_promo_screenA.dart';
 
 // ignore: must_be_immutable
-class SellerPromoGridView extends StatefulWidget {
-  final String namaMenu, thumbnail, harga;
-
-  const SellerPromoGridView({
+class CardProduct extends StatefulWidget {
+  final int hargaProduk;
+  final String namaProduk;
+  final String imagePath;
+  const CardProduct({
     Key? key,
-    required this.namaMenu,
-    required this.thumbnail,
-    required this.harga,
+    required this.namaProduk,
+    required this.imagePath,
+    required this.hargaProduk,
   }) : super(key: key);
 
   @override
-  State<SellerPromoGridView> createState() => _SellerMenuGridViewState();
+  State<CardProduct> createState() => _SellerMenuGridViewState();
 }
 
-class _SellerMenuGridViewState extends State<SellerPromoGridView> {
+class _SellerMenuGridViewState extends State<CardProduct> {
   bool isOn = false;
 
   @override
@@ -33,7 +33,7 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
                 width: 110.0,
                 height: 100.0,
                 child: FadeInImage(
-                  image: NetworkImage('$kPublicStorage/${widget.thumbnail}'),
+                  image: NetworkImage('$kPublicStorage/${(widget.imagePath)}'),
                   placeholder: const AssetImage(''),
                   // ),
                 ),
@@ -47,29 +47,12 @@ class _SellerMenuGridViewState extends State<SellerPromoGridView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.namaMenu,
-                    textAlign: TextAlign.left,
+                    widget.namaProduk,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  SizedBox(
-                    height: 9, // <-- SEE HERE
-                  ),
-                  Text(widget.harga,
-                      textAlign: TextAlign.left,
+                  Text((widget.hargaProduk).toString(),
                       style: Theme.of(context).textTheme.titleSmall),
-                  SizedBox(
-                    height: 9, // <-- SEE HERE
-                  ),
                 ],
-              ),
-            ),
-            Align(
-              child: IconButton(
-                iconSize: 20,
-                icon: const Icon(Icons.arrow_forward_ios),
-                onPressed: () => {
-                  Navigator.pushNamed(context, SellerAddPromoScreen.routeName),
-                },
               ),
             ),
           ],

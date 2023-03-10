@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:umik/screens/penjual/tambah_promo/components/body.dart';
 import 'package:umik/screens/penjual/tambah_promo/components/seller_promo_button.dart';
+import 'dart:convert';
+import '../../../constants.dart';
+import 'package:http/http.dart' as http;
 
 class SellerAddPromoScreen extends StatelessWidget {
-  const SellerAddPromoScreen({super.key});
+  final Map? arguments;
 
+  const SellerAddPromoScreen({super.key, required this.arguments});
   static String routeName = "/add_promo";
 
   @override
@@ -15,7 +19,7 @@ class SellerAddPromoScreen extends StatelessWidget {
         shadowColor: Colors.black45,
         elevation: 20,
       ),
-      body: SellerPromo(),
+      body: SellerPromo(arguments: arguments),
       bottomNavigationBar: const PromoButton(),
     );
   }

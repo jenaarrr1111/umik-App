@@ -35,9 +35,11 @@ class _SellerMenuListViewState extends State<SellerPromoListView> {
                   child: SizedBox(
                     width: 110.0,
                     height: 100.0,
-                    child: Image.asset(
-                      widget.thumbnail,
-                      fit: BoxFit.contain,
+                    child: FadeInImage(
+                      image:
+                          NetworkImage('$kPublicStorage/${widget.thumbnail}'),
+                      placeholder: const AssetImage(''),
+                      // ),
                     ),
                   ),
                 ),
